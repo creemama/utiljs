@@ -1,0 +1,22 @@
+{
+	"author": "Chris Topher <c@creemama.com>",
+	"dependencies": {
+		"utiljs-files": "0.0.0",
+		"utiljs-promises": "0.0.0"
+	},
+	"description": "JavaScript utility methods for URLs",
+	"devDependencies": {
+		"chai": "4.1.2",
+		"mocha": "5.2.0"
+	},
+	"license": "MIT",
+	"name": "utiljs-urls",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-urls"
+	},
+	"scripts": {
+		"mocha": "mocha **/*Test.js"
+	},
+	"version": "0.0.0"
+}
