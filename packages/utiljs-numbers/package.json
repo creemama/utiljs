@@ -5,6 +5,16 @@
 		"chai": "4.1.2",
 		"mocha": "5.2.0"
 	},
+	"keywords": [
+		"int",
+		"integer",
+		"integers",
+		"number",
+		"numbers",
+		"utilities",
+		"utility",
+		"utiljs"
+	],
 	"license": "MIT",
 	"name": "utiljs-numbers",
 	"repository": {

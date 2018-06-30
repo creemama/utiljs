@@ -10,7 +10,10 @@
 	},
 	"keywords": [
 		"stream",
-		"streams"
+		"streams",
+		"utilities",
+		"utility",
+		"utiljs"
 	],
 	"license": "MIT",
 	"name": "utiljs-streams",

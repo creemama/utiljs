@@ -5,6 +5,13 @@
 		"chai": "4.1.2",
 		"mocha": "5.2.0"
 	},
+	"keywords": [
+		"promise",
+		"promises",
+		"utilities",
+		"utility",
+		"utiljs"
+	],
 	"license": "MIT",
 	"name": "utiljs-promises",
 	"repository": {
