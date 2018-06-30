@@ -15,6 +15,15 @@
 		"chai": "4.1.2",
 		"mocha": "5.2.0"
 	},
+	"keywords": [
+		"file",
+		"file system",
+		"files",
+		"node",
+		"utilities",
+		"utility",
+		"utiljs"
+	],
 	"license": "MIT",
 	"name": "utiljs-files",
 	"repository": {

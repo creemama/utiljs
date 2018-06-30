@@ -1,6 +1,13 @@
 {
 	"author": "Chris Topher <c@creemama.com>",
 	"description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
+	"keywords": [
+		"timer",
+		"timers",
+		"utilities",
+		"utility",
+		"utiljs"
+	],
 	"license": "MIT",
 	"name": "utiljs-timers",
 	"repository": {
