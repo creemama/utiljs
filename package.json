@@ -12,6 +12,5 @@
 	},
 	"scripts": {
 		"lerna": "lerna"
-	},
-	"version": "0.0.0"
+	}
 }
