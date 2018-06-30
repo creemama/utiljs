@@ -6,9 +6,9 @@
 		"ncp": "2.0.0",
 		"rimraf": "2.6.2",
 		"touch": "3.1.0",
-		"utiljs-objects": "^0.1.0",
+		"utiljs-objects": "^0.2.0",
 		"utiljs-promises": "^0.1.0",
-		"utiljs-strings": "^0.1.0"
+		"utiljs-strings": "^0.2.0"
 	},
 	"description": "JavaScript Node.js utility methods for files",
 	"devDependencies": {
@@ -33,5 +33,5 @@
 	"scripts": {
 		"mocha": "mocha **/*Test.js"
 	},
-	"version": "0.1.0"
+	"version": "0.2.0"
 }
