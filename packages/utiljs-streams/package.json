@@ -1,7 +1,7 @@
 {
 	"author": "Chris Topher <c@creemama.com>",
 	"dependencies": {
-		"utiljs-promises": "^0.1.0"
+		"utiljs-promises": "^0.3.0"
 	},
 	"description": "JavaScript utility methods for streams",
 	"devDependencies": {
@@ -24,5 +24,5 @@
 	"scripts": {
 		"mocha": "mocha **/*Test.js"
 	},
-	"version": "0.2.0"
+	"version": "0.3.0"
 }
