@@ -1,37 +1,37 @@
 {
-	"author": "Chris Topher <c@creemama.com>",
-	"dependencies": {
-		"async-waterfall": "0.1.5",
-		"mkdirp": "0.5.1",
-		"ncp": "2.0.0",
-		"rimraf": "2.6.2",
-		"touch": "3.1.0",
-		"utiljs-objects": "^0.2.0",
-		"utiljs-promises": "^0.3.0",
-		"utiljs-strings": "^0.2.0"
-	},
-	"description": "JavaScript Node.js utility methods for files",
-	"devDependencies": {
-		"chai": "4.1.2",
-		"mocha": "5.2.0"
-	},
-	"keywords": [
-		"file",
-		"file system",
-		"files",
-		"node",
-		"utilities",
-		"utility",
-		"utiljs"
-	],
-	"license": "MIT",
-	"name": "utiljs-files",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-files"
-	},
-	"scripts": {
-		"mocha": "mocha **/*Test.js"
-	},
-	"version": "0.3.0"
+  "author": "Chris Topher <c@creemama.com>",
+  "dependencies": {
+    "async-waterfall": "0.1.5",
+    "mkdirp": "0.5.1",
+    "ncp": "2.0.0",
+    "rimraf": "2.6.2",
+    "touch": "3.1.0",
+    "utiljs-objects": "^0.2.0",
+    "utiljs-promises": "^0.3.0",
+    "utiljs-strings": "^0.2.0"
+  },
+  "description": "JavaScript Node.js utility methods for files",
+  "devDependencies": {
+    "chai": "4.1.2",
+    "mocha": "5.2.0"
+  },
+  "keywords": [
+    "file",
+    "file system",
+    "files",
+    "node",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "utiljs-files",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-files"
+  },
+  "scripts": {
+    "mocha": "mocha **/*Test.js"
+  },
+  "version": "0.3.0"
 }

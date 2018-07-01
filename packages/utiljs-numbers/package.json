@@ -1,29 +1,29 @@
 {
-	"author": "Chris Topher <c@creemama.com>",
-	"description": "JavaScript utility methods for numbers",
-	"devDependencies": {
-		"chai": "4.1.2",
-		"mocha": "5.2.0"
-	},
-	"keywords": [
-		"int",
-		"integer",
-		"integers",
-		"math",
-		"number",
-		"numbers",
-		"utilities",
-		"utility",
-		"utiljs"
-	],
-	"license": "MIT",
-	"name": "utiljs-numbers",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-numbers"
-	},
-	"scripts": {
-		"mocha": "mocha **/*Test.js"
-	},
-	"version": "0.3.0"
+  "author": "Chris Topher <c@creemama.com>",
+  "description": "JavaScript utility methods for numbers",
+  "devDependencies": {
+    "chai": "4.1.2",
+    "mocha": "5.2.0"
+  },
+  "keywords": [
+    "int",
+    "integer",
+    "integers",
+    "math",
+    "number",
+    "numbers",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "utiljs-numbers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-numbers"
+  },
+  "scripts": {
+    "mocha": "mocha **/*Test.js"
+  },
+  "version": "0.3.0"
 }

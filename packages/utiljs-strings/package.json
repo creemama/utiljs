@@ -1,28 +1,28 @@
 {
-	"author": "Chris Topher <c@creemama.com>",
-	"dependencies": {
-		"base64url": "3.0.0"
-	},
-	"description": "JavaScript utility methods for strings",
-	"devDependencies": {
-		"chai": "4.1.2",
-		"mocha": "5.2.0"
-	},
-	"keywords": [
-		"string",
-		"strings",
-		"utilities",
-		"utility",
-		"utiljs"
-	],
-	"license": "MIT",
-	"name": "utiljs-strings",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-strings"
-	},
-	"scripts": {
-		"mocha": "mocha **/*Test.js"
-	},
-	"version": "0.2.0"
+  "author": "Chris Topher <c@creemama.com>",
+  "dependencies": {
+    "base64url": "3.0.0"
+  },
+  "description": "JavaScript utility methods for strings",
+  "devDependencies": {
+    "chai": "4.1.2",
+    "mocha": "5.2.0"
+  },
+  "keywords": [
+    "string",
+    "strings",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "utiljs-strings",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-strings"
+  },
+  "scripts": {
+    "mocha": "mocha **/*Test.js"
+  },
+  "version": "0.2.0"
 }

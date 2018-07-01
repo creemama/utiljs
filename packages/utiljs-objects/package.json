@@ -1,25 +1,25 @@
 {
-	"author": "Chris Topher <c@creemama.com>",
-	"description": "JavaScript utility methods for objects",
-	"devDependencies": {
-		"chai": "4.1.2",
-		"mocha": "5.2.0"
-	},
-	"keywords": [
-		"object",
-		"objects",
-		"utilities",
-		"utility",
-		"utiljs"
-	],
-	"license": "MIT",
-	"name": "utiljs-objects",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-objects"
-	},
-	"scripts": {
-		"mocha": "mocha **/*Test.js"
-	},
-	"version": "0.2.0"
+  "author": "Chris Topher <c@creemama.com>",
+  "description": "JavaScript utility methods for objects",
+  "devDependencies": {
+    "chai": "4.1.2",
+    "mocha": "5.2.0"
+  },
+  "keywords": [
+    "object",
+    "objects",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "utiljs-objects",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-objects"
+  },
+  "scripts": {
+    "mocha": "mocha **/*Test.js"
+  },
+  "version": "0.2.0"
 }

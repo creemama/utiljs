@@ -1,4 +1,4 @@
+"use strict";
 
-'use strict';
-
-module.exports = (new (require(__dirname + '/src/StringsFactory'))).newStrings()
+module.exports = new (require(__dirname +
+  "/src/StringsFactory"))().newStrings();

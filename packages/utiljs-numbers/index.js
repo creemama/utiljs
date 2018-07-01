@@ -1,4 +1,3 @@
+"use strict";
 
-'use strict';
-
-module.exports = new (require(__dirname + '/Numbers'))
+module.exports = new (require(__dirname + "/Numbers"))();

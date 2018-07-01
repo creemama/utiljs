@@ -1,18 +1,18 @@
 {
-	"author": "Chris Topher <c@creemama.com>",
-	"description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
-	"keywords": [
-		"timer",
-		"timers",
-		"utilities",
-		"utility",
-		"utiljs"
-	],
-	"license": "MIT",
-	"name": "utiljs-timers",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-timers"
-	},
-	"version": "0.2.0"
+  "author": "Chris Topher <c@creemama.com>",
+  "description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
+  "keywords": [
+    "timer",
+    "timers",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "utiljs-timers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-timers"
+  },
+  "version": "0.2.0"
 }

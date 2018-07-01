@@ -1,4 +1,3 @@
+"use strict";
 
-'use strict';
-
-module.exports = new (require(__dirname + '/Streams'))
+module.exports = new (require(__dirname + "/Streams"))();
