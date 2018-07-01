@@ -1,6 +1,6 @@
 {
   "author": "Chris Topher <c@creemama.com>",
-  "description": "JavaScript utility methods",
+  "description": "Util.js - JavaScript utility methods",
   "devDependencies": {
     "lerna": "2.11.0",
     "prettier": "1.13.7"
