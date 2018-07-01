@@ -1,10 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
-  "dependencies": {
-    "lerna": "2.11.0"
-  },
   "description": "JavaScript utility methods",
   "devDependencies": {
+    "lerna": "2.11.0",
     "prettier": "1.13.7"
   },
   "license": "MIT",
@@ -12,8 +10,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs"
-  },
-  "scripts": {
-    "lerna": "lerna"
   }
 }

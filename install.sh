@@ -6,7 +6,7 @@ cd "${scriptDir}"
 
 npm install
 exitCode=${?}
-npm run lerna bootstrap
+npx lerna bootstrap
 if [[ ${?} -ne 0 ]]; then
   exitCode=${?}
 fi
