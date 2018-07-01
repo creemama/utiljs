@@ -1,8 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "utiljs-files": "^0.3.0",
-    "utiljs-promises": "^0.3.0"
+    "utiljs-files": "0.4.0",
+    "utiljs-promises": "0.4.0"
   },
   "description": "JavaScript utility methods for URLs",
   "devDependencies": {
@@ -27,5 +27,5 @@
   "scripts": {
     "mocha": "mocha **/*Test.js"
   },
-  "version": "0.3.0"
+  "version": "0.4.0"
 }
