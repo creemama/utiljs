@@ -3,6 +3,10 @@
 module.exports = Strings;
 
 function Strings(options) {
+  this.fromCharCode = String.fromCharCode;
+  this.fromCodePoint = String.fromCodePoint;
+  this.raw = String.raw;
+
   this.endsWith = endsWith;
   this.pad = pad;
   this.stripTags = stripTags;

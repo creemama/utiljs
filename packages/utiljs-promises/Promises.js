@@ -1,6 +1,11 @@
 "use strict";
 
 module.exports = function Promises() {
+  this.all = Promise.all;
+  this.race = Promise.race;
+  this.reject = Promise.reject;
+  this.resolve = Promise.resolve;
+
   this.promisify = promisify;
   this.promisifyAndCall = promisifyAndCall;
 

@@ -1,6 +1,10 @@
 "use strict";
 
 module.exports = function Arrays() {
+  this.from = Array.from;
+  this.isArray = Array.isArray;
+  this.of = Array.of;
+
   this.contains = contains;
   this.shallowCopy = shallowCopy;
   this.shuffle = shuffle;
