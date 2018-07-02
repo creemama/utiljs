@@ -6,9 +6,9 @@ cd "${scriptDir}"
 
 cd ..
 
-npm install
+npm install --save-exact
 exitCode=${?}
-npx lerna bootstrap
+npx lerna bootstrap -- --save-exact
 if [[ ${?} -ne 0 ]]; then
   exitCode=${?}
 fi
