@@ -25,15 +25,15 @@ module.exports = function Objects() {
   this.isDefined = isDefined;
   this.merge = merge;
 
+  function guarantee(obj) {
+    return isDefined(obj) ? obj : {};
+  }
+
   // This method is useful when determining
   // if an integer variable is defined or not,
   // since 0 is false and may be valid.
   function isDefined(obj) {
     return obj !== null && typeof obj !== "undefined";
-  }
-
-  function guarantee(obj) {
-    return isDefined(obj) ? obj : {};
   }
 
   function merge(a, b) {
