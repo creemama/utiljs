@@ -4,10 +4,6 @@
     "utiljs-promises": "0.4.0"
   },
   "description": "JavaScript utility methods for streams",
-  "devDependencies": {
-    "chai": "4.1.2",
-    "mocha": "5.2.0"
-  },
   "keywords": [
     "stream",
     "streams",
@@ -20,9 +16,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-streams"
-  },
-  "scripts": {
-    "mocha": "mocha **/*Test.js"
   },
   "version": "0.4.0"
 }

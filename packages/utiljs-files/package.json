@@ -11,10 +11,6 @@
     "utiljs-strings": "0.4.0"
   },
   "description": "JavaScript Node.js utility methods for files",
-  "devDependencies": {
-    "chai": "4.1.2",
-    "mocha": "5.2.0"
-  },
   "keywords": [
     "file",
     "file system",
@@ -29,9 +25,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-files"
-  },
-  "scripts": {
-    "mocha": "mocha **/*Test.js"
   },
   "version": "0.4.0"
 }

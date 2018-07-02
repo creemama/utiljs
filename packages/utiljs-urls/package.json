@@ -5,10 +5,6 @@
     "utiljs-promises": "0.4.0"
   },
   "description": "JavaScript utility methods for URLs",
-  "devDependencies": {
-    "chai": "4.1.2",
-    "mocha": "5.2.0"
-  },
   "keywords": [
     "uri",
     "uris",
@@ -23,9 +19,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-urls"
-  },
-  "scripts": {
-    "mocha": "mocha **/*Test.js"
   },
   "version": "0.4.0"
 }

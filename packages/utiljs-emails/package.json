@@ -1,10 +1,6 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "description": "JavaScript utility methods for emails",
-  "devDependencies": {
-    "chai": "4.1.2",
-    "mocha": "5.2.0"
-  },
   "keywords": [
     "email",
     "emails",
@@ -17,9 +13,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-emails"
-  },
-  "scripts": {
-    "mocha": "mocha **/*Test.js"
   },
   "version": "0.4.0"
 }

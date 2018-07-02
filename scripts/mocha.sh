@@ -6,10 +6,13 @@ cd "${scriptDir}"
 
 cd ..
 
+# Put mocha on the PATH.
+PATH=`pwd`/node_modules/.bin:$PATH
+
 exitCode=0
 if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
 	cd "packages/${1}"
-	npm run mocha
+	mocha **/*Test.js
 	exitCode=${?}
 else
 	cd packages
@@ -17,7 +20,7 @@ else
 		cd ${package}
 		if [[ $(find . -type f | egrep ".*Test.js" | wc -l) -ne 0 ]]; then
 			echo "Visting ${package}"
-			npm run mocha ${@}
+			mocha ${@} **/*Test.js
 			latestExitCode=${?}
 			if [[ ${latestExitCode} -ne 0 ]]; then
 				exitCode=${latestExitCode}
