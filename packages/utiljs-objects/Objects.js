@@ -29,9 +29,18 @@ module.exports = function Objects() {
     return isDefined(obj) ? obj : {};
   }
 
-  // This method is useful when determining
-  // if an integer variable is defined or not,
-  // since 0 is false and may be valid.
+  /**
+   * Returns whether the specified obj is defined.
+   *
+   * In other words, this method returns false if and only if the object is
+   * null or undefined.
+   *
+   * This method is useful when an expression like the following might return false when you expected true:
+   * <pre><code>
+   * if (x) console.log("x is defined.");
+   * </code></pre>
+   * This happens for [0, -0, NaN, false, and the empty string ("")]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean}.
+   */
   function isDefined(obj) {
     return obj !== null && typeof obj !== "undefined";
   }

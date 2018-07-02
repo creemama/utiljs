@@ -5,6 +5,29 @@ var expect = require("chai").expect;
 var Objects = require(__dirname + "/Objects");
 
 describe("Objects", () => {
+  describe("#isDefined(obj)", () => {
+    const objects = new Objects();
+    it("should return true for truthy statements", () => {
+      expect(objects.isDefined("truthy")).to.be.true;
+      expect(objects.isDefined(Object)).to.be.true;
+      expect(objects.isDefined(Object.assign)).to.be.true;
+      expect(objects.isDefined([])).to.be.true;
+    });
+    it('should return true for falsey statements 0, -0, NaN, false, and the empty string ("")', () => {
+      expect(objects.isDefined(0)).to.be.true;
+      expect(objects.isDefined(-0)).to.be.true;
+      expect(objects.isDefined(NaN)).to.be.true;
+      expect(objects.isDefined(false)).to.be.true;
+      expect(objects.isDefined("")).to.be.true;
+    });
+    it("should return false for falsey statements null and undefined", () => {
+      expect(objects.isDefined(null)).to.be.false;
+      expect(objects.isDefined()).to.be.false;
+      let a;
+      expect(objects.isDefined(a)).to.be.false;
+    });
+  });
+
   describe("#merge(a, b)", () => {
     var objects = new Objects();
 
