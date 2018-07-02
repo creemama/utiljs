@@ -4,6 +4,8 @@ curDir=`pwd`
 scriptDir=`dirname "${0}"`
 cd "${scriptDir}"
 
+cd ..
+
 npm install
 exitCode=${?}
 npx lerna bootstrap

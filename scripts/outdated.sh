@@ -4,6 +4,8 @@ curDir=`pwd`
 scriptDir=`dirname "${0}"`
 cd "${scriptDir}"
 
+cd ..
+
 exitCode=0
 npm outdated
 cd packages

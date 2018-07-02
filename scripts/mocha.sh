@@ -4,6 +4,8 @@ curDir=`pwd`
 scriptDir=`dirname "${0}"`
 cd "${scriptDir}"
 
+cd ..
+
 exitCode=0
 if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
 	cd "packages/${1}"

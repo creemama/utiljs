@@ -4,6 +4,8 @@ curDir=`pwd`
 scriptDir=`dirname "${0}"`
 cd "${scriptDir}"
 
+cd ..
+
 find . -type f \
 | egrep "^.*\.(css|js|json|md)$" \
 | egrep -v "^.*/(node_modules|target)/.*$" \
