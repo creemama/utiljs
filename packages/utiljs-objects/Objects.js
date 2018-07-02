@@ -44,4 +44,4 @@ module.exports = function Objects() {
     for (let p in d) if (d.hasOwnProperty(p)) merged[p] = d[p];
     return merged;
   }
-}
+};
