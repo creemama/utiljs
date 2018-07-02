@@ -1,8 +1,6 @@
 "use strict";
 
-module.exports = Objects;
-
-function Objects() {
+module.exports = function Objects() {
   this.guarantee = guarantee;
   this.isDefined = isDefined;
   this.keys = Object.keys;
@@ -20,11 +18,11 @@ function Objects() {
   }
 
   function merge(a, b) {
-    var c = guarantee(a);
-    var d = guarantee(b);
-    var merged = {};
-    for (var p in c) if (c.hasOwnProperty(p)) merged[p] = c[p];
-    for (var p in d) if (d.hasOwnProperty(p)) merged[p] = d[p];
+    let c = guarantee(a);
+    let d = guarantee(b);
+    let merged = {};
+    for (let p in c) if (c.hasOwnProperty(p)) merged[p] = c[p];
+    for (let p in d) if (d.hasOwnProperty(p)) merged[p] = d[p];
     return merged;
   }
 }
