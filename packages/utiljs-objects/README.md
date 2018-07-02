@@ -6,7 +6,7 @@ JavaScript utility methods for objects
   <a href="https://www.npmjs.com/package/utiljs-objects"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-objects.svg?style=flat"></a>
 </p>
 
-This class has all the methods of [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) in addition to:
+This class contains all the non-instance methods of [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) in addition to:
 
 - guarantee
 - isDefined
