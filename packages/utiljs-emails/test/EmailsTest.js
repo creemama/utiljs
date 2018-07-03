@@ -2,7 +2,7 @@
 
 var expect = require("chai").expect;
 
-var emails = require(__dirname);
+var emails = require(__dirname + "/..");
 
 describe("Emails", () => {
   describe("#isValidEmail(str)", () => {

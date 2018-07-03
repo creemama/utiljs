@@ -2,7 +2,7 @@
 
 var expect = require("chai").expect;
 
-var Factory = require(__dirname + "/StringsFactory");
+var Factory = require(__dirname + "/../src/StringsFactory");
 
 describe("Strings", () => {
   var strings = new Factory().newStrings();

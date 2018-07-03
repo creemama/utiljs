@@ -1,7 +1,7 @@
 "use strict";
 
 const expect = require("chai").expect,
-  promises = require(__dirname);
+  promises = require(__dirname + "/..");
 
 describe("Promises", function() {
   describe("#promisifyAndCall", () => {

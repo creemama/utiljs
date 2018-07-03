@@ -2,7 +2,7 @@
 
 var expect = require("chai").expect;
 
-const numbers = require(__dirname);
+const numbers = require(__dirname + "/..");
 
 describe("Numbers", () => {
   describe("#isInt(value)", () => {

@@ -12,15 +12,15 @@ PATH=`pwd`/node_modules/.bin:$PATH
 exitCode=0
 if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
 	cd "packages/${1}"
-	mocha **/*Test.js
+	mocha
 	exitCode=${?}
 else
 	cd packages
 	for package in */; do
 		cd ${package}
-		if [[ $(find . -type f | egrep ".*Test.js" | wc -l) -ne 0 ]]; then
+		if [ -d "test" ]; then
 			echo "Visting ${package}"
-			mocha ${@} **/*Test.js
+			mocha ${@}
 			latestExitCode=${?}
 			if [[ ${latestExitCode} -ne 0 ]]; then
 				exitCode=${latestExitCode}

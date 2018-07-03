@@ -2,7 +2,7 @@
 
 var expect = require("chai").expect;
 
-var Objects = require(__dirname + "/Objects");
+var Objects = require(__dirname + "/../Objects");
 
 describe("Objects", () => {
   describe("#isDefined(obj)", () => {

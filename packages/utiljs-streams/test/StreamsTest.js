@@ -2,7 +2,7 @@
 
 var expect = require("chai").expect;
 
-var streams = require(__dirname);
+var streams = require(__dirname + "/..");
 
 describe("Streams", function() {
   describe("#stringify(readable)", () => {

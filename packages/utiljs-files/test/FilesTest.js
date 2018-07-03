@@ -2,9 +2,9 @@
 
 var expect = require("chai").expect;
 
-const Factory = require(__dirname + "/FilesFactory");
-const Files = require(__dirname + "/Files");
-const Resources = require(__dirname + "/FilesResources");
+const Factory = require(__dirname + "/../src/FilesFactory");
+const Files = require(__dirname + "/../src/Files");
+const Resources = require(__dirname + "/../src/FilesResources");
 
 describe("Files", function() {
   const resources = new Resources();

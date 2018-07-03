@@ -2,7 +2,7 @@
 
 var expect = require("chai").expect;
 
-var arrays = require(".");
+var arrays = require(__dirname + "/..");
 
 describe("Arrays", () => {
   describe("#contains(a, obj)", () => {
