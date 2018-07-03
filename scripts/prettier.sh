@@ -7,7 +7,7 @@ cd "${scriptDir}"
 cd ..
 
 find . -type f \
-| egrep "^.*\.(css|js|json|md)$" \
+| egrep "^.*\.(css|js|json|md|scss)$" \
 | egrep -v "^.*/(node_modules|target)/.*$" \
 | egrep -v "^.*/package-lock\.json$" \
 | egrep -v "^\./lerna\.json$" \
