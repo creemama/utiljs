@@ -2,6 +2,13 @@
 
 module.exports = Strings;
 
+/**
+ * JavaScript utility methods for strings
+ *
+ * @param {Object} options - object containing the dependencies of this class
+ * @public
+ * @class
+ */
 function Strings(options) {
   this.fromCharCode = String.fromCharCode;
   this.fromCodePoint = String.fromCodePoint;
