@@ -8,7 +8,7 @@
     "touch": "3.1.0",
     "utiljs-objects": "0.9.0",
     "utiljs-promises": "0.9.0",
-    "utiljs-strings": "0.10.0"
+    "utiljs-strings": "0.11.0"
   },
   "description": "JavaScript Node.js utility methods for files",
   "keywords": [
@@ -26,5 +26,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-files"
   },
-  "version": "0.10.0"
+  "version": "0.11.0"
 }
