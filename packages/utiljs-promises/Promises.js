@@ -6,8 +6,19 @@ module.exports = function Promises() {
   this.reject = Promise.reject;
   this.resolve = Promise.resolve;
 
+  this.call = call;
   this.promisify = promisify;
   this.promisifyAndCall = promisifyAndCall;
+
+  function call(object, functionOnObjectWithCallback, args) {
+    if (hasCallback(args))
+      return functionOnObjectWithCallback.apply(object, args);
+    return promisifyAndCall(object, functionOnObjectWithCallback, ...args);
+  }
+
+  function hasCallback(args) {
+    return args.length > 0 && typeof args[args.length - 1] === "function";
+  }
 
   function promisify(functionWithCallback) {
     return function() {

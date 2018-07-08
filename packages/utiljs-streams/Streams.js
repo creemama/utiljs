@@ -1,10 +1,20 @@
 "use strict";
 
 module.exports = function Streams() {
+  this.finished = finished;
   this.newReadable = newReadable;
+  this.newWritable = newWritable;
+  this.pipeline = pipeline;
   this.stringify = stringify;
 
   const dependencies = {};
+
+  this.Duplex = stream().Duplex;
+  this.PassThrough = stream().PassThrough;
+  this.Readable = stream().Readable;
+  this.Stream = stream().Stream;
+  this.Transform = stream().Transform;
+  this.Writable = stream().Writable;
 
   function get(dependency) {
     return (
@@ -19,8 +29,28 @@ module.exports = function Streams() {
     return get("stream");
   }
 
+  function finished() {
+    if (!stream().finished)
+      throw new Error(
+        "This version of Node.js does not support stream.finished."
+      );
+    return promises().call(stream(), stream().finished, arguments);
+  }
+
   function newReadable() {
-    return new stream().Readable();
+    return new stream().Readable(...arguments);
+  }
+
+  function newWritable() {
+    return new stream().Writable(...arguments);
+  }
+
+  function pipeline() {
+    if (!stream().pipeline)
+      throw new Error(
+        "This version of Node.js does not support stream.pipeline."
+      );
+    return promises().call(stream(), stream().pipeline, arguments);
   }
 
   // http://stackoverflow.com/a/26076032
