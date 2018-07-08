@@ -15,5 +15,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs"
+  },
+  "scripts": {
+    "test": "npx lerna exec --ignore utiljs-timers -- mocha"
   }
 }

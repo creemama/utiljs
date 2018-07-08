@@ -1,0 +1,16 @@
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs/
+
+language: node_js
+node_js:
+ - '10'
+ - '8'
+
+cache:
+  directories:
+    - $HOME/.npm
+    - node_modules
+
+before_install:
+  - npm install --global npm@6.1.0
+
+install: ./scripts/install.sh
