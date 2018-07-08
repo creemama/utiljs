@@ -17,12 +17,6 @@ module.exports = function Streams() {
   this.Transform = stream().Transform;
   this.Writable = stream().Writable;
 
-  function get(dependency) {
-    return (
-      dependencies[dependency] ||
-      (dependencies[dependency] = require(dependency))
-    );
-  }
   function promises() {
     return get("utiljs-promises");
   }
@@ -31,6 +25,12 @@ module.exports = function Streams() {
   }
   function strings() {
     return get("utiljs-strings");
+  }
+  function get(dependency) {
+    return (
+      dependencies[dependency] ||
+      (dependencies[dependency] = require(dependency))
+    );
   }
 
   function finished() {
