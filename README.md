@@ -1,6 +1,10 @@
 # Util.js
 
-Reusable JavaScript utilities for Node.js
+> Reusable JavaScript utilities for Node.js
+
+<p>
+  <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
+</p>
 
 Util.js is a monorepo with the following packages:
 
