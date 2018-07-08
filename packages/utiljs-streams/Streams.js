@@ -1,6 +1,8 @@
 "use strict";
 
-module.exports = function Streams() {
+module.exports = Streams;
+
+function Streams() {
   this.finished = finished;
   this.fromString = fromString;
   this.newReadable = newReadable;
@@ -82,4 +84,4 @@ module.exports = function Streams() {
       .on("end", () => callback(null, string))
       .on("error", error => callback(error));
   }
-};
+}
