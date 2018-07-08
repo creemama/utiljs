@@ -4,7 +4,7 @@ const { expect } = require("chai"),
   stream = require("stream"),
   streams = require(__dirname + "/..");
 
-describe("Streams", function() {
+describe("Streams", () => {
   describe("#finished(stream[, callback])", () => {
     it("should call callback when finished", callback => {
       if (!stream.finished) return callback();
@@ -51,15 +51,14 @@ describe("Streams", function() {
     });
   });
 
-  describe("#stringify(readable)", () => {
-    it("should successfully stringify a Readable", () => {
+  describe("#stringify(readable[, callback])", () => {
+    it("should successfully stringify a Readable and return a Promise", () => {
       const readable = streams.fromString("frog\ncat");
       return streams
         .stringify(readable)
         .then(string => expect(string).to.equal("frog\ncat"));
     });
-    it("should throw an error if the readable is null", stringify_readable);
-    async function stringify_readable() {
+    it("should throw an error if the readable is null and return a Promise", async function() {
       await streams.stringify().then(
         () => {
           throw new Error("Unexpected success");
@@ -78,21 +77,18 @@ describe("Streams", function() {
         },
         error => {}
       );
-    }
-  });
-
-  describe("#stringify(readable, callback)", () => {
-    it("should successfully stringify a Readable", function(done) {
+    });
+    it("should successfully stringify a Readable and notify a callback", callback => {
       const stream = streams.fromString("frog\ncat");
-      streams.stringify(stream, function(err, string) {
-        expect(err).to.be.null;
+      streams.stringify(stream, (error, string) => {
+        expect(error).to.be.null;
         expect(string).to.equal("frog\ncat");
-        done();
+        callback();
       });
     });
-    it("should throw an error if any argument is null", function() {
-      expect(function() {
-        streams.stringify(null, function() {});
+    it("should throw an error if any argument is null and notify a callback", () => {
+      expect(() => {
+        streams.stringify(null, () => {});
       }).to.throw(Error);
     });
   });
