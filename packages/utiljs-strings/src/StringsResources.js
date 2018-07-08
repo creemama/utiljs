@@ -1,6 +1,8 @@
 "use strict";
 
-module.exports = function StringsResources() {
+module.exports = StringsResources;
+
+function StringsResources() {
   const o = {};
 
   function get(resource) {
@@ -10,4 +12,4 @@ module.exports = function StringsResources() {
   this.base64url = function base64url() {
     return get("base64url");
   };
-};
+}
