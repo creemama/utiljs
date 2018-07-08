@@ -97,7 +97,7 @@ describe("Streams", function() {
     });
   });
 
-  describe("#fromString(string)", () => {
+  describe("#fromString(string[, encoding])", () => {
     it("should create a Readable from a string", () => {
       const readable = streams.fromString("foo bar");
       return streams
@@ -109,6 +109,14 @@ describe("Streams", function() {
       return streams
         .stringify(readable)
         .then(string => expect(string).to.eql(""));
+    });
+    it("should properly handle encoding", async function() {
+      let readable = streams.fromString("El Niño & La Niña", "ascii");
+      const ascii = await streams.stringify(readable);
+      expect(ascii).to.eql("El Ni�o & La Ni�a");
+      readable = streams.fromString("El Niño & La Niña", "utf8");
+      const utf8 = await streams.stringify(readable);
+      expect(utf8).to.eql("El Niño & La Niña");
     });
     it("should error on non-string input", () => {
       expect(() => streams.fromString()).to.throw(TypeError);

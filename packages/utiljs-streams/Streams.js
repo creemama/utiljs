@@ -42,11 +42,11 @@ module.exports = function Streams() {
   }
 
   // http://stackoverflow.com/a/22085851
-  function fromString(string) {
+  function fromString(string, encoding) {
     if (!strings().isString(string))
       throw new TypeError("Expected string to be a string but was " + string);
     const readable = newReadable();
-    readable.push(string);
+    readable.push(string, encoding);
     readable.push(null);
     readable.resume(); // Drain the stream.
     return readable;
