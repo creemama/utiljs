@@ -9,8 +9,13 @@ cd ..
 # Put eslint on the PATH.
 PATH=`pwd`/node_modules/.bin:$PATH
 
+prefix=""
+if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
+  prefix="\./packages/${1}/"
+fi
+
 find . -type f \
-| egrep "^.*\.js$" \
+| egrep "^${prefix}.*\.js$" \
 | egrep -v "^.*/(node_modules|target)/.*$" \
 > eslint.txt
 
