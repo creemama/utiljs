@@ -11,8 +11,6 @@ function Strings(options) {
   this.pad = pad;
   this.stripTags = stripTags;
 
-  const o = Object.assign({}, options);
-
   this.base64UrlEncode = base64url().encode;
   this.base64UrlDecode = base64url().decode;
   this.base64ToBase64Url = base64url().fromBase64;
@@ -20,7 +18,7 @@ function Strings(options) {
   this.base64UrlToBuffer = base64url().toBuffer;
 
   function base64url() {
-    return o.base64url;
+    return options.base64url();
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith

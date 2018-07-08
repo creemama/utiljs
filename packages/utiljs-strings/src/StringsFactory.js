@@ -9,10 +9,6 @@ function StringsFactory() {
   this.newStrings = newStrings;
 
   function newStrings() {
-    return new Strings({ base64url: newResources().base64url() });
-  }
-
-  function newResources() {
-    return new Resources();
+    return new Strings(new Resources());
   }
 }
