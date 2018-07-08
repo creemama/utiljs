@@ -4,14 +4,19 @@ module.exports = function Streams() {
   this.newReadable = newReadable;
   this.stringify = stringify;
 
-  const o = {};
+  const dependencies = {};
+
+  function get(dependency) {
+    return (
+      dependencies[dependency] ||
+      (dependencies[dependency] = require(dependency))
+    );
+  }
   function promises() {
-    if (!o.promises) o.promises = require("utiljs-promises");
-    return o.promises;
+    return get("utiljs-promises");
   }
   function stream() {
-    if (!o.stream) o.stream = require("stream");
-    return o.stream;
+    return get("stream");
   }
 
   function newReadable() {
