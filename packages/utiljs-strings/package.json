@@ -5,8 +5,13 @@
   },
   "description": "JavaScript utility methods for strings",
   "keywords": [
+    "base64url",
+    "endsWith",
+    "isString",
+    "pad",
     "string",
     "strings",
+    "stripTags",
     "utilities",
     "utility",
     "utiljs"

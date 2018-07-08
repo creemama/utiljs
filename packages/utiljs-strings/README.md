@@ -14,5 +14,6 @@ This class contains all the non-instance methods of [String](https://developer.m
 - base64UrlToBase64
 - base64UrlToBuffer
 - endsWith
+- isString
 - pad
 - stripTags
