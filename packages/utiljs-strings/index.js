@@ -1,4 +1,5 @@
 "use strict";
 
-module.exports = new (require(__dirname +
-  "/src/StringsFactory"))().newStrings();
+const StringsFactory = require(__dirname + "/src/StringsFactory");
+
+module.exports = new StringsFactory().newStrings();
