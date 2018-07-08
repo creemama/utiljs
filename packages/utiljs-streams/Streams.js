@@ -2,6 +2,7 @@
 
 module.exports = function Streams() {
   this.finished = finished;
+  this.fromString = fromString;
   this.newReadable = newReadable;
   this.newWritable = newWritable;
   this.pipeline = pipeline;
@@ -28,6 +29,9 @@ module.exports = function Streams() {
   function stream() {
     return get("stream");
   }
+  function strings() {
+    return get("utiljs-strings");
+  }
 
   function finished() {
     if (!stream().finished)
@@ -35,6 +39,17 @@ module.exports = function Streams() {
         "This version of Node.js does not support stream.finished."
       );
     return promises().call(stream(), stream().finished, arguments);
+  }
+
+  // http://stackoverflow.com/a/22085851
+  function fromString(string) {
+    if (!strings().isString(string))
+      throw new TypeError("Expected string to be a string but was " + string);
+    const readable = newReadable();
+    readable.push(string);
+    readable.push(null);
+    readable.resume(); // Drain the stream.
+    return readable;
   }
 
   function newReadable() {

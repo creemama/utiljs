@@ -8,4 +8,5 @@
 
 This class contains all the members of [Stream](https://nodejs.org/api/stream.html) in addition to:
 
+- fromString
 - stringify
