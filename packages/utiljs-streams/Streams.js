@@ -78,7 +78,7 @@ function Streams() {
     let string = "";
     readable
       .on("readable", () => {
-        var buffer = readable.read();
+        const buffer = readable.read();
         if (buffer !== null) string += buffer;
       })
       .on("end", () => callback(null, string))
