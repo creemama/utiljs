@@ -15,6 +15,19 @@ function Strings(options) {
   this.raw = String.raw;
 
   this.endsWith = endsWith;
+
+  /**
+   * Returns whether the specified object is an instance of string or not.
+   *
+   * This implementation comes from a [Stack Overflow answer]{@link https://stackoverflow.com/a/9436948}.
+   *
+   * @param {Object} object - the object to test
+   * @returns {boolean} true if the specified object is an instance of string and false otherwise
+   * @public
+   * @function
+   */
+  this.isString = isString;
+
   this.pad = pad;
   this.stripTags = stripTags;
 
@@ -36,6 +49,10 @@ function Strings(options) {
     position -= searchString.length;
     var lastIndex = subjectString.indexOf(searchString, position);
     return lastIndex !== -1 && lastIndex === position;
+  }
+
+  function isString(object) {
+    return typeof object === "string" || object instanceof String;
   }
 
   function pad(n, width, z) {

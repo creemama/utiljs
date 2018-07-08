@@ -66,6 +66,27 @@ describe("Strings", () => {
     });
   });
 
+  describe("#isString(object)", () => {
+    it("should operate normally", () => {
+      // To enumerate the possibilites here, I used the possible return values
+      // of typeof as inspiration:
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
+      expect(strings.isString("")).to.be.true;
+      expect(strings.isString("frog")).to.be.true;
+      expect(strings.isString(new String("cat"))).to.be.true;
+      expect(strings.isString()).to.be.false;
+      expect(strings.isString(null)).to.be.false;
+      expect(strings.isString(false)).to.be.false;
+      expect(strings.isString(0)).to.be.false;
+      expect(
+        strings.isString(() => {
+          return "";
+        })
+      ).to.be.false;
+      expect(strings.isString({})).to.be.false;
+    });
+  });
+
   describe("#pad(n, width, z)", () => {
     it("should operate normally", () => {
       expect(strings.pad("frog", 3)).to.equal("frog");
