@@ -7,7 +7,7 @@
   <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
 </p>
 
-```
+```js
 const streams = require("utiljs-streams");
 const readable = streams.fromString("The programmer learneth");
 streams.stringify(readable).then(console.log); // Outputs "The programmer learneth".
