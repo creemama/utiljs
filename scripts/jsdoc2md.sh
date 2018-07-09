@@ -9,8 +9,8 @@ cd ..
 # Put jsdoc on the PATH.
 PATH=`pwd`/node_modules/.bin:$PATH
 
-if [ -d "target/jsdoc" ]; then
-  rm -rf target/jsdoc
+if [ -f "target/jsdoc2md.md" ]; then
+  rm -rf target/jsdoc2md.md
 fi
 
 prefix=""
@@ -18,10 +18,10 @@ if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
   prefix="\./packages/${1}/"
 fi
 
-jsdoc \
---destination target/jsdoc \
+jsdoc2md \
 `find . -type f \
 | egrep "^${prefix}.*\.js$" \
-| egrep -v "^.*/(node_modules|target)/.*$"`
+| egrep -v "^.*/(node_modules|target)/.*$"` \
+> target/jsdoc2md.md
 
 cd "${curDir}"
