@@ -17,14 +17,12 @@ function get(dependency) {
   );
 }
 
-module.exports = Streams;
-
 /**
  * JavaScript utility methods for [Node.js streams]{@link https://nodejs.org/api/stream.html}
  * @public
  * @class
  */
-function Streams() {
+class Streams {
   /**
    * Sends a notification when a stream is no longer readable, writable, or has experienced an error or a premature close event.
    *
@@ -38,7 +36,13 @@ function Streams() {
    * @instance
    * @function
    */
-  this.finished = finished;
+  finished() {
+    if (!stream().finished)
+      throw new Error(
+        "This version of Node.js does not support stream.finished."
+      );
+    return promises().call(stream(), stream().finished, arguments);
+  }
 
   /**
    * Converts a string into a stream.
@@ -53,7 +57,15 @@ function Streams() {
    * @instance
    * @function
    */
-  this.fromString = fromString;
+  fromString(string, encoding) {
+    if (!strings().isString(string))
+      throw new TypeError("Expected string to be a string but was " + string);
+    const readable = this.newReadable();
+    readable.push(string, encoding);
+    readable.push(null);
+    readable.resume(); // Drain the stream.
+    return readable;
+  }
 
   /**
    * Creates a new Readable stream.
@@ -71,7 +83,9 @@ function Streams() {
    * @instance
    * @function
    */
-  this.newReadable = newReadable;
+  newReadable() {
+    return new stream().Readable(...arguments);
+  }
 
   /**
    * Creates a new Writable stream.
@@ -92,7 +106,9 @@ function Streams() {
    * @instance
    * @function
    */
-  this.newWritable = newWritable;
+  newWritable() {
+    return new stream().Writable(...arguments);
+  }
 
   /**
    * Pipes between streams forwarding errors and properly cleaning up and notifies when the pipeline is complete via a callback or a Promise.
@@ -107,7 +123,13 @@ function Streams() {
    * @instance
    * @function
    */
-  this.pipeline = pipeline;
+  pipeline() {
+    if (!stream().pipeline)
+      throw new Error(
+        "This version of Node.js does not support stream.pipeline."
+      );
+    return promises().call(stream(), stream().pipeline, arguments);
+  }
 
   /**
    * Converts a stream into a string.
@@ -121,105 +143,9 @@ function Streams() {
    * @instance
    * @function
    */
-  this.stringify = stringify;
-
-  /**
-   * A stream that is both Readable and Writable (for example, a TCP socket connection or net.Socket).
-   *
-   * See Node.js's documentation about [Duplex]{@link https://nodejs.org/api/stream.html#stream_implementing_a_duplex_stream}.
-   *
-   * @public
-   * @class
-   */
-  this.Duplex = stream().Duplex;
-
-  /**
-   * A trivial implementation of a Transform stream that simply passes the input bytes across to the output.
-   *
-   * See Node.js's documentation about [PassThrough]{@link https://nodejs.org/api/stream.html#stream_class_stream_passthrough}.
-   *
-   * @public
-   * @class
-   */
-  this.PassThrough = stream().PassThrough;
-
-  /**
-   * A stream from which data can be read, an abstraction of a source (for example, [fs.createReadStream()]{@link https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options}).
-   *
-   * See Node.js's documentation about [Readable]{@link https://nodejs.org/api/stream.html#stream_readable_streams}.
-   *
-   * @public
-   * @class
-   */
-  this.Readable = stream().Readable;
-
-  /**
-   * An abstraction of sources (a place where data can be read from) and destinations (a place where data can be written to).
-   *
-   * See Node.js's documentation about [Stream]{@link https://nodejs.org/api/stream.html}.
-   *
-   * @public
-   * @class
-   */
-  this.Stream = stream().Stream;
-
-  /**
-   * {@link Duplex} streams where the output is in some way related to the input (for example, [zlib.createDeflate()]{@link https://nodejs.org/api/zlib.html#zlib_zlib_createdeflate_options}).
-   *
-   * See Node.js's documentation about [Transform]{@link https://nodejs.org/api/stream.html#stream_class_stream_transform}.
-   *
-   * @public
-   * @class
-   */
-  this.Transform = stream().Transform;
-
-  /**
-   * A stream to which data can be written, an abstraction of a destination (for example, [fs.createWriteStream()]{@link https://nodejs.org/api/fs.html#fs_fs_createwritestream_path_options}).
-   *
-   * See Node.js's documentation about [Writable]{@link https://nodejs.org/api/stream.html#stream_writable_streams}.
-   *
-   * @public
-   * @class
-   */
-  this.Writable = stream().Writable;
-
-  function finished() {
-    if (!stream().finished)
-      throw new Error(
-        "This version of Node.js does not support stream.finished."
-      );
-    return promises().call(stream(), stream().finished, arguments);
-  }
-
-  function fromString(string, encoding) {
-    if (!strings().isString(string))
-      throw new TypeError("Expected string to be a string but was " + string);
-    const readable = newReadable();
-    readable.push(string, encoding);
-    readable.push(null);
-    readable.resume(); // Drain the stream.
-    return readable;
-  }
-
-  function newReadable() {
-    return new stream().Readable(...arguments);
-  }
-
-  function newWritable() {
-    return new stream().Writable(...arguments);
-  }
-
-  function pipeline() {
-    if (!stream().pipeline)
-      throw new Error(
-        "This version of Node.js does not support stream.pipeline."
-      );
-    return promises().call(stream(), stream().pipeline, arguments);
-  }
-
-  function stringify(readable, callback) {
+  stringify(readable, callback) {
     if (!callback)
-      return promises().promisifyAndCall(this, stringify, readable);
+      return promises().promisifyAndCall(this, this.stringify, readable);
 
     let string = "";
     readable
@@ -230,4 +156,78 @@ function Streams() {
       .on("end", () => callback(null, string))
       .on("error", error => callback(error));
   }
+
+  /**
+   * A stream that is both Readable and Writable (for example, a TCP socket connection or net.Socket).
+   *
+   * See Node.js's documentation about [Duplex]{@link https://nodejs.org/api/stream.html#stream_implementing_a_duplex_stream}.
+   *
+   * @public
+   * @class
+   */
+  get Duplex() {
+    return stream().Duplex;
+  }
+
+  /**
+   * A trivial implementation of a Transform stream that simply passes the input bytes across to the output.
+   *
+   * See Node.js's documentation about [PassThrough]{@link https://nodejs.org/api/stream.html#stream_class_stream_passthrough}.
+   *
+   * @public
+   * @class
+   */
+  get PassThrough() {
+    return stream().PassThrough;
+  }
+
+  /**
+   * A stream from which data can be read, an abstraction of a source (for example, [fs.createReadStream()]{@link https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options}).
+   *
+   * See Node.js's documentation about [Readable]{@link https://nodejs.org/api/stream.html#stream_readable_streams}.
+   *
+   * @public
+   * @class
+   */
+  get Readable() {
+    return stream().Readable;
+  }
+
+  /**
+   * An abstraction of sources (a place where data can be read from) and destinations (a place where data can be written to).
+   *
+   * See Node.js's documentation about [Stream]{@link https://nodejs.org/api/stream.html}.
+   *
+   * @public
+   * @class
+   */
+  get Stream() {
+    return stream().Stream;
+  }
+
+  /**
+   * {@link Duplex} streams where the output is in some way related to the input (for example, [zlib.createDeflate()]{@link https://nodejs.org/api/zlib.html#zlib_zlib_createdeflate_options}).
+   *
+   * See Node.js's documentation about [Transform]{@link https://nodejs.org/api/stream.html#stream_class_stream_transform}.
+   *
+   * @public
+   * @class
+   */
+  get Transform() {
+    return stream().Transform;
+  }
+
+  /**
+   * A stream to which data can be written, an abstraction of a destination (for example, [fs.createWriteStream()]{@link https://nodejs.org/api/fs.html#fs_fs_createwritestream_path_options}).
+   *
+   * See Node.js's documentation about [Writable]{@link https://nodejs.org/api/stream.html#stream_writable_streams}.
+   *
+   * @public
+   * @class
+   */
+  get Writable() {
+    return stream().Writable;
+  }
 }
+
+module.exports = Streams;
