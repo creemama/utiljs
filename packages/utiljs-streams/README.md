@@ -1,6 +1,6 @@
 # utiljs-streams
 
-> JavaScript utility methods for Node.js streams
+> JavaScript utility methods for [Node.js streams](https://nodejs.org/api/stream.html)
 
 <p>
   <a href="https://www.npmjs.com/package/utiljs-streams"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-streams.svg?style=flat"></a>
@@ -26,31 +26,24 @@ This class contains all the members of [Stream](https://nodejs.org/api/stream.ht
 **Access**: public
 
 - [Streams](#Streams)
-  - [new Streams()](#new_Streams_new)
   - [.Duplex](#Streams+Duplex)
-    - [new this.Duplex()](#new_Streams+Duplex_new)
+    - [new Streams#Duplex()](#new_Streams+Duplex_new)
   - [.PassThrough](#Streams+PassThrough)
-    - [new this.PassThrough()](#new_Streams+PassThrough_new)
+    - [new Streams#PassThrough()](#new_Streams+PassThrough_new)
   - [.Readable](#Streams+Readable)
-    - [new this.Readable()](#new_Streams+Readable_new)
+    - [new Streams#Readable()](#new_Streams+Readable_new)
   - [.Stream](#Streams+Stream)
-    - [new this.Stream()](#new_Streams+Stream_new)
+    - [new Streams#Stream()](#new_Streams+Stream_new)
   - [.Transform](#Streams+Transform)
-    - [new this.Transform()](#new_Streams+Transform_new)
+    - [new Streams#Transform()](#new_Streams+Transform_new)
   - [.Writable](#Streams+Writable)
-    - [new this.Writable()](#new_Streams+Writable_new)
+    - [new Streams#Writable()](#new_Streams+Writable_new)
   - [.finished(stream, [callback])](#Streams+finished) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.fromString(string, [encoding])](#Streams+fromString) ⇒ <code>Readable</code>
   - [.newReadable([params])](#Streams+newReadable) ⇒ <code>Readable</code>
   - [.newWritable([params])](#Streams+newWritable) ⇒ <code>Writable</code>
   - [.pipeline([callback])](#Streams+pipeline) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.stringify(readable, [callback])](#Streams+stringify) ⇒ <code>undefined</code> \| <code>Promise</code>
-
-<a name="new_Streams_new"></a>
-
-### new Streams()
-
-JavaScript utility methods for [Node.js streams](https://nodejs.org/api/stream.html)
 
 <a name="Streams+Duplex"></a>
 
@@ -60,7 +53,7 @@ JavaScript utility methods for [Node.js streams](https://nodejs.org/api/stream.h
 **Access**: public  
 <a name="new_Streams+Duplex_new"></a>
 
-#### new this.Duplex()
+#### new Streams#Duplex()
 
 A stream that is both Readable and Writable (for example, a TCP socket connection or net.Socket).
 
@@ -74,7 +67,7 @@ See Node.js's documentation about [Duplex](https://nodejs.org/api/stream.html#st
 **Access**: public  
 <a name="new_Streams+PassThrough_new"></a>
 
-#### new this.PassThrough()
+#### new Streams#PassThrough()
 
 A trivial implementation of a Transform stream that simply passes the input bytes across to the output.
 
@@ -88,7 +81,7 @@ See Node.js's documentation about [PassThrough](https://nodejs.org/api/stream.ht
 **Access**: public  
 <a name="new_Streams+Readable_new"></a>
 
-#### new this.Readable()
+#### new Streams#Readable()
 
 A stream from which data can be read, an abstraction of a source (for example, [fs.createReadStream()](https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options)).
 
@@ -102,7 +95,7 @@ See Node.js's documentation about [Readable](https://nodejs.org/api/stream.html#
 **Access**: public  
 <a name="new_Streams+Stream_new"></a>
 
-#### new this.Stream()
+#### new Streams#Stream()
 
 An abstraction of sources (a place where data can be read from) and destinations (a place where data can be written to).
 
@@ -116,7 +109,7 @@ See Node.js's documentation about [Stream](https://nodejs.org/api/stream.html).
 **Access**: public  
 <a name="new_Streams+Transform_new"></a>
 
-#### new this.Transform()
+#### new Streams#Transform()
 
 [Duplex](Duplex) streams where the output is in some way related to the input (for example, [zlib.createDeflate()](https://nodejs.org/api/zlib.html#zlib_zlib_createdeflate_options)).
 
@@ -130,7 +123,7 @@ See Node.js's documentation about [Transform](https://nodejs.org/api/stream.html
 **Access**: public  
 <a name="new_Streams+Writable_new"></a>
 
-#### new this.Writable()
+#### new Streams#Writable()
 
 A stream to which data can be written, an abstraction of a destination (for example, [fs.createWriteStream()](https://nodejs.org/api/fs.html#fs_fs_createwritestream_path_options)).
 
