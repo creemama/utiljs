@@ -1,5 +1,22 @@
 "use strict";
 
+const dependencies = {};
+
+function promises() {
+  return get("utiljs-promises");
+}
+function stream() {
+  return get("stream");
+}
+function strings() {
+  return get("utiljs-strings");
+}
+function get(dependency) {
+  return (
+    dependencies[dependency] || (dependencies[dependency] = require(dependency))
+  );
+}
+
 module.exports = Streams;
 
 /**
@@ -106,8 +123,6 @@ function Streams() {
    */
   this.stringify = stringify;
 
-  const dependencies = {};
-
   /**
    * A stream that is both Readable and Writable (for example, a TCP socket connection or net.Socket).
    *
@@ -167,22 +182,6 @@ function Streams() {
    * @class
    */
   this.Writable = stream().Writable;
-
-  function promises() {
-    return get("utiljs-promises");
-  }
-  function stream() {
-    return get("stream");
-  }
-  function strings() {
-    return get("utiljs-strings");
-  }
-  function get(dependency) {
-    return (
-      dependencies[dependency] ||
-      (dependencies[dependency] = require(dependency))
-    );
-  }
 
   function finished() {
     if (!stream().finished)
