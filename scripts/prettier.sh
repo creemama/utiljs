@@ -12,11 +12,13 @@ if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
 fi
 
 find . -type f \
-| egrep "^${prefix}.*\.(css|js|json|md|scss)$" \
+| egrep "^${prefix}.*\.(css|js|json|jsx|md|scss)$" \
 | egrep -v "^.*/(node_modules|target)/.*$" \
 | egrep -v "^.*/package-lock\.json$" \
 | egrep -v "^\./lerna\.json$" \
 > prettier.txt
+
+sort prettier.txt -o prettier.txt
 
 while read in; do npx prettier --write "$in"; done < prettier.txt
 
