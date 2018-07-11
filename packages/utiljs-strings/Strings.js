@@ -1,28 +1,33 @@
 "use strict";
 
-module.exports = Strings;
-
 /**
  * JavaScript utility methods for strings
- *
- * @param {Object} options - object containing the dependencies of this class
  * @public
  * @class
  */
-function Strings(options) {
-  this.base64ToBase64Url = base64url().fromBase64;
+class Strings {
+  base64ToBase64Url() {
+    return base64url().fromBase64(...arguments);
+  }
 
-  this.base64UrlDecode = base64url().decode;
+  base64UrlDecode() {
+    return base64url().decode(...arguments);
+  }
 
-  this.base64UrlEncode = base64url().encode;
+  base64UrlEncode() {
+    return base64url().encode(...arguments);
+  }
 
-  this.base64UrlToBase64 = base64url().toBase64;
+  base64UrlToBase64() {
+    return base64url().toBase64(...arguments);
+  }
 
-  this.base64UrlToBuffer = base64url().toBuffer;
+  base64UrlToBuffer() {
+    return base64url().toBuffer(...arguments);
+  }
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
-  this.endsWith = endsWith;
-  function endsWith(str, searchString, position) {
+  endsWith(str, searchString, position) {
     var subjectString = str.toString();
     if (position === undefined || position > subjectString.length)
       position = subjectString.length;
@@ -31,9 +36,13 @@ function Strings(options) {
     return lastIndex !== -1 && lastIndex === position;
   }
 
-  this.fromCharCode = String.fromCharCode;
+  fromCharCode() {
+    return String.fromCharCode(...arguments);
+  }
 
-  this.fromCodePoint = String.fromCodePoint;
+  fromCodePoint() {
+    return String.fromCodePoint(...arguments);
+  }
 
   /**
    * Returns whether the specified object is an instance of string or not.
@@ -45,13 +54,11 @@ function Strings(options) {
    * @public
    * @function
    */
-  this.isString = isString;
-  function isString(object) {
+  isString(object) {
     return typeof object === "string" || object instanceof String;
   }
 
-  this.pad = pad;
-  function pad(n, width, z) {
+  pad(n, width, z) {
     z = z || "0";
     z = z + "";
     if (z.length > 1)
@@ -62,15 +69,23 @@ function Strings(options) {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 
-  this.raw = String.raw;
+  raw() {
+    return String.raw(...arguments);
+  }
 
   // https://css-tricks.com/snippets/javascript/strip-html-tags-in-javascript/
-  this.stripTags = stripTags;
-  function stripTags(str) {
+  stripTags(str) {
     return str.replace(/(<([^>]+)>)/gi, "");
   }
+}
 
-  function base64url() {
-    return options.base64url();
-  }
+module.exports = Strings;
+
+const dependencies = {};
+
+function base64url() {
+  return (
+    dependencies["base64url"] ||
+    (dependencies["base64url"] = require("base64url"))
+  );
 }
