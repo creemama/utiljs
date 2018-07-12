@@ -1,34 +1,57 @@
 "use strict";
 
-module.exports = function Objects() {
-  this.assign = Object.assign;
-
-  this.create = Object.create;
-
-  this.defineProperties = Object.defineProperties;
-
-  this.defineProperty = Object.defineProperty;
-
-  this.entries = Object.entries;
-
-  this.freeze = Object.freeze;
-
-  this.guarantee = guarantee;
-  function guarantee(obj) {
-    return isDefined(obj) ? obj : {};
+class Objects {
+  assign() {
+    return Object.assign(...arguments);
   }
 
-  this.getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+  create() {
+    return Object.create(...arguments);
+  }
 
-  this.getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors;
+  defineProperties() {
+    return Object.defineProperties(...arguments);
+  }
 
-  this.getOwnPropertyNames = Object.getOwnPropertyNames;
+  defineProperty() {
+    return Object.defineProperty(...arguments);
+  }
 
-  this.getOwnPropertySymbols = Object.getOwnPropertySymbols;
+  entries() {
+    return Object.entries(...arguments);
+  }
 
-  this.getPrototypeOf = Object.getPrototypeOf;
+  freeze() {
+    return Object.freeze(...arguments);
+  }
 
-  this.is = Object.is;
+  getOwnPropertyDescriptor() {
+    return Object.getOwnPropertyDescriptor(...arguments);
+  }
+
+  getOwnPropertyDescriptors() {
+    return Object.getOwnPropertyDescriptors(...arguments);
+  }
+
+  getOwnPropertyNames() {
+    return Object.getOwnPropertyNames(...arguments);
+  }
+
+  getOwnPropertySymbols() {
+    return Object.getOwnPropertySymbols(...arguments);
+  }
+
+  getPrototypeOf() {
+    return Object.getPrototypeOf(...arguments);
+  }
+
+  guarantee(obj) {
+    return this.isDefined(obj) ? obj : {};
+  }
+
+  is() {
+    return Object.is(...arguments);
+  }
 
   /**
    * Returns whether the specified obj is defined.
@@ -42,32 +65,46 @@ module.exports = function Objects() {
    * </code></pre>
    * This happens for [0, -0, NaN, false, and the empty string ("")]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean}.
    */
-  this.isDefined = isDefined;
-  function isDefined(obj) {
+  isDefined(obj) {
     return obj !== null && typeof obj !== "undefined";
   }
 
-  this.isExtensible = Object.isExtensible;
+  isExtensible() {
+    return Object.isExtensible(...arguments);
+  }
 
-  this.isFrozen = Object.isFrozen;
+  isFrozen() {
+    return Object.isFrozen(...arguments);
+  }
 
-  this.isSealed = Object.isSealed;
+  isSealed() {
+    return Object.isSealed(...arguments);
+  }
 
-  this.keys = Object.keys;
+  keys() {
+    return Object.keys(...arguments);
+  }
 
-  this.merge = merge;
-  function merge(a, b) {
-    let c = guarantee(a);
-    let d = guarantee(b);
+  merge(a, b) {
+    let c = this.guarantee(a);
+    let d = this.guarantee(b);
     let merged = {};
     for (let p in c) if (c.hasOwnProperty(p)) merged[p] = c[p];
     for (let p in d) if (d.hasOwnProperty(p)) merged[p] = d[p];
     return merged;
   }
 
-  this.seal = Object.seal;
+  seal() {
+    return Object.seal(...arguments);
+  }
 
-  this.setPrototypeOf = Object.setPrototypeOf;
+  setPrototypeOf() {
+    return Object.setPrototypeOf(...arguments);
+  }
 
-  this.values = Object.values;
-};
+  values() {
+    return Object.values(...arguments);
+  }
+}
+
+module.exports = Objects;
