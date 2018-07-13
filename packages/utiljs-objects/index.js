@@ -1,4 +1,4 @@
 "use strict";
 
-const Objects = require("./lib/Objects");
+const Objects = require("./dist/Objects");
 module.exports = new Objects();

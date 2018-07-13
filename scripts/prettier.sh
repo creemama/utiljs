@@ -12,8 +12,8 @@ if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
 fi
 
 find . -type f \
-| egrep "^${prefix}.*\.(css|js|json|jsx|md|scss)$" \
-| egrep -v "^.*/(node_modules|target)/.*$" \
+| egrep "^(\./\.babelrc|${prefix}.*\.(css|js|json|jsx|md|scss))$" \
+| egrep -v "^.*/(dist|node_modules|target)/.*$" \
 | egrep -v "^.*/package-lock\.json$" \
 | egrep -v "^\./lerna\.json$" \
 > prettier.txt

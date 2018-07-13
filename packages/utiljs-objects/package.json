@@ -1,5 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
+  "dependencies": {
+    "babel-runtime": "6.26.0"
+  },
   "description": "JavaScript utility methods for objects",
   "keywords": [
     "object",
@@ -13,6 +16,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-objects"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/babel lib --out-dir dist",
+    "prepublishOnly": "npm run build"
   },
   "version": "0.12.0"
 }

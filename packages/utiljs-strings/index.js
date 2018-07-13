@@ -1,4 +1,4 @@
 "use strict";
 
-const Strings = require("./lib/Strings");
+const Strings = require("./dist/Strings");
 module.exports = new Strings();
