@@ -2,32 +2,33 @@
 
 module.exports = function Objects() {
   this.assign = Object.assign;
+
   this.create = Object.create;
+
   this.defineProperties = Object.defineProperties;
+
   this.defineProperty = Object.defineProperty;
+
   this.entries = Object.entries;
+
   this.freeze = Object.freeze;
-  this.getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-  this.getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors;
-  this.getOwnPropertyNames = Object.getOwnPropertyNames;
-  this.getOwnPropertySymbols = Object.getOwnPropertySymbols;
-  this.getPrototypeOf = Object.getPrototypeOf;
-  this.is = Object.is;
-  this.isExtensible = Object.isExtensible;
-  this.isFrozen = Object.isFrozen;
-  this.isSealed = Object.isSealed;
-  this.keys = Object.keys;
-  this.seal = Object.seal;
-  this.setPrototypeOf = Object.setPrototypeOf;
-  this.values = Object.values;
 
   this.guarantee = guarantee;
-  this.isDefined = isDefined;
-  this.merge = merge;
-
   function guarantee(obj) {
     return isDefined(obj) ? obj : {};
   }
+
+  this.getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+  this.getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors;
+
+  this.getOwnPropertyNames = Object.getOwnPropertyNames;
+
+  this.getOwnPropertySymbols = Object.getOwnPropertySymbols;
+
+  this.getPrototypeOf = Object.getPrototypeOf;
+
+  this.is = Object.is;
 
   /**
    * Returns whether the specified obj is defined.
@@ -41,10 +42,20 @@ module.exports = function Objects() {
    * </code></pre>
    * This happens for [0, -0, NaN, false, and the empty string ("")]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean}.
    */
+  this.isDefined = isDefined;
   function isDefined(obj) {
     return obj !== null && typeof obj !== "undefined";
   }
 
+  this.isExtensible = Object.isExtensible;
+
+  this.isFrozen = Object.isFrozen;
+
+  this.isSealed = Object.isSealed;
+
+  this.keys = Object.keys;
+
+  this.merge = merge;
   function merge(a, b) {
     let c = guarantee(a);
     let d = guarantee(b);
@@ -53,4 +64,10 @@ module.exports = function Objects() {
     for (let p in d) if (d.hasOwnProperty(p)) merged[p] = d[p];
     return merged;
   }
+
+  this.seal = Object.seal;
+
+  this.setPrototypeOf = Object.setPrototypeOf;
+
+  this.values = Object.values;
 };
