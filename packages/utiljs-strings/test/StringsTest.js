@@ -63,6 +63,15 @@ describe("Strings", () => {
     });
   });
 
+  describe("#fromCharCode(num1[, ...[, numN]])", () => {
+    it("should return a string created from a sequence of UTF-16 code units", () => {
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode
+      expect(strings.fromCharCode(65, 66, 67)).to.eql("ABC");
+      expect(strings.fromCharCode(0x2014)).to.eql("—");
+      expect(strings.fromCharCode(0x12014)).to.eql("—"); // The digit 1 is truncated and ignored.
+    });
+  });
+
   describe("#isString(object)", () => {
     it("should operate normally", () => {
       // To enumerate the possibilites here, I used the possible return values

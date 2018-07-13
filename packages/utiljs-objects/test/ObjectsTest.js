@@ -4,6 +4,14 @@ const { expect } = require("chai"),
   objects = require("..");
 
 describe("Objects", () => {
+  describe("#assign(target, ...sources)", () => {
+    it("should copy values from a source to a target", () => {
+      const source = { a: "foo", b: "bar" };
+      const target = objects.assign({}, source);
+      expect(target).to.eql({ a: "foo", b: "bar" });
+    });
+  });
+
   describe("#isDefined(obj)", () => {
     it("should return true for truthy statements", () => {
       expect(objects.isDefined("truthy")).to.be.true;
