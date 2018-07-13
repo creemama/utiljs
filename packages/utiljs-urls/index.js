@@ -1,3 +1,4 @@
 "use strict";
 
-module.exports = new (require(__dirname + "/src/UrlsFactory"))().newUrls();
+const UrlsFactory = require("./src/UrlsFactory");
+module.exports = new UrlsFactory().newUrls();

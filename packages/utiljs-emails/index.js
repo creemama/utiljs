@@ -1,3 +1,4 @@
 "use strict";
 
-module.exports = new (require(__dirname + "/Emails"))();
+const Emails = require("./Emails");
+module.exports = new Emails();

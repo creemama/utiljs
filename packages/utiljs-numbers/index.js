@@ -1,3 +1,4 @@
 "use strict";
 
-module.exports = new (require(__dirname + "/Numbers"))();
+const Numbers = require("./Numbers");
+module.exports = new Numbers();

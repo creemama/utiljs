@@ -1,3 +1,4 @@
 "use strict";
 
-module.exports = new (require(__dirname + "/Objects"))();
+const Objects = require("./Objects");
+module.exports = new Objects();

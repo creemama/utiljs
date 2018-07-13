@@ -1,3 +1,4 @@
 "use strict";
 
-module.exports = new (require(__dirname + "/Arrays"))();
+const Arrays = require("./Arrays");
+module.exports = new Arrays();

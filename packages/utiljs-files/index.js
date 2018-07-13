@@ -1,3 +1,4 @@
 "use strict";
 
-module.exports = new (require(__dirname + "/src/FilesFactory"))().newFiles();
+const FilesFactory = require("./src/FilesFactory");
+module.exports = new FilesFactory().newFiles();

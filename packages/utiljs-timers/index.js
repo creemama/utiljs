@@ -1,3 +1,4 @@
 "use strict";
 
-module.exports = new (require(__dirname + "/Timers"))();
+const Timers = require("./Timers");
+module.exports = new Timers();
