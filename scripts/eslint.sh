@@ -19,6 +19,8 @@ find . -type f \
 | egrep -v "^.*/(node_modules|target)/.*$" \
 > eslint.txt
 
+sort eslint.txt -o eslint.txt
+
 while read in; do
   echo $in
   npx eslint "$in"
