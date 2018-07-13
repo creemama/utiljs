@@ -1,7 +1,7 @@
 "use strict";
 
-const Resources = require(__dirname + "/StringsResources");
-const Strings = require(__dirname + "/Strings");
+const Resources = require("./StringsResources");
+const Strings = require("./Strings");
 
 module.exports = StringsFactory;
 

@@ -1,12 +1,9 @@
 "use strict";
 
-var expect = require("chai").expect;
-
-var Factory = require(__dirname + "/../src/StringsFactory");
+const { expect } = require("chai"),
+  strings = require("..");
 
 describe("Strings", () => {
-  var strings = new Factory().newStrings();
-
   describe("#base64Url...", () => {
     it("should operate normally", () => {
       // From https://www.npmjs.com/package/base64url

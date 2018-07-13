@@ -1,7 +1,7 @@
 "use strict";
 
-const Files = require(__dirname + "/Files");
-const Resources = require(__dirname + "/FilesResources");
+const Files = require("./Files");
+const Resources = require("./FilesResources");
 
 module.exports = function FilesFactory(options) {
   this.newFiles = function newFiles() {

@@ -1,12 +1,10 @@
 "use strict";
 
-var expect = require("chai").expect;
-
-var Objects = require(__dirname + "/../Objects");
+const { expect } = require("chai"),
+  objects = require("..");
 
 describe("Objects", () => {
   describe("#isDefined(obj)", () => {
-    const objects = new Objects();
     it("should return true for truthy statements", () => {
       expect(objects.isDefined("truthy")).to.be.true;
       expect(objects.isDefined(Object)).to.be.true;
@@ -29,8 +27,6 @@ describe("Objects", () => {
   });
 
   describe("#merge(a, b)", () => {
-    var objects = new Objects();
-
     it("should handle nulls and undefined inputs", () => {
       // If u = undefined, n = null, and o = object,
       // we're going to test:

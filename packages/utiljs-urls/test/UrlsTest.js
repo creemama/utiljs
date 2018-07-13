@@ -3,7 +3,7 @@
 const expect = require("chai").expect,
   files = require("utiljs-files"),
   targetDir = __dirname + "/../target",
-  urls = require(__dirname + "/..");
+  urls = require("..");
 
 describe("Urls", () => {
   describe("#(de|en)codeURI", () => {

@@ -1,8 +1,7 @@
 "use strict";
 
-var expect = require("chai").expect;
-
-var emails = require(__dirname + "/..");
+const emails = require(".."),
+  { expect } = require("chai");
 
 describe("Emails", () => {
   describe("#isValidEmail(str)", () => {

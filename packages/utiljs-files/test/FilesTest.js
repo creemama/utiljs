@@ -1,10 +1,9 @@
 "use strict";
 
-var expect = require("chai").expect;
-
-const Factory = require(__dirname + "/../src/FilesFactory");
-const Files = require(__dirname + "/../src/Files");
-const Resources = require(__dirname + "/../src/FilesResources");
+const { expect } = require("chai"),
+  Factory = require("../src/FilesFactory"),
+  Files = require("../src/Files"),
+  Resources = require("../src/FilesResources");
 
 describe("Files", function() {
   const resources = new Resources();

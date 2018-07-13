@@ -1,8 +1,7 @@
 "use strict";
 
-var expect = require("chai").expect;
-
-const numbers = require(__dirname + "/..");
+const { expect } = require("chai"),
+  numbers = require("..");
 
 describe("Numbers", () => {
   describe("#isInt(value)", () => {

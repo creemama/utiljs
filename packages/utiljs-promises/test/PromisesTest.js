@@ -1,7 +1,7 @@
 "use strict";
 
-const expect = require("chai").expect,
-  promises = require(__dirname + "/..");
+const { expect } = require("chai"),
+  promises = require("..");
 
 describe("Promises", function() {
   describe("#call(object, functionOnObjectWithCallback, args)", () => {

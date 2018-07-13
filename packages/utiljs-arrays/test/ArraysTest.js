@@ -1,8 +1,7 @@
 "use strict";
 
-var expect = require("chai").expect;
-
-var arrays = require(__dirname + "/..");
+const arrays = require(".."),
+  { expect } = require("chai");
 
 describe("Arrays", () => {
   describe("#contains(a, obj)", () => {

@@ -2,7 +2,7 @@
 
 const { expect } = require("chai"),
   stream = require("stream"),
-  streams = require(__dirname + "/..");
+  streams = require("..");
 
 describe("Streams", () => {
   describe("#finished(stream[, callback])", () => {
