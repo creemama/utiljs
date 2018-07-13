@@ -6,9 +6,9 @@
     "ncp": "2.0.0",
     "rimraf": "2.6.2",
     "touch": "3.1.0",
-    "utiljs-objects": "0.18.0",
+    "utiljs-objects": "0.18.1",
     "utiljs-promises": "0.18.0",
-    "utiljs-strings": "0.18.0"
+    "utiljs-strings": "0.18.1"
   },
   "description": "JavaScript Node.js utility methods for files",
   "keywords": [
@@ -26,5 +26,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-files"
   },
-  "version": "0.18.0"
+  "version": "0.18.1"
 }
