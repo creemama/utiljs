@@ -1,4 +1,4 @@
 "use strict";
 
-const FilesFactory = require("./src/FilesFactory");
+const FilesFactory = require("./lib/FilesFactory");
 module.exports = new FilesFactory().newFiles();

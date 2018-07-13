@@ -1,4 +1,4 @@
 "use strict";
 
-const Streams = require("./Streams");
+const Streams = require("./lib/Streams");
 module.exports = new Streams();

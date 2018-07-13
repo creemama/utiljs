@@ -1,4 +1,4 @@
 "use strict";
 
-const UrlsFactory = require("./src/UrlsFactory");
+const UrlsFactory = require("./lib/UrlsFactory");
 module.exports = new UrlsFactory().newUrls();

@@ -1,9 +1,9 @@
 "use strict";
 
 const { expect } = require("chai"),
-  Factory = require("../src/FilesFactory"),
-  Files = require("../src/Files"),
-  Resources = require("../src/FilesResources");
+  Factory = require("../lib/FilesFactory"),
+  Files = require("../lib/Files"),
+  Resources = require("../lib/FilesResources");
 
 describe("Files", function() {
   const resources = new Resources();
