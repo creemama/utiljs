@@ -21,7 +21,7 @@ class Promises {
             if (error) return reject(error);
             if (arguments.length == 1) return resolve.call(null);
             if (arguments.length == 2) return resolve.call(null, arguments[1]);
-            const callbackArguments = Array.from(arguments);
+            const callbackArguments = arrays().from(arguments);
             callbackArguments.shift(); // Remove the first element.
             resolve.call(null, callbackArguments);
           });
@@ -50,6 +50,15 @@ class Promises {
 }
 
 module.exports = Promises;
+
+const dependencies = {};
+
+function arrays() {
+  return (
+    dependencies["utiljs-arrays"] ||
+    (dependencies["utiljs-arrays"] = require("utiljs-arrays"))
+  );
+}
 
 function hasCallback(args) {
   return args.length > 0 && typeof args[args.length - 1] === "function";
