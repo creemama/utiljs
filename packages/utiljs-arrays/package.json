@@ -17,5 +17,9 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-arrays"
   },
+  "scripts": {
+    "build": "../../node_modules/.bin/babel lib --out-dir dist",
+    "prepublishOnly": "npm run build"
+  },
   "version": "0.19.0"
 }

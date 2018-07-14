@@ -1,4 +1,4 @@
 "use strict";
 
-var Arrays = require("./lib/Arrays");
+var Arrays = require("./dist/Arrays");
 module.exports = new Arrays();
