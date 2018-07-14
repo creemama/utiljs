@@ -1,22 +1,5 @@
 "use strict";
 
-const dependencies = {};
-
-function promises() {
-  return get("utiljs-promises");
-}
-function stream() {
-  return get("stream");
-}
-function strings() {
-  return get("utiljs-strings");
-}
-function get(dependency) {
-  return (
-    dependencies[dependency] || (dependencies[dependency] = require(dependency))
-  );
-}
-
 /**
  * JavaScript utility methods for [Node.js streams]{@link https://nodejs.org/api/stream.html}
  * @public
@@ -231,3 +214,20 @@ class Streams {
 }
 
 module.exports = Streams;
+
+const dependencies = {};
+function get(dependency) {
+  return (
+    dependencies[dependency] || (dependencies[dependency] = require(dependency))
+  );
+}
+
+function promises() {
+  return get("utiljs-promises");
+}
+function stream() {
+  return get("stream");
+}
+function strings() {
+  return get("utiljs-strings");
+}
