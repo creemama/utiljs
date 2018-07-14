@@ -82,10 +82,12 @@ class Strings {
 module.exports = Strings;
 
 const dependencies = {};
+function get(dependency) {
+  return (
+    dependencies[dependency] || (dependencies[dependency] = require(dependency))
+  );
+}
 
 function base64url() {
-  return (
-    dependencies["base64url"] ||
-    (dependencies["base64url"] = require("base64url"))
-  );
+  return get("base64url");
 }
