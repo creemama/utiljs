@@ -17,16 +17,16 @@ class Promises {
       const thiz = this;
       return new Promise((resolve, reject) => {
         try {
-          functionWithCallback.call(thiz, ...args, function(err) {
-            if (err) return reject(err);
+          functionWithCallback.call(thiz, ...args, function(error) {
+            if (error) return reject(error);
             if (arguments.length == 1) return resolve.call(null);
             if (arguments.length == 2) return resolve.call(null, arguments[1]);
             const callbackArguments = Array.from(arguments);
-            callbackArguments.shift(); // remove the first element
+            callbackArguments.shift(); // Remove the first element.
             resolve.call(null, callbackArguments);
           });
-        } catch (e) {
-          reject(e);
+        } catch (err) {
+          reject(err);
         }
       });
     };
