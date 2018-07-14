@@ -1,4 +1,4 @@
 "use strict";
 
-const Promises = require("./lib/Promises");
+var Promises = require("./lib/Promises");
 module.exports = new Promises();

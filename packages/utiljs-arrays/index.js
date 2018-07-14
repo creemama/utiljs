@@ -1,4 +1,4 @@
 "use strict";
 
-const Arrays = require("./lib/Arrays");
+var Arrays = require("./lib/Arrays");
 module.exports = new Arrays();
