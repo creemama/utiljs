@@ -1,17 +1,17 @@
 "use strict";
 
-module.exports = function Promises() {
-  this.all = Promise.all;
-
-  this.call = call;
-  function call(object, functionOnObjectWithCallback, args) {
-    if (hasCallback(args))
-      return functionOnObjectWithCallback.apply(object, args);
-    return promisifyAndCall(object, functionOnObjectWithCallback, ...args);
+class Promises {
+  all() {
+    return Promise.all(...arguments);
   }
 
-  this.promisify = promisify;
-  function promisify(functionWithCallback) {
+  call(object, functionOnObjectWithCallback, args) {
+    if (hasCallback(args))
+      return functionOnObjectWithCallback.apply(object, args);
+    return this.promisifyAndCall(object, functionOnObjectWithCallback, ...args);
+  }
+
+  promisify(functionWithCallback) {
     return function() {
       const args = arguments;
       const thiz = this;
@@ -32,18 +32,25 @@ module.exports = function Promises() {
     };
   }
 
-  this.promisifyAndCall = promisifyAndCall;
-  function promisifyAndCall(object, functionOnObjectWithCallback, ...args) {
-    return promisify(functionOnObjectWithCallback).apply(object, args);
+  promisifyAndCall(object, functionOnObjectWithCallback, ...args) {
+    return this.promisify(functionOnObjectWithCallback).apply(object, args);
   }
 
-  this.race = Promise.race;
-
-  this.reject = Promise.reject;
-
-  this.resolve = Promise.resolve;
-
-  function hasCallback(args) {
-    return args.length > 0 && typeof args[args.length - 1] === "function";
+  race() {
+    return Promise.race(...arguments);
   }
-};
+
+  reject() {
+    return Promise.reject(...arguments);
+  }
+
+  resolve() {
+    return Promise.resolve(...arguments);
+  }
+}
+
+module.exports = Promises;
+
+function hasCallback(args) {
+  return args.length > 0 && typeof args[args.length - 1] === "function";
+}

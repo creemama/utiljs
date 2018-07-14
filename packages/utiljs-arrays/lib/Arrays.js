@@ -1,31 +1,38 @@
 "use strict";
 
-module.exports = function Arrays() {
-  this.contains = contains;
-  function contains(array, object) {
+class Arrays {
+  contains(array, object) {
     return array.indexOf(object) > -1;
   }
 
-  this.from = Array.from;
+  from() {
+    return Array.from(...arguments);
+  }
 
-  this.isArray = Array.isArray;
+  isArray() {
+    return Array.isArray(...arguments);
+  }
 
-  this.of = Array.of;
+  of() {
+    return Array.of(...arguments);
+  }
 
-  this.shallowCopy = shallowCopy;
-  function shallowCopy(array) {
+  shallowCopy(array) {
     return array.slice(0);
   }
 
-  this.shuffle = shuffle;
-  function shuffle(array) {
-    return knuthshuffle().knuthShuffle(shallowCopy(array));
+  shuffle(array) {
+    return knuthshuffle().knuthShuffle(this.shallowCopy(array));
   }
+}
 
-  const o = {};
+module.exports = Arrays;
 
-  function knuthshuffle() {
-    if (!o["knuth-shuffle"]) o["knuth-shuffle"] = require("knuth-shuffle");
-    return o["knuth-shuffle"];
-  }
-};
+const dependencies = {};
+
+function knuthshuffle() {
+  return (
+    dependencies["knuth-shuffle"] ||
+    (dependencies["knuth-shuffle"] = require("knuth-shuffle"))
+  );
+}
