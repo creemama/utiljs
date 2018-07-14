@@ -2,24 +2,15 @@
 
 module.exports = function Promises() {
   this.all = Promise.all;
-  this.race = Promise.race;
-  this.reject = Promise.reject;
-  this.resolve = Promise.resolve;
 
   this.call = call;
-  this.promisify = promisify;
-  this.promisifyAndCall = promisifyAndCall;
-
   function call(object, functionOnObjectWithCallback, args) {
     if (hasCallback(args))
       return functionOnObjectWithCallback.apply(object, args);
     return promisifyAndCall(object, functionOnObjectWithCallback, ...args);
   }
 
-  function hasCallback(args) {
-    return args.length > 0 && typeof args[args.length - 1] === "function";
-  }
-
+  this.promisify = promisify;
   function promisify(functionWithCallback) {
     return function() {
       const args = arguments;
@@ -41,7 +32,18 @@ module.exports = function Promises() {
     };
   }
 
+  this.promisifyAndCall = promisifyAndCall;
   function promisifyAndCall(object, functionOnObjectWithCallback, ...args) {
     return promisify(functionOnObjectWithCallback).apply(object, args);
+  }
+
+  this.race = Promise.race;
+
+  this.reject = Promise.reject;
+
+  this.resolve = Promise.resolve;
+
+  function hasCallback(args) {
+    return args.length > 0 && typeof args[args.length - 1] === "function";
   }
 };
