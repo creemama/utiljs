@@ -1,6 +1,7 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "knuth-shuffle": "1.0.8"
   },
   "description": "JavaScript utility methods for arrays",
