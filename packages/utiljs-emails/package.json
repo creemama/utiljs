@@ -1,5 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
+  "dependencies": {
+    "babel-runtime": "6.26.0"
+  },
   "description": "JavaScript utility methods for emails",
   "keywords": [
     "email",

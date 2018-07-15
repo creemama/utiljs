@@ -1,4 +1,4 @@
 "use strict";
 
-var Emails = require("./lib/Emails");
+var Emails = require("./dist/Emails");
 module.exports = new Emails();
