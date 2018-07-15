@@ -21,7 +21,7 @@ fi
 jsdoc2md \
 `find . -type f \
 | egrep "^${prefix}.*\.js$" \
-| egrep -v "^.*/(node_modules|target)/.*$"` \
+| egrep -v "^.*/(dist|node_modules|target)/.*$"` \
 > target/jsdoc2md.md
 
 cd "${curDir}"

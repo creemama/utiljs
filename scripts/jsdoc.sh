@@ -22,6 +22,6 @@ jsdoc \
 --destination target/jsdoc \
 `find . -type f \
 | egrep "^${prefix}.*\.js$" \
-| egrep -v "^.*/(node_modules|target)/.*$"`
+| egrep -v "^.*/(dist|node_modules|target)/.*$"`
 
 cd "${curDir}"
