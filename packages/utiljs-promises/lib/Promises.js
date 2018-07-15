@@ -2,6 +2,7 @@
 
 class Promises {
   all() {
+    if (arguments.length > 1) return Promise.all(arguments);
     return Promise.all(...arguments);
   }
 
@@ -37,6 +38,7 @@ class Promises {
   }
 
   race() {
+    if (arguments.length > 1) return Promise.race(arguments);
     return Promise.race(...arguments);
   }
 
