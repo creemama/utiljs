@@ -1,11 +1,4 @@
 {
   plugins: ["transform-runtime"],
-  presets: [
-    [
-      "env",
-      {
-        debug: true
-      }
-    ]
-  ]
+  presets: ["env"]
 }
