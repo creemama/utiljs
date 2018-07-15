@@ -1,5 +1,10 @@
 "use strict";
 
+/**
+ * JavaScript utility methods for [objects]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object}
+ * @public
+ * @class
+ */
 class Objects {
   assign() {
     return Object.assign(...arguments);
@@ -54,7 +59,7 @@ class Objects {
   }
 
   /**
-   * Returns whether the specified obj is defined.
+   * Returns whether the specified obj is defined (i.e., not null and not undefined).
    *
    * In other words, this method returns false if and only if the object is
    * null or undefined.
@@ -64,9 +69,17 @@ class Objects {
    * if (x) console.log("x is defined.");
    * </code></pre>
    * This happens for [0, -0, NaN, false, and the empty string ("")]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean}.
+   *
+   * @param {*} object The object to check
+   * @return {boolean} true if the given object is defined or false otherwise
+   * @public
+   * @instance
+   * @function
    */
-  isDefined(obj) {
-    return obj !== null && typeof obj !== "undefined";
+  isDefined(object) {
+    // https://stackoverflow.com/a/15992131
+    // return object !== null && typeof object !== "undefined";
+    return object != null;
   }
 
   isExtensible() {
