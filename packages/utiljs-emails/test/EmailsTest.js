@@ -4,7 +4,7 @@ const emails = require(".."),
   { expect } = require("chai");
 
 describe("Emails", () => {
-  describe("#isValidEmail(str)", () => {
+  describe("#isValidEmail(string)", () => {
     it("should validate foo-bar.baz@example.com", () => {
       expect(emails.isValidEmail("foo-bar.baz@example.com")).to.be.true;
     });
