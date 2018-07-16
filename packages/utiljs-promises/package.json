@@ -2,7 +2,7 @@
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
     "babel-runtime": "6.26.0",
-    "utiljs-arrays": "0.21.0"
+    "utiljs-arrays": "0.22.0"
   },
   "description": "JavaScript utility methods for promises",
   "keywords": [
@@ -18,5 +18,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-promises"
   },
-  "version": "0.21.0"
+  "version": "0.22.0"
 }
