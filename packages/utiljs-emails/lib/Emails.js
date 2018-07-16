@@ -1,5 +1,7 @@
 "use strict";
 
+const EmailHeaders = require("./EmailHeaders");
+
 /**
  * JavaScript utility methods for emails
  * @public
@@ -21,6 +23,40 @@ class Emails {
     return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
       string
     );
+  }
+
+  /**
+   * Wraps the given nameValueArrayOfHeaders inside an object that makes email-header lookup easy.
+   *
+   * When using the returned object, you no longer have to worry about the case (e.g., "In-Reply-To" or "In-reply-to") of email headers.
+   *
+   * [googleapis]{@link https://www.npmjs.com/package/googleapis}'s interface to Gmail returns email headers as an array of name-value objects. The following is a sample:
+   * <pre>
+   * [ { name: 'Delivered-To', value: 'c@creemama.com' },
+   * ...
+   *   { name: 'Date', value: 'Tue, 10 Jul 2018 10:18:52 -0700' },
+   * ...
+   *   { name: 'To', value: 'Chris Topher <c@creemama.com>' } ]
+   * </pre>
+   *
+   * @param {Array} nameValueArrayOfHeaders An array of name-value objects containing email headers
+   * @return {EmailHeaders} A new {@link EmailHeaders} instance
+   * @throws {TypeError} If nameValueArrayOfHeaders is not an array-like object containing name-value objects
+   * @public
+   * @instance
+   * @function
+   */
+  wrapHeaders(nameValueArrayOfHeaders) {
+    const headerMap = {};
+    const lowercaseHeaderMap = {};
+    for (const header of nameValueArrayOfHeaders) {
+      headerMap[header.name] = header.value;
+      lowercaseHeaderMap[header.name.toLowerCase()] = header.value;
+    }
+    return new EmailHeaders({
+      headerMap,
+      lowercaseHeaderMap
+    });
   }
 }
 
