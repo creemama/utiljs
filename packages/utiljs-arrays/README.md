@@ -9,8 +9,6 @@
 
 This class contains all the non-instance methods of [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) in addition to:
 
-- [contains](#Arrays+contains)
-- [shallowCopy](#Arrays+shallowCopy)
 - [shuffle](#Arrays+shuffle)
 
 <a name="Arrays"></a>
@@ -21,29 +19,10 @@ This class contains all the non-instance methods of [Array](https://developer.mo
 **Access**: public
 
 - [Arrays](#Arrays)
-  - ~~[.contains(array, object)](#Arrays+contains) ⇒ <code>boolean</code>~~
   - [.from(arrayLike, [mapFn], [thisArg])](#Arrays+from) ⇒ <code>Array</code>
   - [.isArray(obj)](#Arrays+isArray) ⇒ <code>boolean</code>
   - [.of(...elementN)](#Arrays+of) ⇒ <code>Array</code>
-  - [.shallowCopy(array)](#Arrays+shallowCopy) ⇒ <code>Array</code>
   - [.shuffle(array)](#Arrays+shuffle) ⇒ <code>Array</code>
-
-<a name="Arrays+contains"></a>
-
-### ~~arrays.contains(array, object) ⇒ <code>boolean</code>~~
-
-**_Deprecated_**
-
-Returns whether the specified array contains the specified object
-
-**Kind**: instance method of [<code>Arrays</code>](#Arrays)  
-**Returns**: <code>boolean</code> - true if the array contains the object or false otherwise  
-**Access**: public
-
-| Param  | Type               | Description                       |
-| ------ | ------------------ | --------------------------------- |
-| array  | <code>Array</code> | The array to search for object in |
-| object | <code>\*</code>    | The element to search for         |
 
 <a name="Arrays+from"></a>
 
@@ -94,20 +73,6 @@ See MDN's documentation about [of](https://developer.mozilla.org/en-US/docs/Web/
 | Param       | Type            | Description                           |
 | ----------- | --------------- | ------------------------------------- |
 | ...elementN | <code>\*</code> | Elements of which to create the array |
-
-<a name="Arrays+shallowCopy"></a>
-
-### arrays.shallowCopy(array) ⇒ <code>Array</code>
-
-Returns a shallow copy of the specified array
-
-**Kind**: instance method of [<code>Arrays</code>](#Arrays)  
-**Returns**: <code>Array</code> - A new Array instance  
-**Access**: public
-
-| Param | Type               | Description                           |
-| ----- | ------------------ | ------------------------------------- |
-| array | <code>Array</code> | The array to create a shallow copy of |
 
 <a name="Arrays+shuffle"></a>
 

@@ -7,20 +7,6 @@
  */
 class Arrays {
   /**
-   * Returns whether the specified array contains the specified object
-   * @param {Array} array The array to search for object in
-   * @param {*} object The element to search for
-   * @return {boolean} true if the array contains the object or false otherwise
-   * @public
-   * @instance
-   * @function
-   * @deprecated Use [Array#includes]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes} instead.
-   */
-  contains(array, object) {
-    return array.indexOf(object) > -1;
-  }
-
-  /**
    * Creates a new, shallow-copied Array instance from an array-like or iterable object.
    *
    * See MDN's documentation about [from]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from}.
@@ -68,18 +54,6 @@ class Arrays {
   }
 
   /**
-   * Returns a shallow copy of the specified array
-   * @param {Array} array The array to create a shallow copy of
-   * @return {Array} A new Array instance
-   * @public
-   * @instance
-   * @function
-   */
-  shallowCopy(array) {
-    return array.slice(0);
-  }
-
-  /**
    * Shuffles the elements of the specified array.
    *
    * See [knuth-shuffle]{@link https://www.npmjs.com/package/knuth-shuffle}.
@@ -91,7 +65,7 @@ class Arrays {
    * @function
    */
   shuffle(array) {
-    return knuthshuffle().knuthShuffle(this.shallowCopy(array));
+    return knuthshuffle().knuthShuffle(this.from(array));
   }
 }
 
