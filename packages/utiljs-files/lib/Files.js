@@ -42,40 +42,6 @@ module.exports = function Files(options) {
   Object.assign(this, path());
 
   this.cp = cp;
-  this.cpr = cpr;
-  this.diff = Files_diff;
-  this.filesWithExtension = Files_filesWithExtension;
-  this.filesWithExtensionSync = Files_filesWithExtensionSync;
-  this.isDirectory = Files_isDirectory;
-  this.isDirectorySync = Files_isDirectorySync;
-  this.isFile = Files_isFile;
-  this.isFileSync = Files_isFileSync;
-  this.mkdirp = (path, cb) => {
-    if (cb) {
-      _mkdirp()(path, cb);
-      return;
-    }
-    return new Promise((resolve, reject) => {
-      _mkdirp()(path, (err, made) => {
-        if (err) reject(err);
-        else resolve();
-      });
-    });
-  };
-  this.mkdirpSync = function(dir, opts) {
-    return _mkdirp().sync(dir, opts);
-  };
-  this.readdir = promises().promisify(fs().readdir);
-  this.readFile = readFile;
-  this.readFiles = Files_readFiles;
-  this.rmrf = rmrf;
-  this.rmrfSync = function(path, opts) {
-    return _rimraf().sync(path, opts);
-  };
-  this.stat = stat;
-  this.touch = _touch();
-  this.writeFile = writeFile;
-
   function cp(source, target) {
     let doneCalled = false;
 
@@ -96,6 +62,7 @@ module.exports = function Files(options) {
     });
   }
 
+  this.cpr = cpr;
   function cpr(source, destination, options, callback) {
     if (typeof options !== "function" && !callback) {
       if (options)
@@ -111,6 +78,7 @@ module.exports = function Files(options) {
     ncp().call(ncp(), source, destination, options, callback);
   }
 
+  this.diff = Files_diff;
   function Files_diff(pathA, pathB, cb) {
     if (!_objects().isDefined(pathA)) throw "pathA cannot be undefined";
     if (!_objects().isDefined(pathB)) throw "pathB cannot be undefined";
@@ -123,31 +91,7 @@ module.exports = function Files(options) {
     });
   }
 
-  /**
-   * Does not recursively search for files.
-   * When specifying ext, do not include the period.
-   */
-  function Files_filesWithExtensionSync(opts) {
-    var dir = opts.dir;
-    var ext = opts.ext;
-
-    if (!_objects().isDefined(dir)) throw "dir cannot be undefined";
-    if (!_objects().isDefined(ext)) throw "ext cannot be undefined";
-
-    var files = _fs().readdirSync(dir);
-    var filesWithExt = [];
-
-    var divider = _strings().endsWith(dir, "/") ? "" : "/";
-
-    function Files_filesWithExtension_forEach(file) {
-      if (_strings().endsWith(file.toLowerCase(), "." + ext)) {
-        filesWithExt.push(dir + divider + file);
-      }
-    }
-    files.forEach(Files_filesWithExtension_forEach);
-    return filesWithExt;
-  }
-
+  this.filesWithExtension = Files_filesWithExtension;
   function Files_filesWithExtension(opts, cb) {
     if (!cb)
       return promises().promisifyAndCall(this, Files_filesWithExtension, opts);
@@ -192,6 +136,33 @@ module.exports = function Files(options) {
     });
   }
 
+  /**
+   * Does not recursively search for files.
+   * When specifying ext, do not include the period.
+   */
+  this.filesWithExtensionSync = Files_filesWithExtensionSync;
+  function Files_filesWithExtensionSync(opts) {
+    var dir = opts.dir;
+    var ext = opts.ext;
+
+    if (!_objects().isDefined(dir)) throw "dir cannot be undefined";
+    if (!_objects().isDefined(ext)) throw "ext cannot be undefined";
+
+    var files = _fs().readdirSync(dir);
+    var filesWithExt = [];
+
+    var divider = _strings().endsWith(dir, "/") ? "" : "/";
+
+    function Files_filesWithExtension_forEach(file) {
+      if (_strings().endsWith(file.toLowerCase(), "." + ext)) {
+        filesWithExt.push(dir + divider + file);
+      }
+    }
+    files.forEach(Files_filesWithExtension_forEach);
+    return filesWithExt;
+  }
+
+  this.isDirectory = Files_isDirectory;
   function Files_isDirectory(path, cb) {
     _fs().lstat(path, function(err, stats) {
       if (_objects().isDefined(err)) {
@@ -202,12 +173,14 @@ module.exports = function Files(options) {
     });
   }
 
+  this.isDirectorySync = Files_isDirectorySync;
   function Files_isDirectorySync(path) {
     return _fs()
       .lstatSync(path)
       .isDirectory();
   }
 
+  this.isFile = Files_isFile;
   function Files_isFile(path, callback) {
     if (!callback) {
       return promises().promisifyAndCall(this, Files_isFile, path);
@@ -221,31 +194,38 @@ module.exports = function Files(options) {
     });
   }
 
+  this.isFileSync = Files_isFileSync;
   function Files_isFileSync(path) {
     return _fs()
       .lstatSync(path)
       .isFile();
   }
 
+  this.mkdirp = (path, cb) => {
+    if (cb) {
+      _mkdirp()(path, cb);
+      return;
+    }
+    return new Promise((resolve, reject) => {
+      _mkdirp()(path, (err, made) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  };
+
+  this.mkdirpSync = function(dir, opts) {
+    return _mkdirp().sync(dir, opts);
+  };
+
+  this.readdir = promises().promisify(fs().readdir);
+
+  this.readFile = readFile;
   function readFile() {
     return wrapCallback(arguments, readFile, _fs().readFile);
   }
 
-  function wrapCallback(args, localMethod, targetMethod) {
-    if (hasCallback(args)) return targetMethod.apply(null, args);
-    else
-      return new Promise((resolve, reject) => {
-        localMethod.call(null, ...args, (err, data) => {
-          if (err) reject(err);
-          else resolve(data);
-        });
-      });
-  }
-
-  function hasCallback(args) {
-    return args.length > 0 && typeof args[args.length - 1] === "function";
-  }
-
+  this.readFiles = Files_readFiles;
   function Files_readFiles(files, options, cb) {
     var opts;
     var caba;
@@ -284,6 +264,7 @@ module.exports = function Files(options) {
     }
   }
 
+  this.rmrf = rmrf;
   function rmrf(path, options, callback) {
     if (typeof options !== "function" && !callback) {
       if (options)
@@ -293,11 +274,34 @@ module.exports = function Files(options) {
     _rimraf().call(_rimraf(), path, options, callback);
   }
 
+  this.rmrfSync = function(path, opts) {
+    return _rimraf().sync(path, opts);
+  };
+
+  this.stat = stat;
   function stat() {
     return wrapCallback(arguments, stat, fs().stat);
   }
 
+  this.touch = _touch();
+
+  this.writeFile = writeFile;
   function writeFile() {
     return wrapCallback(arguments, writeFile, _fs().writeFile);
   }
 };
+
+function wrapCallback(args, localMethod, targetMethod) {
+  if (hasCallback(args)) return targetMethod.apply(null, args);
+  else
+    return new Promise((resolve, reject) => {
+      localMethod.call(null, ...args, (err, data) => {
+        if (err) reject(err);
+        else resolve(data);
+      });
+    });
+}
+
+function hasCallback(args) {
+  return args.length > 0 && typeof args[args.length - 1] === "function";
+}
