@@ -1,37 +1,6 @@
 "use strict";
 
 module.exports = function Files(options) {
-  function childProcess() {
-    return options.child_process();
-  }
-  function fs() {
-    return options.fs();
-  }
-  function mkdirp() {
-    return options.mkdirp();
-  }
-  function ncp() {
-    return options.ncp();
-  }
-  function objects() {
-    return options.objects();
-  }
-  function path() {
-    return options.path();
-  }
-  function promises() {
-    return options.promises();
-  }
-  function rimraf() {
-    return options.rimraf();
-  }
-  function strings() {
-    return options.strings();
-  }
-  function touch() {
-    return options.touch();
-  }
-
   Object.assign(this, fs());
   Object.assign(this, path());
 
@@ -226,6 +195,37 @@ module.exports = function Files(options) {
   this.writeFile = writeFile;
   function writeFile() {
     return wrapCallback(arguments, writeFile, fs().writeFile);
+  }
+
+  function childProcess() {
+    return options.child_process();
+  }
+  function fs() {
+    return options.fs();
+  }
+  function mkdirp() {
+    return options.mkdirp();
+  }
+  function ncp() {
+    return options.ncp();
+  }
+  function objects() {
+    return options.objects();
+  }
+  function path() {
+    return options.path();
+  }
+  function promises() {
+    return options.promises();
+  }
+  function rimraf() {
+    return options.rimraf();
+  }
+  function strings() {
+    return options.strings();
+  }
+  function touch() {
+    return options.touch();
   }
 };
 
