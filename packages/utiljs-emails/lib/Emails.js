@@ -1,7 +1,5 @@
 "use strict";
 
-const EmailHeaders = require("./EmailHeaders");
-
 /**
  * JavaScript utility methods for emails
  * @public
@@ -53,6 +51,7 @@ class Emails {
       headerMap[header.name] = header.value;
       lowercaseHeaderMap[header.name.toLowerCase()] = header.value;
     }
+    const EmailHeaders = requireEmailHeaders();
     return new EmailHeaders({
       headerMap,
       lowercaseHeaderMap
@@ -61,3 +60,12 @@ class Emails {
 }
 
 module.exports = Emails;
+
+const dependencies = {};
+
+function requireEmailHeaders() {
+  return (
+    dependencies["EmailHeaders"] ||
+    (dependencies["EmailHeaders"] = require("./EmailHeaders"))
+  );
+}
