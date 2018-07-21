@@ -4,6 +4,222 @@ const { expect } = require("chai"),
   promises = require("..");
 
 describe("Promises", function() {
+  describe("#(apply|call)Callback(object, functionOnObjectWithCallback, args)", () => {
+    function notify(message, who, callback) {
+      if (message == "Throw error") throw new Error("Hypnotoad died.");
+      if (message == "Return undefined") return;
+      callback(null, `${message}, ${who}!`);
+    }
+    it("should resolve a Promise", async function() {
+      expect(
+        await promises.applyCallback(null, notify, ["Promise me", "Hypnotoad"])
+      ).to.eql("Promise me, Hypnotoad!");
+      expect(
+        await promises.callCallback(null, notify, "Promise me", "Hypnotoad")
+      ).to.eql("Promise me, Hypnotoad!");
+    });
+    it("should error if functionOnObjectWithCallback is not a function", () => {
+      expect(() =>
+        promises.applyCallback(null, null, ["Promise me", "Hypnotoad"])
+      ).to.throw(TypeError);
+      expect(() =>
+        promises.callCallback(null, null, "Promise me", "Hypnotoad")
+      ).to.throw(TypeError);
+      expect(() =>
+        promises.applyCallback(null, "a", ["Promise me", "Hypnotoad"])
+      ).to.throw(TypeError);
+      expect(() =>
+        promises.callCallback(null, "a", "Promise me", "Hypnotoad")
+      ).to.throw(TypeError);
+    });
+    it("should error if args is erroneous", () => {
+      // This does not cause failures in the unit test, but there is output.
+      promises
+        .callCallback(null, notify, "Return undefined")
+        .then(message => {
+          throw new Error("Expected expected the function to never return.");
+        })
+        .catch(error => {
+          throw error;
+        });
+      expect(() => promises.applyCallback(null, notify)).to.throw(TypeError);
+      const a = promises
+        .callCallback(null, notify)
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      const b = promises
+        .applyCallback(null, notify, ["Hypnotoad"])
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      const c = promises
+        .callCallback(null, notify, "Hypnotoad")
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      const d = promises
+        .applyCallback(null, notify, ["Throw error"])
+        .catch(error => expect(error).to.be.an.instanceof(Error));
+      const e = promises
+        .callCallback(null, notify, "Throw error")
+        .catch(error => expect(error).to.be.an.instanceof(Error));
+      return promises.all(a, b, c, d, e);
+    });
+  });
+
+  describe("#(apply|call)Promise(object, promiseFunctionOnObject, args)", () => {
+    function notify(message, who) {
+      if (message == "Throw error") throw new Error("Hypnotoad died.");
+      if (message == "Return undefined") return;
+      return promises.resolve(`${message}, ${who}!`);
+    }
+    it("should notify a callback", callback => {
+      a(callback);
+      function a(callbck) {
+        promises.applyPromise(null, notify, [
+          "Call back",
+          "Hypnotoad",
+          (error, message) => {
+            expect(message).to.eql("Call back, Hypnotoad!");
+            b(callbck);
+          }
+        ]);
+      }
+      function b(callbck) {
+        promises.callPromise(
+          null,
+          notify,
+          "Call back",
+          "Hypnotoad",
+          (error, message) => {
+            expect(message).to.eql("Call back, Hypnotoad!");
+            c(callbck);
+          }
+        );
+      }
+      function c(callbck) {
+        function adapt(message, who, callback) {
+          if (callback) return promises.applyPromise(null, notify, arguments);
+          return promises.resolve(`${message}, ${who}!`);
+        }
+        promises.callPromise(
+          null,
+          adapt,
+          "Call back",
+          "Hypnotoad",
+          (error, value) => {
+            try {
+              expect(value).to.eql("Call back, Hypnotoad!");
+              callbck();
+            } catch (err) {
+              callbck(err);
+            }
+          }
+        );
+      }
+    });
+    it("should error if promiseFunction is not a function", () => {
+      expect(() =>
+        promises.applyPromise(null, null, ["Call back", "Hypnotoad"])
+      ).to.throw(TypeError);
+      expect(() =>
+        promises.callPromise(null, null, "Call back", "Hypnotoad")
+      ).to.throw(TypeError);
+      expect(() =>
+        promises.applyPromise(null, "a", ["Call back", "Hypnotoad"])
+      ).to.throw(TypeError);
+      expect(() =>
+        promises.callPromise(null, "a", "Call back", "Hypnotoad")
+      ).to.throw(TypeError);
+    });
+    it("should handle erroneous input", callback => {
+      a(callback);
+      function a(callbck) {
+        try {
+          expect(() => promises.applyPromise(null, notify)).to.throw(TypeError);
+          b(callbck);
+        } catch (error) {
+          callbck(error);
+        }
+      }
+      function b(callbck) {
+        promises
+          .callPromise(null, notify)
+          .then(message => {
+            expect(message).to.eql("undefined, undefined!");
+            c(callbck);
+          })
+          .catch(callbck);
+      }
+      function c(callbck) {
+        promises.applyPromise(null, notify, [
+          "Call back",
+          (error, value) => {
+            try {
+              expect(error).to.be.null;
+              expect(value).to.eql("Call back, undefined!");
+              d(callbck);
+            } catch (err) {
+              callbck(err);
+            }
+          }
+        ]);
+      }
+      function d(callbck) {
+        promises.callPromise(null, notify, "Call back", (error, value) => {
+          try {
+            expect(error).to.be.null;
+            expect(value).to.eql("Call back, undefined!");
+            e(callbck);
+          } catch (err) {
+            callbck(err);
+          }
+        });
+      }
+      function e(callbck) {
+        promises.applyPromise(null, notify, [
+          "Throw error",
+          (error, value) => {
+            try {
+              expect(error).to.be.an.instanceof(Error);
+              expect(value).to.be.undefined;
+              f(callbck);
+            } catch (err) {
+              callbck(err);
+            }
+          }
+        ]);
+      }
+      function f(callbck) {
+        promises.callPromise(null, notify, "Throw error", (error, value) => {
+          try {
+            expect(error).to.be.an.instanceof(Error);
+            expect(value).to.be.undefined;
+            g(callbck);
+          } catch (err) {
+            callbck(err);
+          }
+        });
+      }
+      function g(callbck) {
+        try {
+          expect(() =>
+            promises.callPromise(
+              null,
+              notify,
+              "Return undefined",
+              (error, value) => {
+                callback(
+                  new Error(
+                    "We expected #callPromise to not call this callback."
+                  )
+                );
+              }
+            )
+          ).to.throw(Error);
+          callbck();
+        } catch (error) {
+          callbck(error);
+        }
+      }
+    });
+  });
+
   describe("#all(iterable)", () => {
     it("should properly handle a single, iterable argument", () => {
       const promise1 = Promise.resolve(3);
@@ -72,6 +288,56 @@ describe("Promises", function() {
       expect(() => promises.call(null, "a", [() => {}])).to.throw(TypeError);
       expect(() => promises.call(null, null, [])).to.throw(TypeError);
       expect(() => promises.call(null, "a", [])).to.throw(TypeError);
+    });
+  });
+
+  describe("#callbackify(promiseFunction)", () => {
+    it("should callbackify Promise functions with no arguments", callback => {
+      function promiseFunction() {
+        return Promise.resolve("foobar");
+      }
+      promises.callbackify(promiseFunction)((error, value) => {
+        try {
+          expect(error).to.be.null;
+          expect(value).to.eql("foobar");
+          callback();
+        } catch (err) {
+          callback(err);
+        }
+      });
+    });
+    it("should callbackify Promise functions with one arguments", callback => {
+      function promiseFunction(message) {
+        return Promise.resolve(message);
+      }
+      promises.callbackify(promiseFunction)("foobar", (error, value) => {
+        try {
+          expect(error).to.be.null;
+          expect(value).to.eql("foobar");
+          callback();
+        } catch (err) {
+          callback(err);
+        }
+      });
+    });
+    it("should callbackify Promise functions with two arguments", callback => {
+      function promiseFunction(a, b) {
+        return Promise.resolve(a + b);
+      }
+      promises.callbackify(promiseFunction)("foo", "bar", (error, value) => {
+        try {
+          expect(error).to.be.null;
+          expect(value).to.eql("foobar");
+          callback();
+        } catch (err) {
+          callback(err);
+        }
+      });
+    });
+    it("should throw an error if promiseFunction is not a function", () => {
+      expect(() => promises.callbackify()).to.throw(TypeError);
+      expect(() => promises.callbackify(null)).to.throw(TypeError);
+      expect(() => promises.callbackify("a")).to.throw(TypeError);
     });
   });
 

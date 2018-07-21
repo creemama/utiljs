@@ -9,7 +9,12 @@
 
 This class contains all the non-instance methods of [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) in addition to:
 
+- [applyCallback](#Promises+applyCallback)
+- [applyPromise](#Promises+applyPromise)
 - [call](#Promises+call)
+- [callbackify](#Promises+callbackify)
+- [callCallback](#Promises+callCallback)
+- [callPromise](#Promises+callPromise)
 - [promisify](#Promises+promisify)
 - [promisifyAndCall](#Promises+promisifyAndCall)
 
@@ -24,7 +29,12 @@ This class contains all the non-instance methods of [Promise](https://developer.
 
 - [Promises](#Promises)
   - [.all(iterable)](#Promises+all) ⇒ <code>Promise</code>
+  - [.applyCallback(object, functionOnObjectWithCallback, args)](#Promises+applyCallback) ⇒ <code>undefined</code> \| <code>Promise</code>
+  - [.applyPromise(object, promiseFunctionOnObject, args)](#Promises+applyPromise) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.call(object, functionOnObjectWithCallback, args)](#Promises+call) ⇒ <code>undefined</code> \| <code>Promise</code>
+  - [.callbackify(promiseFunction)](#Promises+callbackify) ⇒ <code>function</code>
+  - [.callCallback(object, functionOnObjectWithCallback, [...args])](#Promises+callCallback) ⇒ <code>undefined</code> \| <code>Promise</code>
+  - [.callPromise(object, promiseFunctionOnObject, [...args])](#Promises+callPromise) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.promisify(functionWithCallback)](#Promises+promisify) ⇒ <code>function</code>
   - [.promisifyAndCall(object, functionOnObjectWithCallback, ...args)](#Promises+promisifyAndCall) ⇒ <code>Promise</code>
   - [.race(iterable)](#Promises+race) ⇒ <code>Promise</code>
@@ -68,6 +78,131 @@ promises.all(promise1, promise2, promise3).then(values => {
 // expected output: Array [3, 42, "foo"]
 ```
 
+<a name="Promises+applyCallback"></a>
+
+### promises.applyCallback(object, functionOnObjectWithCallback, args) ⇒ <code>undefined</code> \| <code>Promise</code>
+
+Calls the given functionOnObjectWithCallback with the given args that either (A) returns a Promise if args does not contain a callback or (B) notifies the callback if args contains a callback.
+
+Use this function if you are wrapping an existing function that only takes a callback but would like that function to handle both callbacks and Promises.
+
+It is also useful in writing new functions where you would like to support both callbacks and Promises.
+
+This function adapts functions that accept a callback. [applyPromise](#Promises+applyPromise) adapts functions that return a Promise.
+
+This function is similar to Function#apply. It accepts a single array of arguments.
+
+Function#call and [callCallback](#Promises+callCallback) accept an argument list.
+
+When trying to remember the difference between #apply and #call, think, "#apply accepts an array. Both array and #apply start with a."
+
+**Kind**: instance method of [<code>Promises</code>](#Promises)  
+**Returns**: <code>undefined</code> \| <code>Promise</code> - undefined if the last element of args is a callback or a Promise if args does not contain a callback  
+**Throws**:
+
+- <code>TypeError</code> If functionOnObjectWithCallback is not a function or if args is null or undefined
+
+**Access**: public
+
+| Param                        | Type                  | Description                                                                                                                                                                                                    |
+| ---------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| object                       | <code>Object</code>   | Value to use as this when executing functionOnObjectWithCallback (can be null)                                                                                                                                 |
+| functionOnObjectWithCallback | <code>function</code> | A function that takes a callback as its last argument                                                                                                                                                          |
+| args                         |                       | An array-like object containing the arguments to pass to functionOnObjectWithCallback; this is usually just [arguments](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments) |
+
+**Example**
+
+```js
+// Wrap a function that only accepts a callback.
+const promises = require("utiljs-promises");
+const stream = require("stream");
+const streams = require("utiljs-streams");
+// stream#finished only takes a callback.
+// Wrap stream#finished so that it handles both callbacks and Promises.
+function finished() {
+  return promises.applyCallback(stream, stream.finished, arguments);
+}
+const readableToCallback = streams.fromString("Call back, Hypnotoad!");
+finished(readableToCallback, () => console.log("Finished with a callback"));
+const readableToPromise = streams.fromString("Promise me, Hypnotoad!");
+finished(readableToPromise).then(() => console.log("Finished as promised"));
+```
+
+**Example**
+
+```js
+// Write a function that supports both callbacks and Promises.
+const promises = require("utiljs-promises");
+function notify(message, who, callback) {
+  if (!callback) return promises.applyCallback(null, notify, arguments);
+  callback(null, `${message}, ${who}!`);
+}
+notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+notify("Promise me", "Hypnotoad").then(console.log);
+```
+
+<a name="Promises+applyPromise"></a>
+
+### promises.applyPromise(object, promiseFunctionOnObject, args) ⇒ <code>undefined</code> \| <code>Promise</code>
+
+Calls the given promiseFunctionOnObject with the given args that either (A) returns a Promise if args does not contain a callback or (B) notifies the callback if args contains a callback.
+
+Use this function if you are wrapping an existing function that only returns a Promise but would like that function to handle both callbacks and Promises.
+
+It is also useful in writing new functions where you would like to support both callbacks and Promises.
+
+This function adapts functions that return a Promise. [applyCallback](#Promises+applyCallback) adapts functions that accept a callback.
+
+This function is similar to Function#apply. It accepts a single array of arguments.
+
+Function#call and [callPromise](#Promises+callPromise) accept an argument list.
+
+When trying to remember the difference between #apply and #call, think, "#apply accepts an array. Both array and #apply start with a."
+
+**Kind**: instance method of [<code>Promises</code>](#Promises)  
+**Returns**: <code>undefined</code> \| <code>Promise</code> - undefined if the last element of args is a callback or a Promise if args does not contain a callback  
+**Throws**:
+
+- <code>TypeError</code> If promiseFunctionOnObject is not a function or if args is null or undefined
+
+**Access**: public
+
+| Param                   | Type                  | Description                                                                                                                                                                                               |
+| ----------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| object                  | <code>Object</code>   | Value to use as this when executing promiseFunctionOnObject (can be null)                                                                                                                                 |
+| promiseFunctionOnObject | <code>function</code> | A function that returns a Promise                                                                                                                                                                         |
+| args                    |                       | An array-like object containing the arguments to pass to promiseFunctionOnObject; this is usually just [arguments](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments) |
+
+**Example**
+
+```js
+// Wrap a function that only returns a Promise.
+const promises = require("utiljs-promises");
+function notifyPromise(message, who) {
+  return promises.resolve(`${message}, ${who}!`);
+}
+// #notifyPromise only returns a Promise.
+// Wrap #notifyPromise so that it handles both callbacks and Promises.
+function notify(message, who, callback) {
+  return promises.applyPromise(null, notifyPromise, arguments);
+}
+notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+notify("Promise me", "Hypnotoad").then(console.log);
+```
+
+**Example**
+
+```js
+// Write a function that supports both callbacks and Promises.
+const promises = require("utiljs-promises");
+function notify(message, who, callback) {
+  if (callback) return promises.applyPromise(null, notify, arguments);
+  return promises.resolve(`${message}, ${who}!`);
+}
+notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+notify("Promise me", "Hypnotoad").then(console.log);
+```
+
 <a name="Promises+call"></a>
 
 ### promises.call(object, functionOnObjectWithCallback, args) ⇒ <code>undefined</code> \| <code>Promise</code>
@@ -103,6 +238,125 @@ const readableToCallback = streams.fromString("Call back, Hypnotoad!");
 finished(readableToCallback, () => console.log("Finished with a callback"));
 const readableToPromise = streams.fromString("Promise me, Hypnotoad!");
 finished(readableToPromise).then(() => console.log("Finished as promised"));
+```
+
+<a name="Promises+callbackify"></a>
+
+### promises.callbackify(promiseFunction) ⇒ <code>function</code>
+
+Wraps the given promiseFunction such that calling the returned with a callback notifies the callback with an error if promiseFunction rejcts or the return value if promiseFunction resolves.
+
+Use [callPromise](#Promises+callPromise) if you would like to callbackify a method and call it in one line.
+
+The returned function notifies a callback of an error if promiseFunction is not a function.
+
+**Kind**: instance method of [<code>Promises</code>](#Promises)  
+**Returns**: <code>function</code> - A function that accepts a callback  
+**Access**: public
+
+| Param           | Type                  | Description                       |
+| --------------- | --------------------- | --------------------------------- |
+| promiseFunction | <code>function</code> | A function that returns a Promise |
+
+**Example**
+
+```js
+const promises = require("utiljs-promises");
+function notifyPromise(message, who) {
+  return promises.resolve(`${message}, ${who}!`);
+}
+// #notifyPromise only returns a Promise.
+// Wrap #notifyPromise so that it accepts a callback.
+const notify = promises.callbackify(notifyPromise);
+notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+```
+
+<a name="Promises+callCallback"></a>
+
+### promises.callCallback(object, functionOnObjectWithCallback, [...args]) ⇒ <code>undefined</code> \| <code>Promise</code>
+
+Calls the given functionOnObjectWithCallback with the given args that either (A) returns a Promise if args does not contain a callback or (B) notifies the callback if args contains a callback.
+
+This method just calls:
+
+<pre><code>
+this.applyCallback(object, functionOnObjectWithCallback, args)
+</code></pre>
+
+See [applyCallback](#Promises+applyCallback).
+
+**Kind**: instance method of [<code>Promises</code>](#Promises)  
+**Returns**: <code>undefined</code> \| <code>Promise</code> - undefined if the last element of args is a callback or a Promise if args does not contain a callback  
+**Throws**:
+
+- <code>TypeError</code> If functionOnObjectWithCallback is not a function
+
+**Access**: public
+
+| Param                        | Type                  | Description                                                                      |
+| ---------------------------- | --------------------- | -------------------------------------------------------------------------------- |
+| object                       | <code>Object</code>   | Value to use as this when executing functionOnObjectWithCallback (can be null)   |
+| functionOnObjectWithCallback | <code>function</code> | A function that takes a callback as its last argument                            |
+| [...args]                    | <code>\*</code>       | The arguments to pass to functionOnObjectWithCallback or its promisified version |
+
+**Example**
+
+```js
+const promises = require("utiljs-promises");
+function notifyCallback(message, who, callback) {
+  callback(null, `${message}, ${who}!`);
+}
+// #notifyCallback only accpets a callback.
+// Force #notifyCallback to return a Promise.
+promises
+  .callCallback(null, notifyCallback, "Promise me", "Hypnotoad")
+  .then(console.log);
+```
+
+<a name="Promises+callPromise"></a>
+
+### promises.callPromise(object, promiseFunctionOnObject, [...args]) ⇒ <code>undefined</code> \| <code>Promise</code>
+
+Calls the given promiseFunctionOnObject with the given args that either (A) returns a Promise if args does not contain a callback or (B) notifies the callback if args contains a callback.
+
+This method just calls:
+
+<pre><code>
+this.applyCallback(object, functionOnObjectWithCallback, args)
+</code></pre>
+
+See [applyPromise](#Promises+applyPromise).
+
+**Kind**: instance method of [<code>Promises</code>](#Promises)  
+**Returns**: <code>undefined</code> \| <code>Promise</code> - undefined if the last element of args is a callback or a Promise if args does not contain a callback  
+**Throws**:
+
+- <code>TypeError</code> If promiseFunctionOnObject is not a function
+
+**Access**: public
+
+| Param                   | Type                  | Description                                                                   |
+| ----------------------- | --------------------- | ----------------------------------------------------------------------------- |
+| object                  | <code>Object</code>   | Value to use as this when executing promiseFunctionOnObject (can be null)     |
+| promiseFunctionOnObject | <code>function</code> | A function that returns a Promise                                             |
+| [...args]               | <code>\*</code>       | The arguments to pass to promiseFunctionOnObject or its callbackified version |
+
+**Example**
+
+```js
+const promises = require("utiljs-promises");
+function notifyPromise(message, who) {
+  return promises.resolve(`${message}, ${who}!`);
+}
+// #notifyPromise only returns a Promise.
+// Force #notifyPromise to accept a callback.
+promises.callPromise(
+  null,
+  notifyPromise,
+  "Call back",
+  "Hypnotoad",
+  (error, message) => console.log(message)
+);
 ```
 
 <a name="Promises+promisify"></a>
