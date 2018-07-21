@@ -10,11 +10,29 @@ describe("Files", function() {
   const fs = resources.fs();
   const waterfall = resources.asyncwaterfall();
   const targetDir = __dirname + "/../target";
-  new Factory().newFiles().mkdirpSync(targetDir);
+  const emptyDir = targetDir + "/emptyDir";
+  const files = new Factory().newFiles();
+  const jsonDir = targetDir + "/filesWithExtension";
+  files.mkdirpSync(targetDir);
+  files.mkdirpSync(emptyDir);
+
+  async function prepareDirWithJsonFiles() {
+    await files.mkdirp(jsonDir);
+    await files.touch(jsonDir + "/.DS_Store");
+    await files.touch(jsonDir + "/.gitignore");
+    await files.mkdirp(jsonDir + "/json");
+    await files.mkdirp(jsonDir + "/lib");
+    await files.mkdirp(jsonDir + "/node_modules");
+    await files.touch(jsonDir + "/package.json");
+    await files.mkdirp(jsonDir + "/public");
+    await files.touch(jsonDir + "/server.json");
+    await files.mkdirp(jsonDir + "/target");
+    await files.touch(jsonDir + "/tasks.JSON");
+    await files.mkdirp(jsonDir + "/test");
+    await files.mkdirp(jsonDir + "/views");
+  }
 
   describe("#diff(pathA, pathB, cb)", function() {
-    const files = new Factory().newFiles();
-
     it("should throw an exception if pathA is undefined", () => {
       expect(function() {
         files.diff();
@@ -81,8 +99,6 @@ describe("Files", function() {
   });
 
   describe("#filesWithExtension()", () => {
-    const files = new Factory().newFiles();
-
     it("should throw a TypeError if caller does not specify any arguments", () => {
       return files
         .filesWithExtension()
@@ -162,87 +178,54 @@ describe("Files", function() {
 
   describe("#filesWithExtension()", function() {
     it("should return [] if dir is empty", function(cb) {
-      var fs = {
-        readdir: function(dir, cbk) {
-          cbk(null, []);
-        }
-      };
-      const files = new Factory({ fs: fs }).newFiles();
-
-      files.filesWithExtension({ dir: ".", ext: "json" }, (err, f) => {
+      files.filesWithExtension({ dir: emptyDir, ext: "json" }, (err, f) => {
         expect(f).to.have.members([]);
         cb();
       });
     });
-  });
-
-  describe("#filesWithExtension()", function() {
-    var fs = {
-      readdir: function(dir, cbk) {
-        cbk(null, [
-          ".DS_Store",
-          ".gitignore",
-          "json",
-          "lib",
-          "node_modules",
-          "package.json",
-          "public",
-          "server.json",
-          "target",
-          "tasks.JSON",
-          "test",
-          "views"
-        ]);
-      }
-    };
-    const files = new Factory({ fs: fs }).newFiles();
-
     it("should have a forward slash separating directory and filename in returned filenames if dir does not contain a slash at the end", cb => {
-      files.filesWithExtension(
-        { dir: "/path/to/dir", ext: "json" },
-        (err, f) => {
+      prepareDirWithJsonFiles().then(() => {
+        files.filesWithExtension({ dir: jsonDir, ext: "json" }, (err, f) => {
           expect(f).to.have.members([
-            "/path/to/dir/package.json",
-            "/path/to/dir/server.json",
-            "/path/to/dir/tasks.JSON"
+            jsonDir + "/package.json",
+            jsonDir + "/server.json",
+            jsonDir + "/tasks.JSON"
           ]);
           cb();
-        }
-      );
+        });
+      });
     });
     it("should not have two forward slashes in returned filenames if dir contains a slash at the end", cb => {
-      files.filesWithExtension(
-        { dir: "/path/to/dir/", ext: "json" },
-        (err, f) => {
+      prepareDirWithJsonFiles().then(() => {
+        files.filesWithExtension({ dir: jsonDir, ext: "json" }, (err, f) => {
           expect(f).to.have.members([
-            "/path/to/dir/package.json",
-            "/path/to/dir/server.json",
-            "/path/to/dir/tasks.JSON"
+            jsonDir + "/package.json",
+            jsonDir + "/server.json",
+            jsonDir + "/tasks.JSON"
           ]);
           cb();
-        }
-      );
+        });
+      });
     });
     it("should return [] if there are files in dir matching ext but ext starts with a period", cb => {
-      files.filesWithExtension(
-        { dir: "/path/to/dir", ext: ".json" },
-        (err, f) => {
+      prepareDirWithJsonFiles().then(() => {
+        files.filesWithExtension({ dir: jsonDir, ext: ".json" }, (err, f) => {
           expect(f).to.have.members([]);
           cb();
-        }
-      );
+        });
+      });
     });
     it("should return [] if ext is empty", cb => {
-      files.filesWithExtension({ dir: "/path/to/dir/", ext: "" }, (err, f) => {
-        expect(f).to.have.members([]);
-        cb();
+      prepareDirWithJsonFiles().then(() => {
+        files.filesWithExtension({ dir: jsonDir, ext: "" }, (err, f) => {
+          expect(f).to.have.members([]);
+          cb();
+        });
       });
     });
   });
 
   describe("#filesWithExtensionSync()", function() {
-    const files = new Factory().newFiles();
-
     it("should throw a TypeError if caller does not specify any arguments", function() {
       expect(function() {
         files.filesWithExtensionSync();
@@ -276,77 +259,50 @@ describe("Files", function() {
         });
       }).to.throw(/ENOENT.*/);
     });
-  });
-
-  describe("#filesWithExtensionSync()", function() {
     it("should return [] if dir is empty", function() {
-      var fs = {
-        readdir() {},
-        readdirSync: function() {
-          return [];
-        }
-      };
-      const files = new Factory({ fs: fs }).newFiles();
       expect(
-        files.filesWithExtensionSync({ dir: ".", ext: "json" })
+        files.filesWithExtensionSync({ dir: emptyDir, ext: "json" })
       ).to.have.members([]);
     });
-  });
-
-  describe("#filesWithExtensionSync()", function() {
-    var fs = {
-      readdir() {},
-      readdirSync: function() {
-        return [
-          ".DS_Store",
-          ".gitignore",
-          "json",
-          "lib",
-          "node_modules",
-          "package.json",
-          "public",
-          "server.json",
-          "target",
-          "tasks.JSON",
-          "test",
-          "views"
-        ];
-      }
-    };
-    const files = new Factory({ fs: fs }).newFiles();
-
     it("should have a forward slash separating directory and filename in returned filenames if dir does not contain a slash at the end", function() {
-      expect(
-        files.filesWithExtensionSync({ dir: "/path/to/dir", ext: "json" })
-      ).to.have.members([
-        "/path/to/dir/package.json",
-        "/path/to/dir/server.json",
-        "/path/to/dir/tasks.JSON"
-      ]);
+      return prepareDirWithJsonFiles().then(() => {
+        expect(
+          files.filesWithExtensionSync({ dir: jsonDir, ext: "json" })
+        ).to.have.members([
+          jsonDir + "/package.json",
+          jsonDir + "/server.json",
+          jsonDir + "/tasks.JSON"
+        ]);
+      });
     });
     it("should not have two forward slashes in returned filenames if dir contains a slash at the end", function() {
-      expect(
-        files.filesWithExtensionSync({ dir: "/path/to/dir/", ext: "json" })
-      ).to.have.members([
-        "/path/to/dir/package.json",
-        "/path/to/dir/server.json",
-        "/path/to/dir/tasks.JSON"
-      ]);
+      return prepareDirWithJsonFiles().then(() => {
+        expect(
+          files.filesWithExtensionSync({ dir: jsonDir, ext: "json" })
+        ).to.have.members([
+          jsonDir + "/package.json",
+          jsonDir + "/server.json",
+          jsonDir + "/tasks.JSON"
+        ]);
+      });
     });
     it("should return [] if there are files in dir matching ext but ext starts with a period", function() {
-      expect(
-        files.filesWithExtensionSync({ dir: "/path/to/dir", ext: ".json" })
-      ).to.have.members([]);
+      return prepareDirWithJsonFiles().then(() => {
+        expect(
+          files.filesWithExtensionSync({ dir: jsonDir, ext: ".json" })
+        ).to.have.members([]);
+      });
     });
     it("should return [] if ext is empty", function() {
-      expect(
-        files.filesWithExtensionSync({ dir: "/path/to/dir/", ext: "" })
-      ).to.have.members([]);
+      return prepareDirWithJsonFiles().then(() => {
+        expect(
+          files.filesWithExtensionSync({ dir: jsonDir, ext: "" })
+        ).to.have.members([]);
+      });
     });
   });
 
   describe("#isDirectory", function() {
-    const files = new Factory({ fs: fs }).newFiles();
     it("should be true for the working directory", function(done) {
       files.isDirectory(".", function(err, truth) {
         expect(err).to.be.null;
@@ -388,7 +344,6 @@ describe("Files", function() {
   });
 
   describe("#isDirectorySync", function() {
-    const files = new Factory({ fs: fs }).newFiles();
     it("should return true for the working directory", function() {
       expect(files.isDirectorySync(".")).to.be.ok;
     });
@@ -411,7 +366,6 @@ describe("Files", function() {
   });
 
   describe("#isFile", function() {
-    const files = new Factory({ fs: fs }).newFiles();
     it("should be false for the working directory", function(done) {
       files.isFile(".", function(err, truth) {
         expect(err).to.be.null;
@@ -450,7 +404,6 @@ describe("Files", function() {
   });
 
   describe("#isFileSync", function() {
-    const files = new Factory({ fs: fs }).newFiles();
     it("should return false for the working directory", function() {
       expect(files.isFileSync(".")).to.be.false;
     });
@@ -473,8 +426,6 @@ describe("Files", function() {
   });
 
   describe("#mkdirp and #rmrf", function() {
-    const files = new Factory().newFiles();
-
     it("should create and destroy a new directory hierarchy", function(done) {
       var testDir = targetDir + "/this/is/a/nested/dir";
       waterfall(
@@ -517,13 +468,10 @@ describe("Files", function() {
   });
 
   describe("#rmrf", function() {
-    const files = new Factory().newFiles();
-    var fs = resources.fs();
-
     it("should delete files", function(done) {
       var testFile = targetDir + "/frog.txt";
       files.mkdirpSync(targetDir);
-      fs.closeSync(fs.openSync(testFile, "w"));
+      files.closeSync(files.openSync(testFile, "w"));
       waterfall(
         [
           function(cb) {
@@ -551,8 +499,6 @@ describe("Files", function() {
   });
 
   describe("#mkdirpSync and #rmrfSync", function() {
-    const files = new Factory().newFiles();
-
     it("should create and destroy a new directory hierarchy", function() {
       var testDir = targetDir + "/this/is/a/nested/dir";
       files.rmrfSync(targetDir);
@@ -573,9 +519,6 @@ describe("Files", function() {
 
   describe("#readFiles(files, options, callback)", function(done) {
     var asyncwaterfall = resources.asyncwaterfall();
-    const files = new Factory().newFiles();
-    var fs = resources.fs();
-
     before(function(done) {
       asyncwaterfall(
         [
@@ -590,15 +533,15 @@ describe("Files", function() {
           function(made, cb) {
             cb(null, targetDir + "/a.txt", "a", "utf8");
           },
-          fs.writeFile,
+          files.writeFile,
           function(cb) {
             cb(null, targetDir + "/b.txt", "b", "utf8");
           },
-          fs.writeFile,
+          files.writeFile,
           function(cb) {
             cb(null, targetDir + "/c.txt", "c", "utf8");
           },
-          fs.writeFile
+          files.writeFile
         ],
         done
       );
@@ -609,16 +552,7 @@ describe("Files", function() {
     });
 
     it("should successfully read three files when called without options", function(done) {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
-      testee.readFiles(
+      files.readFiles(
         [targetDir + "/a.txt", targetDir + "/b.txt", targetDir + "/c.txt"],
         function(err, string) {
           expect(err).to.be.null;
@@ -628,16 +562,7 @@ describe("Files", function() {
       );
     });
     it("should successfully read three files when called with option 'utf8'", function(done) {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
-      testee.readFiles(
+      files.readFiles(
         [targetDir + "/b.txt", targetDir + "/a.txt", targetDir + "/c.txt"],
         "utf8",
         function(err, string) {
@@ -648,16 +573,7 @@ describe("Files", function() {
       );
     });
     it("should successfully read three files when called with options", function(done) {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
-      testee.readFiles(
+      files.readFiles(
         [targetDir + "/c.txt", targetDir + "/a.txt", targetDir + "/c.txt"],
         { encoding: "utf8", flag: "r" },
         function(err, string) {
@@ -668,16 +584,7 @@ describe("Files", function() {
       );
     });
     it("should successfully read three files when called with null options", function(done) {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
-      testee.readFiles(
+      files.readFiles(
         [targetDir + "/c.txt", targetDir + "/a.txt", targetDir + "/c.txt"],
         null,
         function(err, string) {
@@ -688,17 +595,8 @@ describe("Files", function() {
       );
     });
     it("should throw an error if callback is null", function() {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
       expect(function() {
-        testee.readFiles([
+        files.readFiles([
           targetDir + "/c.txt",
           targetDir + "/a.txt",
           targetDir + "/c.txt"
@@ -706,60 +604,24 @@ describe("Files", function() {
       }).to.throw("callback cb is not a function");
     });
     it("should throw an error if files argument is null", function() {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
       expect(function() {
-        testee.readFiles(null, function() {});
+        files.readFiles(null, function() {});
       }).to.throw("Cannot read property 'forEach' of null");
     });
     it("should return an empty string if files argument is empty", done => {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
-      testee.readFiles([], null, function(err, string) {
+      files.readFiles([], null, function(err, string) {
         expect(err).to.be.null;
         expect(string).to.equal("");
         done();
       });
     });
     it("should throw an error if files does not have a forEach method", function() {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
       expect(function() {
-        testee.readFiles("", function() {});
+        files.readFiles("", function() {});
       }).to.throw(TypeError);
     });
     it("should return with an error if one of the files does not exist", function(done) {
-      var testee = new Files({
-        asyncwaterfall: () => asyncwaterfall,
-        fs: () => fs,
-        objects: resources.objects,
-        path: () => null,
-        promises: resources.promises,
-        rimraf: () => null,
-        touch: () => null
-      });
-      testee.readFiles(
+      files.readFiles(
         [
           targetDir + "/c.txt",
           targetDir + "/nonexistent.txt",
@@ -777,8 +639,6 @@ describe("Files", function() {
   });
 
   describe("#touch(filename, options, cb)", function() {
-    const files = new Factory().newFiles();
-
     before(function(done) {
       waterfall(
         [
