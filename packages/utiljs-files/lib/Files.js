@@ -13,7 +13,7 @@ module.exports = function Files(options) {
   function _fs() {
     return options.fs();
   }
-  function _mkdirp() {
+  function mkdirp() {
     return options.mkdirp();
   }
   function ncp() {
@@ -28,7 +28,7 @@ module.exports = function Files(options) {
   function promises() {
     return options.promises();
   }
-  function _rimraf() {
+  function rimraf() {
     return options.rimraf();
   }
   function _strings() {
@@ -203,11 +203,11 @@ module.exports = function Files(options) {
 
   this.mkdirp = (path, cb) => {
     if (cb) {
-      _mkdirp()(path, cb);
+      mkdirp()(path, cb);
       return;
     }
     return new Promise((resolve, reject) => {
-      _mkdirp()(path, (err, made) => {
+      mkdirp()(path, (err, made) => {
         if (err) reject(err);
         else resolve();
       });
@@ -215,7 +215,7 @@ module.exports = function Files(options) {
   };
 
   this.mkdirpSync = function(dir, opts) {
-    return _mkdirp().sync(dir, opts);
+    return mkdirp().sync(dir, opts);
   };
 
   this.readdir = promises().promisify(fs().readdir);
@@ -271,11 +271,11 @@ module.exports = function Files(options) {
         return promises().promisifyAndCall(this, rmrf, path, options);
       return promises().promisifyAndCall(this, rmrf, path);
     }
-    _rimraf().call(_rimraf(), path, options, callback);
+    rimraf().call(rimraf(), path, options, callback);
   }
 
   this.rmrfSync = function(path, opts) {
-    return _rimraf().sync(path, opts);
+    return rimraf().sync(path, opts);
   };
 
   this.stat = stat;
