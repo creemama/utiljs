@@ -32,6 +32,44 @@ describe("Files", function() {
     await files.mkdirp(jsonDir + "/views");
   }
 
+  describe("#cp(src, dest)", function() {
+    it("should successfully copy a file", async function() {
+      const src = targetDir + "/cp.txt";
+      const dest = targetDir + "/cp2.txt";
+      await files.rmrf(src);
+      await files.rmrf(dest);
+      await files.mkdirp(targetDir);
+      await files.writeFile(src, "cp", "utf8");
+      await files.cp(src, dest);
+      expect(await files.readFile(dest, "utf8")).to.eql("cp");
+      await files.rmrf(src);
+      await files.rmrf(dest);
+    });
+  });
+
+  describe("#cpr(src, dest)", function() {
+    it("should successfully copy a directory", async function() {
+      const src = targetDir + "/cprA";
+      const src0 = src + "/0.txt";
+      const src1 = src + "/1.txt";
+      const src2 = src + "/2.txt";
+      const dest = targetDir + "/cprB";
+      const dest0 = dest + "/0.txt";
+      await files.rmrf(src);
+      await files.rmrf(dest);
+      await files.mkdirp(src);
+      await files.mkdirp(dest);
+      await files.writeFile(src0, "cp", "utf8");
+      await files.touch(src1);
+      await files.touch(src2);
+      await files.cpr(src, dest);
+      expect(await files.readFile(dest0, "utf8")).to.eql("cp");
+      expect(await files.readdir(dest)).to.eql(["0.txt", "1.txt", "2.txt"]);
+      await files.rmrf(src);
+      await files.rmrf(dest);
+    });
+  });
+
   describe("#diff(pathA, pathB, cb)", function() {
     it("should throw an exception if pathA is undefined", () => {
       expect(function() {
