@@ -1,8 +1,31 @@
 "use strict";
 
 module.exports = function Files(options) {
-  Object.assign(this, fs());
   Object.assign(this, path());
+
+  this.access = fs().access;
+
+  this.accessSync = fs().accessSync;
+
+  this.appendFile = fs().appendFile;
+
+  this.appendFileSync = fs().appendFileSync;
+
+  this.chmod = fs().chmod;
+
+  this.chmodSync = fs().chmodSync;
+
+  this.chown = fs().chown;
+
+  this.chownSync = fs().chownSync;
+
+  this.close = fs().close;
+
+  this.closeSync = fs().closeSync;
+
+  this.copyFile = fs().copyFile;
+
+  this.copyFileSync = fs().copyFileSync;
 
   this.cp = cp;
   function cp() {
@@ -13,6 +36,10 @@ module.exports = function Files(options) {
   function cpr() {
     return promises().call(null, ncp(), arguments);
   }
+
+  this.createReadStream = fs().createReadStream;
+
+  this.createWriteStream = fs().createWriteStream;
 
   this.diff = diff;
   function diff(pathA, pathB, callback) {
@@ -30,6 +57,22 @@ module.exports = function Files(options) {
     });
   }
 
+  this.exists = fs().exists;
+
+  this.existsSync = fs().existsSync;
+
+  this.fchmod = fs().fchmod;
+
+  this.fchmodSync = fs().fchmodSync;
+
+  this.fchown = fs().fchown;
+
+  this.fchownSync = fs().fchownSync;
+
+  this.fdatasync = fs().fdatasync;
+
+  this.fdatasyncSync = fs().fdatasyncSync;
+
   this.filesWithExtension = filesWithExtension;
   function filesWithExtension(params, callback) {
     if (typeof callback === "function")
@@ -40,7 +83,6 @@ module.exports = function Files(options) {
         throw new TypeError(
           `We expected params to be defined, but it was ${params}.`
         );
-
       const { dir, ext } = params;
 
       if (!objects().isDefined(dir))
@@ -97,6 +139,22 @@ module.exports = function Files(options) {
     return filesWithExt;
   }
 
+  this.fstat = fs().fstat;
+
+  this.fstatSync = fs().fstatSync;
+
+  this.fsync = fs().fsync;
+
+  this.fsyncSync = fs().fsyncSync;
+
+  this.ftruncate = fs().ftruncate;
+
+  this.ftruncateSync = fs().ftruncateSync;
+
+  this.futimes = fs().futimes;
+
+  this.futimesSync = fs().futimesSync;
+
   this.isDirectory = isDirectory;
   function isDirectory(path, callback) {
     if (typeof callback === "function")
@@ -129,12 +187,18 @@ module.exports = function Files(options) {
     return this.lstatSync(path).isFile();
   }
 
+  this.link = fs().link;
+
+  this.linkSync = fs().linkSync;
+
   this.lstat = lstat;
   function lstat() {
     return promises().applyCallback(fs(), fs().lstat, arguments);
   }
 
   this.lstatSync = fs().lstatSync;
+
+  this.mkdir = fs().mkdir;
 
   this.mkdirp = function(path, cb) {
     return promises().call(null, mkdirp(), arguments);
@@ -144,12 +208,28 @@ module.exports = function Files(options) {
     return mkdirp().sync(dir, opts);
   };
 
+  this.mkdirSync = fs().mkdirSync;
+
+  this.mkdtemp = fs().mkdtemp;
+
+  this.mkdtempSync = fs().mkdtempSync;
+
+  this.open = fs().open;
+
+  this.openSync = fs().openSync;
+
+  this.read = fs().read;
+
   this.readdir = promises().promisify(fs().readdir);
+
+  this.readdirSync = fs().readdirSync;
 
   this.readFile = readFile;
   function readFile() {
     return wrapCallback(arguments, readFile, fs().readFile);
   }
+
+  this.readFileSync = fs().readFileSync;
 
   this.readFiles = readFiles;
   function readFiles(files, options, callback) {
@@ -174,6 +254,26 @@ module.exports = function Files(options) {
     })();
   }
 
+  this.readlink = fs().readlink;
+
+  this.readlinkSync = fs().readlinkSync;
+
+  this.readSync = fs().readSync;
+
+  this.realpath = fs().realpath;
+  // this.realpath.native
+
+  this.realpathSync = fs().realpathSync;
+  // this.realpathSync.native
+
+  this.rename = fs().rename;
+
+  this.renameSync = fs().renameSync;
+
+  this.rmdir = fs().rmdir;
+
+  this.rmdirSync = fs().rmdirSync;
+
   this.rmrf = rmrf;
   function rmrf() {
     return promises().call(null, rimraf(), arguments);
@@ -188,14 +288,56 @@ module.exports = function Files(options) {
     return wrapCallback(arguments, stat, fs().stat);
   }
 
+  this.statSync = fs().statSync;
+
+  this.symlink = fs().symlink;
+
+  this.symlinkSync = fs().symlinkSync;
+
   this.touch = function() {
     return touch().apply(null, arguments);
   };
+
+  this.truncate = fs().truncate;
+
+  this.truncateSync = fs().truncateSync;
+
+  this.unlink = fs().unlink;
+
+  this.unlinkSync = fs().unlinkSync;
+
+  this.unwatchFile = fs().unwatchFile;
+
+  this.utimes = fs().utimes;
+
+  this.utimesSync = fs().utimesSync;
+
+  this.watch = fs().watch;
+
+  this.watchFile = fs().watchFile;
+
+  this.write = fs().write;
 
   this.writeFile = writeFile;
   function writeFile() {
     return wrapCallback(arguments, writeFile, fs().writeFile);
   }
+
+  this.writeFileSync = fs().writeFileSync;
+
+  this.writeSync = fs().writeSync;
+
+  this.FileReadStream = fs().FileReadStream;
+
+  this.FileWriteStream = fs().FileWriteStream;
+
+  this.ReadStream = fs().ReadStream;
+
+  this.Stats = fs().Stats;
+
+  this.WriteStream = fs().WriteStream;
+
+  this.constants = fs().constants;
 
   function childProcess() {
     return options.child_process();
