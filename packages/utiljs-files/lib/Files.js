@@ -42,40 +42,13 @@ module.exports = function Files(options) {
   Object.assign(this, path());
 
   this.cp = cp;
-  function cp(source, target) {
-    let doneCalled = false;
-
-    return new Promise((resolve, reject) => {
-      let rd = fs().createReadStream(source);
-      let wr = fs().createWriteStream(target);
-      rd.on("error", done);
-      wr.on("error", done);
-      wr.on("close", done);
-      rd.pipe(wr);
-
-      function done(err) {
-        if (doneCalled) return;
-        doneCalled = true;
-        if (err) reject(err);
-        else resolve();
-      }
-    });
+  function cp() {
+    return promises().call(fs(), fs().copyFile, arguments);
   }
 
   this.cpr = cpr;
-  function cpr(source, destination, options, callback) {
-    if (typeof options !== "function" && !callback) {
-      if (options)
-        return promises().promisifyAndCall(
-          this,
-          cpr,
-          source,
-          destination,
-          options
-        );
-      return promises().promisifyAndCall(this, cpr, source, destination);
-    }
-    ncp().call(ncp(), source, destination, options, callback);
+  function cpr() {
+    return promises().call(null, ncp(), arguments);
   }
 
   this.diff = Files_diff;
