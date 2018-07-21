@@ -4,7 +4,7 @@ module.exports = function Files(options) {
   function _asyncwaterfall() {
     return options.asyncwaterfall();
   }
-  function _child_process() {
+  function childProcess() {
     return options.child_process();
   }
   function fs() {
@@ -51,16 +51,19 @@ module.exports = function Files(options) {
     return promises().call(null, ncp(), arguments);
   }
 
-  this.diff = Files_diff;
-  function Files_diff(pathA, pathB, cb) {
-    if (!objects().isDefined(pathA)) throw "pathA cannot be undefined";
-    if (!objects().isDefined(pathB)) throw "pathB cannot be undefined";
-    var diff = _child_process().spawn("diff", [pathA, pathB]);
+  this.diff = diff;
+  function diff(pathA, pathB, callback) {
+    if (!callback) return promises().call(null, this.diff, arguments);
+    if (!objects().isDefined(pathA))
+      return callback(new TypeError("We expected pathA to be defined."));
+    if (!objects().isDefined(pathB))
+      return callback(new TypeError("We expected pathB to be defined."));
+    var diff = childProcess().spawn("diff", [pathA, pathB]);
     diff.on("close", code => {
-      cb(null, code === 0);
+      callback(null, code === 0);
     });
     diff.on("error", err => {
-      cb(err);
+      callback(err);
     });
   }
 

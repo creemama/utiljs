@@ -71,67 +71,72 @@ describe("Files", function() {
   });
 
   describe("#diff(pathA, pathB, cb)", function() {
-    it("should throw an exception if pathA is undefined", () => {
-      expect(function() {
-        files.diff();
-      }).to.throw("pathA cannot be undefined");
-    });
-    it("should throw an exception if pathA is null", () => {
-      expect(function() {
-        files.diff(null, "/not/a/path");
-      }).to.throw("pathA cannot be undefined");
-    });
-    it("should throw an exception if pathB is undefined", () => {
-      expect(function() {
-        files.diff("/not/a/path");
-      }).to.throw("pathB cannot be undefined");
-    });
-    it("should throw an exception if pathB is null", () => {
-      expect(function() {
-        files.diff("/not/a/path", null);
-      }).to.throw("pathB cannot be undefined");
-    });
-    it("should return false if neither path exists", done => {
-      files.diff("/not/a/path", "/not/a/path", (err, code) => {
-        expect(err).to.be.null;
-        expect(code).to.equal(false);
-        done();
+    it("should error if pathA is undefined", callback => {
+      let pathA;
+      files.diff(pathA, "/not/a/path", (error, result) => {
+        expect(error).to.be.an.instanceof(TypeError);
+        callback();
       });
     });
-    it("should return true if both paths are the same directory", done => {
-      files.diff(__dirname, __dirname, (err, code) => {
-        expect(err).to.be.null;
-        expect(code).to.equal(true);
-        done();
+    it("should error if pathA is null", callback => {
+      files.diff(null, "/not/a/path", (error, result) => {
+        expect(error).to.be.an.instanceof(TypeError);
+        callback();
       });
     });
-    it("should return true if both paths are the same file", done => {
-      files.diff(
-        __dirname + "/FilesTest.js",
-        __dirname + "/FilesTest.js",
-        (err, code) => {
-          expect(err).to.be.null;
-          expect(code).to.equal(true);
-          done();
-        }
-      );
+    it("should error if pathB is undefined", callback => {
+      let pathB;
+      files.diff("/not/a/path", pathB, (error, result) => {
+        expect(error).to.be.an.instanceof(TypeError);
+        callback();
+      });
     });
-    it("should return false if both paths are different file", done => {
-      files.diff(
-        __dirname + "/FilesTest.js",
-        __dirname + "/StreamsTest.js",
-        (err, code) => {
-          expect(err).to.be.null;
-          expect(code).to.equal(false);
-          done();
-        }
-      );
+    it("should error if pathB is null", callback => {
+      files.diff("/not/a/path", null, (error, result) => {
+        expect(error).to.be.an.instanceof(TypeError);
+        callback();
+      });
     });
-    it("should return false if both paths are different directories", done => {
-      files.diff(__dirname, __dirname + "/support", (err, code) => {
-        expect(err).to.be.null;
-        expect(code).to.equal(false);
-        done();
+    it("should return false if neither path exists", callback => {
+      files.diff("/not/a/path", "/not/a/path", (error, result) => {
+        expect(error).to.be.null;
+        expect(result).to.be.false;
+        callback();
+      });
+    });
+    it("should return true if both paths are the same directory", callback => {
+      files.diff(__dirname, __dirname, (error, result) => {
+        expect(error).to.be.null;
+        expect(result).to.be.ok;
+        callback();
+      });
+    });
+    it("should return true if both paths are the same file", callback => {
+      files.diff(__filename, __filename, (error, result) => {
+        expect(error).to.be.null;
+        expect(result).to.be.ok;
+        callback();
+      });
+    });
+    it("should resolve to true if both paths are the same file", async function() {
+      expect(await files.diff(__filename, __filename)).to.be.ok;
+    });
+    it("should return false if both paths are different files", callback => {
+      const pathA = __dirname + "/FilesTest.js";
+      const pathB = __dirname + "/../index.js";
+      expect(files.isFile(pathA)).to.be.ok;
+      expect(files.isFile(pathB)).to.be.ok;
+      files.diff(pathA, pathB, (error, result) => {
+        expect(error).to.be.null;
+        expect(result).to.be.false;
+        callback();
+      });
+    });
+    it("should return false if both paths are different directories", callback => {
+      files.diff(__dirname, __dirname + "/..", (error, result) => {
+        expect(error).to.be.null;
+        expect(result).to.be.false;
+        callback();
       });
     });
   });
