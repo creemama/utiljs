@@ -34,7 +34,7 @@ module.exports = function Files(options) {
   function _strings() {
     return options.strings();
   }
-  function _touch() {
+  function touch() {
     return options.touch();
   }
 
@@ -283,7 +283,9 @@ module.exports = function Files(options) {
     return wrapCallback(arguments, stat, fs().stat);
   }
 
-  this.touch = _touch();
+  this.touch = function() {
+    return touch().apply(null, arguments);
+  };
 
   this.writeFile = writeFile;
   function writeFile() {
