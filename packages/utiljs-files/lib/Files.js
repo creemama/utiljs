@@ -19,7 +19,7 @@ module.exports = function Files(options) {
   function ncp() {
     return options.ncp();
   }
-  function _objects() {
+  function objects() {
     return options.objects();
   }
   function path() {
@@ -53,8 +53,8 @@ module.exports = function Files(options) {
 
   this.diff = Files_diff;
   function Files_diff(pathA, pathB, cb) {
-    if (!_objects().isDefined(pathA)) throw "pathA cannot be undefined";
-    if (!_objects().isDefined(pathB)) throw "pathB cannot be undefined";
+    if (!objects().isDefined(pathA)) throw "pathA cannot be undefined";
+    if (!objects().isDefined(pathB)) throw "pathB cannot be undefined";
     var diff = _child_process().spawn("diff", [pathA, pathB]);
     diff.on("close", code => {
       cb(null, code === 0);
@@ -69,7 +69,7 @@ module.exports = function Files(options) {
     if (!cb)
       return promises().promisifyAndCall(this, Files_filesWithExtension, opts);
 
-    if (!_objects().isDefined(opts)) {
+    if (!objects().isDefined(opts)) {
       cb("opts cannot be undefined");
       return;
     }
@@ -81,17 +81,17 @@ module.exports = function Files(options) {
     var dir = opts.dir;
     var ext = opts.ext;
 
-    if (!_objects().isDefined(dir)) {
+    if (!objects().isDefined(dir)) {
       cb("dir cannot be undefined");
       return;
     }
-    if (!_objects().isDefined(ext)) {
+    if (!objects().isDefined(ext)) {
       cb("ext cannot be undefined");
       return;
     }
 
     _fs().readdir(dir, (err, files) => {
-      if (_objects().isDefined(err)) {
+      if (objects().isDefined(err)) {
         cb(err);
         return;
       }
@@ -118,8 +118,8 @@ module.exports = function Files(options) {
     var dir = opts.dir;
     var ext = opts.ext;
 
-    if (!_objects().isDefined(dir)) throw "dir cannot be undefined";
-    if (!_objects().isDefined(ext)) throw "ext cannot be undefined";
+    if (!objects().isDefined(dir)) throw "dir cannot be undefined";
+    if (!objects().isDefined(ext)) throw "ext cannot be undefined";
 
     var files = _fs().readdirSync(dir);
     var filesWithExt = [];
@@ -138,7 +138,7 @@ module.exports = function Files(options) {
   this.isDirectory = Files_isDirectory;
   function Files_isDirectory(path, cb) {
     _fs().lstat(path, function(err, stats) {
-      if (_objects().isDefined(err)) {
+      if (objects().isDefined(err)) {
         cb(err, null);
         return;
       }
@@ -159,7 +159,7 @@ module.exports = function Files(options) {
       return promises().promisifyAndCall(this, Files_isFile, path);
     }
     _fs().lstat(path, function(err, stats) {
-      if (_objects().isDefined(err)) {
+      if (objects().isDefined(err)) {
         callback(err, null);
         return;
       }
@@ -220,7 +220,7 @@ module.exports = function Files(options) {
     }
     function Files_readFiles_end(err, str) {
       string += str;
-      if (_objects().isDefined(err)) {
+      if (objects().isDefined(err)) {
         caba(err);
         return;
       }
