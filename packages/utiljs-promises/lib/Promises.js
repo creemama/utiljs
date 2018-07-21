@@ -150,38 +150,14 @@ class Promises {
   }
 
   /**
-   * Calls the given functionOnObjectWithCallback with the given args that either (A) returns a Promise if args does not contain a callback or (B) notifies the callback if args contains a callback.
-   *
-   * Use this function if you are wrapping an existing function that only takes a callback but would like that function to handle both callbacks and Promises.
-   *
-   * Other than functionOnObjectWithCallback notifying when an error happens, this promise rejects if functionOnObjectWithCallback is not a function or if you give the wrong number of arguments for functionOnObjectWithCallback.
-   *
-   * @example
-   * const promises = require("utiljs-promises");
-   * const stream = require("stream");
-   * const streams = require("utiljs-streams");
-   * // stream#finished only takes a callback.
-   * // Wrap stream#finished so that it handles both callbacks and Promises.
-   * function finished() {
-   *   return promises.call(stream, stream.finished, arguments);
-   * }
-   * const readableToCallback = streams.fromString("Call back, Hypnotoad!");
-   * finished(readableToCallback, () => console.log("Finished with a callback"));
-   * const readableToPromise = streams.fromString("Promise me, Hypnotoad!");
-   * finished(readableToPromise).then(() => console.log("Finished as promised"));
-   *
-   * @param {Object} object Value to use as this when executing functionOnObjectWithCallback (can be null)
-   * @param {Function} functionOnObjectWithCallback A function that takes a callback as its last argument
-   * @param args An array-like object containing the arguments to pass to functionOnObjectWithCallback; this is usually just [arguments]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments}
-   * @return {undefined|Promise} undefined if the last element of args is a callback or a Promise if args does not contain a callback
+   * Use {@link Promises#applyCallback} instead.
    * @public
    * @instance
    * @function
+   * @deprecated
    */
   call(object, functionOnObjectWithCallback, args) {
-    if (hasCallback(args))
-      return functionOnObjectWithCallback.apply(object, args);
-    return this.promisifyAndCall(object, functionOnObjectWithCallback, ...args);
+    return this.applyCallback(object, functionOnObjectWithCallback, args);
   }
 
   /**
@@ -307,9 +283,9 @@ class Promises {
   }
 
   /**
-   * Wraps the given functionWithCallback such that calling the returned function returns a Promise that resolves if functionWithCallback succeeds and rejects if functionWithCallback errors
+   * Wraps the given functionWithCallback such that calling the returned function returns a Promise that resolves if functionWithCallback succeeds and rejects if functionWithCallback errors.
    *
-   * Use {@link Promises#promisifyAndCall} if you would like to promisify a method and call it in one line.
+   * Use {@link Promises#callCallback} if you would like to promisify a method and call it in one line.
    *
    * The returned Promise rejects if functionWithCallback is not a function.
    *
@@ -355,41 +331,14 @@ class Promises {
   }
 
   /**
-   * Calls the given functionOnObjectWithCallback with the given args returning a Promise that resolves if functionOnObjectWithCallback succeeds and rejects if functionOnObjectWithCallback errors
-   *
-   * Using this method may be less boilerplate than using {@link Promises#promisify}.
-   *
-   * Use this method when writing new functions that support both callbacks and Promises.
-   *
-   * @example
-   * const promises = require("utiljs-promises");
-   * const stream = require("stream");
-   * const streams = require("utiljs-streams");
-   * // stream#finished only takes a callback.
-   * const readable = streams.fromString("Promise me, Hypnotoad!");
-   * promises
-   *   .promisifyAndCall(stream, stream.finished, readable)
-   *   .then(() => console.log("Finished as promised"));
-   *
-   * @example
-   * const promises = require("utiljs-promises");
-   * function notify(message, callback) {
-   *   if (!callback) return promises.promisifyAndCall(null, notify, message);
-   *   callback(null, message);
-   * }
-   * notify("Call back, Hypnotoad!", (error, message) => console.log(message));
-   * notify("Promise me, Hypnotoad!").then(console.log);
-   *
-   * @param {Object} object Value to use as this when executing functionOnObjectWithCallback (can be null)
-   * @param {Function} functionOnObjectWithCallback A function that takes a callback as its last argument
-   * @param {...*} args The arguments to pass to functionOnObjectWithCallback; this list of arguments should not contain a callback
-   * @return {Promise} a new Promise instance
+   * Use {@link Promises#callCallback} instead.
    * @public
    * @instance
    * @function
+   * @deprecated
    */
   promisifyAndCall(object, functionOnObjectWithCallback, ...args) {
-    return this.promisify(functionOnObjectWithCallback).apply(object, args);
+    return this.applyCallback(object, functionOnObjectWithCallback, args);
   }
 
   /**

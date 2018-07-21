@@ -11,12 +11,10 @@ This class contains all the non-instance methods of [Promise](https://developer.
 
 - [applyCallback](#Promises+applyCallback)
 - [applyPromise](#Promises+applyPromise)
-- [call](#Promises+call)
 - [callbackify](#Promises+callbackify)
 - [callCallback](#Promises+callCallback)
 - [callPromise](#Promises+callPromise)
 - [promisify](#Promises+promisify)
-- [promisifyAndCall](#Promises+promisifyAndCall)
 
 [Promises#all](#Promises+all) and [Promises#race](#Promises+race) behave a little differently from Promise#all and Promise#race. Unlike Promise#all and Promise#race, Promises#all and Promises#race can take multiple arguments.
 
@@ -31,12 +29,12 @@ This class contains all the non-instance methods of [Promise](https://developer.
   - [.all(iterable)](#Promises+all) ⇒ <code>Promise</code>
   - [.applyCallback(object, functionOnObjectWithCallback, args)](#Promises+applyCallback) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.applyPromise(object, promiseFunctionOnObject, args)](#Promises+applyPromise) ⇒ <code>undefined</code> \| <code>Promise</code>
-  - [.call(object, functionOnObjectWithCallback, args)](#Promises+call) ⇒ <code>undefined</code> \| <code>Promise</code>
+  - ~~[.call()](#Promises+call)~~
   - [.callbackify(promiseFunction)](#Promises+callbackify) ⇒ <code>function</code>
   - [.callCallback(object, functionOnObjectWithCallback, [...args])](#Promises+callCallback) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.callPromise(object, promiseFunctionOnObject, [...args])](#Promises+callPromise) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.promisify(functionWithCallback)](#Promises+promisify) ⇒ <code>function</code>
-  - [.promisifyAndCall(object, functionOnObjectWithCallback, ...args)](#Promises+promisifyAndCall) ⇒ <code>Promise</code>
+  - ~~[.promisifyAndCall()](#Promises+promisifyAndCall)~~
   - [.race(iterable)](#Promises+race) ⇒ <code>Promise</code>
   - [.reject(reason)](#Promises+reject) ⇒ <code>Promise</code>
   - [.resolve(value)](#Promises+resolve) ⇒ <code>Promise</code>
@@ -205,41 +203,14 @@ notify("Promise me", "Hypnotoad").then(console.log);
 
 <a name="Promises+call"></a>
 
-### promises.call(object, functionOnObjectWithCallback, args) ⇒ <code>undefined</code> \| <code>Promise</code>
+### ~~promises.call()~~
 
-Calls the given functionOnObjectWithCallback with the given args that either (A) returns a Promise if args does not contain a callback or (B) notifies the callback if args contains a callback.
+**_Deprecated_**
 
-Use this function if you are wrapping an existing function that only takes a callback but would like that function to handle both callbacks and Promises.
-
-Other than functionOnObjectWithCallback notifying when an error happens, this promise rejects if functionOnObjectWithCallback is not a function or if you give the wrong number of arguments for functionOnObjectWithCallback.
+Use [applyCallback](#Promises+applyCallback) instead.
 
 **Kind**: instance method of [<code>Promises</code>](#Promises)  
-**Returns**: <code>undefined</code> \| <code>Promise</code> - undefined if the last element of args is a callback or a Promise if args does not contain a callback  
-**Access**: public
-
-| Param                        | Type                  | Description                                                                                                                                                                                                    |
-| ---------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| object                       | <code>Object</code>   | Value to use as this when executing functionOnObjectWithCallback (can be null)                                                                                                                                 |
-| functionOnObjectWithCallback | <code>function</code> | A function that takes a callback as its last argument                                                                                                                                                          |
-| args                         |                       | An array-like object containing the arguments to pass to functionOnObjectWithCallback; this is usually just [arguments](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments) |
-
-**Example**
-
-```js
-const promises = require("utiljs-promises");
-const stream = require("stream");
-const streams = require("utiljs-streams");
-// stream#finished only takes a callback.
-// Wrap stream#finished so that it handles both callbacks and Promises.
-function finished() {
-  return promises.call(stream, stream.finished, arguments);
-}
-const readableToCallback = streams.fromString("Call back, Hypnotoad!");
-finished(readableToCallback, () => console.log("Finished with a callback"));
-const readableToPromise = streams.fromString("Promise me, Hypnotoad!");
-finished(readableToPromise).then(() => console.log("Finished as promised"));
-```
-
+**Access**: public  
 <a name="Promises+callbackify"></a>
 
 ### promises.callbackify(promiseFunction) ⇒ <code>function</code>
@@ -365,9 +336,9 @@ promises.callPromise(
 
 ### promises.promisify(functionWithCallback) ⇒ <code>function</code>
 
-Wraps the given functionWithCallback such that calling the returned function returns a Promise that resolves if functionWithCallback succeeds and rejects if functionWithCallback errors
+Wraps the given functionWithCallback such that calling the returned function returns a Promise that resolves if functionWithCallback succeeds and rejects if functionWithCallback errors.
 
-Use [promisifyAndCall](#Promises+promisifyAndCall) if you would like to promisify a method and call it in one line.
+Use [callCallback](#Promises+callCallback) if you would like to promisify a method and call it in one line.
 
 The returned Promise rejects if functionWithCallback is not a function.
 
@@ -394,49 +365,14 @@ finished(readable).then(() => console.log("Finished as promised"));
 
 <a name="Promises+promisifyAndCall"></a>
 
-### promises.promisifyAndCall(object, functionOnObjectWithCallback, ...args) ⇒ <code>Promise</code>
+### ~~promises.promisifyAndCall()~~
 
-Calls the given functionOnObjectWithCallback with the given args returning a Promise that resolves if functionOnObjectWithCallback succeeds and rejects if functionOnObjectWithCallback errors
+**_Deprecated_**
 
-Using this method may be less boilerplate than using [promisify](#Promises+promisify).
-
-Use this method when writing new functions that support both callbacks and Promises.
+Use [callCallback](#Promises+callCallback) instead.
 
 **Kind**: instance method of [<code>Promises</code>](#Promises)  
-**Returns**: <code>Promise</code> - a new Promise instance  
-**Access**: public
-
-| Param                        | Type                  | Description                                                                                                 |
-| ---------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------- |
-| object                       | <code>Object</code>   | Value to use as this when executing functionOnObjectWithCallback (can be null)                              |
-| functionOnObjectWithCallback | <code>function</code> | A function that takes a callback as its last argument                                                       |
-| ...args                      | <code>\*</code>       | The arguments to pass to functionOnObjectWithCallback; this list of arguments should not contain a callback |
-
-**Example**
-
-```js
-const promises = require("utiljs-promises");
-const stream = require("stream");
-const streams = require("utiljs-streams");
-// stream#finished only takes a callback.
-const readable = streams.fromString("Promise me, Hypnotoad!");
-promises
-  .promisifyAndCall(stream, stream.finished, readable)
-  .then(() => console.log("Finished as promised"));
-```
-
-**Example**
-
-```js
-const promises = require("utiljs-promises");
-function notify(message, callback) {
-  if (!callback) return promises.promisifyAndCall(null, notify, message);
-  callback(null, message);
-}
-notify("Call back, Hypnotoad!", (error, message) => console.log(message));
-notify("Promise me, Hypnotoad!").then(console.log);
-```
-
+**Access**: public  
 <a name="Promises+race"></a>
 
 ### promises.race(iterable) ⇒ <code>Promise</code>

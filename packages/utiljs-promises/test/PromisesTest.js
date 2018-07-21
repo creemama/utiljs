@@ -280,10 +280,9 @@ describe("Promises", function() {
         TypeError
       );
       // The following line sends functionWithCallback the wrong number of arguments.
-      const a = promises
-        .call(null, functionWithCallback, "a")
-        .then(() => expect.fail("We expected call to throw an error."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      expect(() => promises.call(null, functionWithCallback, "a")).to.throw(
+        TypeError
+      );
       expect(() => promises.call(null, null, [() => {}])).to.throw(TypeError);
       expect(() => promises.call(null, "a", [() => {}])).to.throw(TypeError);
       expect(() => promises.call(null, null, [])).to.throw(TypeError);
