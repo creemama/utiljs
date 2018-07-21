@@ -99,6 +99,10 @@ class Promises {
    * @function
    */
   promisify(functionWithCallback) {
+    if (typeof functionWithCallback !== "function")
+      throw new TypeError(
+        `We expected functionWithCallback to be a function but was ${functionWithCallback}.`
+      );
     return function() {
       const args = arguments;
       const thiz = this;

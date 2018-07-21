@@ -70,15 +70,8 @@ describe("Promises", function() {
         .catch(error => expect(error).to.be.an.instanceof(TypeError));
       expect(() => promises.call(null, null, [() => {}])).to.throw(TypeError);
       expect(() => promises.call(null, "a", [() => {}])).to.throw(TypeError);
-      const b = promises
-        .call(null, null, [])
-        .then(() => expect.fail("We expected call to throw an error."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      const c = promises
-        .call(null, "a", [])
-        .then(() => expect.fail("We expected call to throw an error."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      return promises.all(a, b, c);
+      expect(() => promises.call(null, null, [])).to.throw(TypeError);
+      expect(() => promises.call(null, "a", [])).to.throw(TypeError);
     });
   });
 
@@ -105,19 +98,9 @@ describe("Promises", function() {
       return promises.promisify(functionWithCallback)("a", "b");
     });
     it("should reject if functionWithCallback is not a function", () => {
-      const a = promises
-        .promisify()()
-        .then(() => expect.fail("We expected promisify to fail."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      const b = promises
-        .promisify(null)()
-        .then(() => expect.fail("We expected promisify to fail."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      const c = promises
-        .promisify("random")()
-        .then(() => expect.fail("We expected promisify to fail."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      return promises.all(a, b, c);
+      expect(() => promises.promisify()).to.throw(TypeError);
+      expect(() => promises.promisify(null)).to.throw(TypeError);
+      expect(() => promises.promisify("random")).to.throw(TypeError);
     });
   });
 
@@ -150,15 +133,9 @@ describe("Promises", function() {
         .promisifyAndCall(null, functionWithCallback, "a")
         .then(() => expect.fail("We expected call to throw an error."))
         .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      const b = promises
-        .promisifyAndCall(null, null)
-        .then(() => expect.fail("We expected call to throw an error."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      const c = promises
-        .promisifyAndCall(null, "a")
-        .then(() => expect.fail("We expected call to throw an error."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      return promises.all(a, b, c);
+      expect(() => promises.promisifyAndCall(null, null)).to.throw(TypeError);
+      expect(() => promises.promisifyAndCall(null, "a")).to.throw(TypeError);
+      return a;
     });
   });
 

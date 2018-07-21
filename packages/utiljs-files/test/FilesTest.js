@@ -281,6 +281,7 @@ describe("Files", function() {
   describe("#filesWithExtensionSync()", function() {
     it("should return [] if dir is empty", function() {
       var fs = {
+        readdir() {},
         readdirSync: function() {
           return [];
         }
@@ -294,6 +295,7 @@ describe("Files", function() {
 
   describe("#filesWithExtensionSync()", function() {
     var fs = {
+      readdir() {},
       readdirSync: function() {
         return [
           ".DS_Store",
