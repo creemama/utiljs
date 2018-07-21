@@ -10,9 +10,6 @@ module.exports = function Files(options) {
   function fs() {
     return options.fs();
   }
-  function _fs() {
-    return options.fs();
-  }
   function mkdirp() {
     return options.mkdirp();
   }
@@ -31,7 +28,7 @@ module.exports = function Files(options) {
   function rimraf() {
     return options.rimraf();
   }
-  function _strings() {
+  function strings() {
     return options.strings();
   }
   function touch() {
@@ -93,17 +90,17 @@ module.exports = function Files(options) {
       return;
     }
 
-    _fs().readdir(dir, (err, files) => {
+    fs().readdir(dir, (err, files) => {
       if (objects().isDefined(err)) {
         cb(err);
         return;
       }
       var filesWithExt = [];
 
-      var divider = _strings().endsWith(dir, "/") ? "" : "/";
+      var divider = strings().endsWith(dir, "/") ? "" : "/";
 
       function Files_filesWithExtension_forEach(file) {
-        if (_strings().endsWith(file.toLowerCase(), "." + ext)) {
+        if (strings().endsWith(file.toLowerCase(), "." + ext)) {
           filesWithExt.push(dir + divider + file);
         }
       }
@@ -124,13 +121,13 @@ module.exports = function Files(options) {
     if (!objects().isDefined(dir)) throw "dir cannot be undefined";
     if (!objects().isDefined(ext)) throw "ext cannot be undefined";
 
-    var files = _fs().readdirSync(dir);
+    var files = fs().readdirSync(dir);
     var filesWithExt = [];
 
-    var divider = _strings().endsWith(dir, "/") ? "" : "/";
+    var divider = strings().endsWith(dir, "/") ? "" : "/";
 
     function Files_filesWithExtension_forEach(file) {
-      if (_strings().endsWith(file.toLowerCase(), "." + ext)) {
+      if (strings().endsWith(file.toLowerCase(), "." + ext)) {
         filesWithExt.push(dir + divider + file);
       }
     }
@@ -140,7 +137,7 @@ module.exports = function Files(options) {
 
   this.isDirectory = Files_isDirectory;
   function Files_isDirectory(path, cb) {
-    _fs().lstat(path, function(err, stats) {
+    fs().lstat(path, function(err, stats) {
       if (objects().isDefined(err)) {
         cb(err, null);
         return;
@@ -151,7 +148,7 @@ module.exports = function Files(options) {
 
   this.isDirectorySync = Files_isDirectorySync;
   function Files_isDirectorySync(path) {
-    return _fs()
+    return fs()
       .lstatSync(path)
       .isDirectory();
   }
@@ -161,7 +158,7 @@ module.exports = function Files(options) {
     if (!callback) {
       return promises().promisifyAndCall(this, Files_isFile, path);
     }
-    _fs().lstat(path, function(err, stats) {
+    fs().lstat(path, function(err, stats) {
       if (objects().isDefined(err)) {
         callback(err, null);
         return;
@@ -172,7 +169,7 @@ module.exports = function Files(options) {
 
   this.isFileSync = Files_isFileSync;
   function Files_isFileSync(path) {
-    return _fs()
+    return fs()
       .lstatSync(path)
       .isFile();
   }
@@ -189,7 +186,7 @@ module.exports = function Files(options) {
 
   this.readFile = readFile;
   function readFile() {
-    return wrapCallback(arguments, readFile, _fs().readFile);
+    return wrapCallback(arguments, readFile, fs().readFile);
   }
 
   this.readFiles = Files_readFiles;
@@ -211,7 +208,7 @@ module.exports = function Files(options) {
     tasks.push(Files_readFiles_start);
     files.forEach(function(file) {
       tasks.push(Files_readFiles_readFile.bind({ file: file }));
-      tasks.push(_fs().readFile);
+      tasks.push(fs().readFile);
     });
     _asyncwaterfall()(tasks, Files_readFiles_end);
     function Files_readFiles_start(callback) {
@@ -251,7 +248,7 @@ module.exports = function Files(options) {
 
   this.writeFile = writeFile;
   function writeFile() {
-    return wrapCallback(arguments, writeFile, _fs().writeFile);
+    return wrapCallback(arguments, writeFile, fs().writeFile);
   }
 };
 
