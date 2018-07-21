@@ -1,8 +1,6 @@
 "use strict";
 
 module.exports = function Files(options) {
-  Object.assign(this, path());
-
   this.access = fs().access;
 
   this.accessSync = fs().accessSync;
@@ -10,6 +8,8 @@ module.exports = function Files(options) {
   this.appendFile = fs().appendFile;
 
   this.appendFileSync = fs().appendFileSync;
+
+  this.basename = path().basename;
 
   this.chmod = fs().chmod;
 
@@ -57,9 +57,13 @@ module.exports = function Files(options) {
     });
   }
 
+  this.dirname = path().dirname;
+
   this.exists = fs().exists;
 
   this.existsSync = fs().existsSync;
+
+  this.extname = path().extname;
 
   this.fchmod = fs().fchmod;
 
@@ -139,6 +143,8 @@ module.exports = function Files(options) {
     return filesWithExt;
   }
 
+  this.format = path().format;
+
   this.fstat = fs().fstat;
 
   this.fstatSync = fs().fstatSync;
@@ -154,6 +160,8 @@ module.exports = function Files(options) {
   this.futimes = fs().futimes;
 
   this.futimesSync = fs().futimesSync;
+
+  this.isAbsolute = path().isAbsolute;
 
   this.isDirectory = isDirectory;
   function isDirectory(path, callback) {
@@ -187,6 +195,8 @@ module.exports = function Files(options) {
     return this.lstatSync(path).isFile();
   }
 
+  this.join = path().join;
+
   this.link = fs().link;
 
   this.linkSync = fs().linkSync;
@@ -214,9 +224,13 @@ module.exports = function Files(options) {
 
   this.mkdtempSync = fs().mkdtempSync;
 
+  this.normalize = path().normalize;
+
   this.open = fs().open;
 
   this.openSync = fs().openSync;
+
+  this.parse = path().parse;
 
   this.read = fs().read;
 
@@ -266,9 +280,13 @@ module.exports = function Files(options) {
   this.realpathSync = fs().realpathSync;
   // this.realpathSync.native
 
+  this.relative = path().relative;
+
   this.rename = fs().rename;
 
   this.renameSync = fs().renameSync;
+
+  this.resolve = path().resolve;
 
   this.rmdir = fs().rmdir;
 
@@ -293,6 +311,8 @@ module.exports = function Files(options) {
   this.symlink = fs().symlink;
 
   this.symlinkSync = fs().symlinkSync;
+
+  this.toNamespacedPath = path().toNamespacedPath;
 
   this.touch = function() {
     return touch().apply(null, arguments);
@@ -338,6 +358,14 @@ module.exports = function Files(options) {
   this.WriteStream = fs().WriteStream;
 
   this.constants = fs().constants;
+
+  this.delimiter = path().delimiter;
+
+  this.posix = path().posix;
+
+  this.sep = path().sep;
+
+  this.win32 = path().win32;
 
   function childProcess() {
     return options.child_process();
