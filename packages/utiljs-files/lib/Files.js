@@ -201,17 +201,8 @@ module.exports = function Files(options) {
       .isFile();
   }
 
-  this.mkdirp = (path, cb) => {
-    if (cb) {
-      mkdirp()(path, cb);
-      return;
-    }
-    return new Promise((resolve, reject) => {
-      mkdirp()(path, (err, made) => {
-        if (err) reject(err);
-        else resolve();
-      });
-    });
+  this.mkdirp = function(path, cb) {
+    return promises().call(null, mkdirp(), arguments);
   };
 
   this.mkdirpSync = function(dir, opts) {
@@ -265,13 +256,8 @@ module.exports = function Files(options) {
   }
 
   this.rmrf = rmrf;
-  function rmrf(path, options, callback) {
-    if (typeof options !== "function" && !callback) {
-      if (options)
-        return promises().promisifyAndCall(this, rmrf, path, options);
-      return promises().promisifyAndCall(this, rmrf, path);
-    }
-    rimraf().call(rimraf(), path, options, callback);
+  function rmrf() {
+    return promises().call(null, rimraf(), arguments);
   }
 
   this.rmrfSync = function(path, opts) {
