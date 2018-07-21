@@ -146,123 +146,166 @@ describe("Files", function() {
       return files
         .filesWithExtension()
         .then(() => expect.fail())
-        .catch(error => expect(error).to.eq("opts cannot be undefined"));
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
     });
-    it("should return an error if callback specified and caller does not specify any arguments", cb => {
-      files.filesWithExtension(null, err => {
-        expect(err).to.equal("opts cannot be undefined");
-        cb();
+    it("should error if a callback is specified and caller does not specify any arguments", done => {
+      files.filesWithExtension(null, error => {
+        try {
+          expect(error).to.be.an.instanceof(TypeError);
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should throw an exception if opts is empty", () => {
+    it("should error if params is empty", () => {
       return files
         .filesWithExtension({})
         .then(() => expect.fail())
-        .catch(error => expect(error).to.eq("dir cannot be undefined"));
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
     });
-    it("should return an error if callback specified and opts is empty", cb => {
-      files.filesWithExtension({}, err => {
-        expect(err).to.equal("dir cannot be undefined");
-        cb();
+    it("should error if callback is specified and params is empty", done => {
+      files.filesWithExtension({}, error => {
+        try {
+          expect(error).to.be.an.instanceof(TypeError);
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should throw an exception if dir and ext are null", () => {
+    it("should error if dir and ext are null", () => {
       return files
         .filesWithExtension({ dir: null, ext: null })
         .then(() => expect.fail())
-        .catch(error => expect(error).to.eq("dir cannot be undefined"));
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
     });
-    it("should return an error if callback is specified and dir and ext are null", cb => {
-      files.filesWithExtension({ dir: null, ext: null }, err => {
-        expect(err).to.equal("dir cannot be undefined");
-        cb();
+    it("should return an error if callback is specified and dir and ext are null", done => {
+      files.filesWithExtension({ dir: null, ext: null }, error => {
+        try {
+          expect(error).to.be.an.instanceof(TypeError);
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should throw an exception if only ext is null", () => {
+    it("should error if only ext is null", () => {
       return files
         .filesWithExtension({ dir: ".", ext: null })
         .then(() => expect.fail())
-        .catch(error => expect(error).to.eq("ext cannot be undefined"));
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
     });
-    it("should return an error if callback specified and only ext is null", cb => {
-      files.filesWithExtension({ dir: ".", ext: null }, err => {
-        expect(err).to.equal("ext cannot be undefined");
-        cb();
+    it("should error if callback is specified and only ext is null", done => {
+      files.filesWithExtension({ dir: ".", ext: null }, error => {
+        try {
+          expect(error).to.be.an.instanceof(TypeError);
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
     it("should throw an exception if only dir is null", () => {
       return files
         .filesWithExtension({ dir: null, ext: "json" })
         .then(() => expect.fail())
-        .catch(error => expect(error).to.eq("dir cannot be undefined"));
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
     });
-    it("should return an error if only dir is null", cb => {
-      files.filesWithExtension({ dir: null, ext: "json" }, err => {
-        expect(err).to.equal("dir cannot be undefined");
-        cb();
+    it("should error if only dir is null", done => {
+      files.filesWithExtension({ dir: null, ext: "json" }, error => {
+        try {
+          expect(error).to.be.an.instanceof(TypeError);
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
     it("should throw an exception if dir does not exist", () => {
       return files
         .filesWithExtension({ dir: "/unlikely/to/exist/dir", ext: "json" })
         .then(() => expect.fail())
-        .catch(error => expect(error).to.be.an("Error"));
+        .catch(error => {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.toString()).to.include("ENOENT");
+        });
     });
-    it("should return an error if dir does not exist", cb => {
+    it("should error if dir does not exist", done => {
       files.filesWithExtension(
         { dir: "/unlikely/to/exist/dir", ext: "json" },
-        err => {
-          expect(resources.objects().isDefined(err)).to.be.true;
-          cb();
+        error => {
+          try {
+            expect(error).to.be.an.instanceof(Error);
+            expect(error.toString()).to.include("ENOENT");
+            done();
+          } catch (err) {
+            done(err);
+          }
         }
       );
     });
-  });
-
-  describe("#filesWithExtension()", function() {
-    it("should return [] if dir is empty", function(cb) {
-      files.filesWithExtension({ dir: emptyDir, ext: "json" }, (err, f) => {
-        expect(f).to.have.members([]);
-        cb();
+    it("should return [] if dir is empty", done => {
+      files.filesWithExtension(
+        { dir: emptyDir, ext: "json" },
+        (error, result) => {
+          try {
+            expect(result).to.have.members([]);
+            done();
+          } catch (err) {
+            done(err);
+          }
+        }
+      );
+    });
+    it("should have a forward slash separating directory and filename in returned filenames if dir does not contain a slash at the end", async function() {
+      await prepareDirWithJsonFiles();
+      const result = await files.filesWithExtension({
+        dir: jsonDir,
+        ext: "json"
+      });
+      expect(result).to.have.members([
+        jsonDir + "/package.json",
+        jsonDir + "/server.json",
+        jsonDir + "/tasks.JSON"
+      ]);
+    });
+    it("should not have two forward slashes in returned filenames if dir contains a slash at the end", done => {
+      prepareDirWithJsonFiles().then(() => {
+        files.filesWithExtension(
+          { dir: jsonDir + "/", ext: "json" },
+          (error, result) => {
+            try {
+              expect(result).to.have.members([
+                jsonDir + "/package.json",
+                jsonDir + "/server.json",
+                jsonDir + "/tasks.JSON"
+              ]);
+              done();
+            } catch (err) {
+              done(err);
+            }
+          }
+        );
       });
     });
-    it("should have a forward slash separating directory and filename in returned filenames if dir does not contain a slash at the end", cb => {
-      prepareDirWithJsonFiles().then(() => {
-        files.filesWithExtension({ dir: jsonDir, ext: "json" }, (err, f) => {
-          expect(f).to.have.members([
-            jsonDir + "/package.json",
-            jsonDir + "/server.json",
-            jsonDir + "/tasks.JSON"
-          ]);
-          cb();
-        });
+    it("should return [] if there are files in dir matching ext but ext starts with a period", async function() {
+      await prepareDirWithJsonFiles();
+      const result = await files.filesWithExtension({
+        dir: jsonDir,
+        ext: ".json"
       });
+      expect(result).to.have.members([]);
     });
-    it("should not have two forward slashes in returned filenames if dir contains a slash at the end", cb => {
+    it("should return [] if ext is empty", done => {
       prepareDirWithJsonFiles().then(() => {
-        files.filesWithExtension({ dir: jsonDir, ext: "json" }, (err, f) => {
-          expect(f).to.have.members([
-            jsonDir + "/package.json",
-            jsonDir + "/server.json",
-            jsonDir + "/tasks.JSON"
-          ]);
-          cb();
-        });
-      });
-    });
-    it("should return [] if there are files in dir matching ext but ext starts with a period", cb => {
-      prepareDirWithJsonFiles().then(() => {
-        files.filesWithExtension({ dir: jsonDir, ext: ".json" }, (err, f) => {
-          expect(f).to.have.members([]);
-          cb();
-        });
-      });
-    });
-    it("should return [] if ext is empty", cb => {
-      prepareDirWithJsonFiles().then(() => {
-        files.filesWithExtension({ dir: jsonDir, ext: "" }, (err, f) => {
-          expect(f).to.have.members([]);
-          cb();
+        files.filesWithExtension({ dir: jsonDir, ext: "" }, (error, result) => {
+          try {
+            expect(result).to.have.members([]);
+            done();
+          } catch (err) {
+            done(err);
+          }
         });
       });
     });
@@ -277,22 +320,22 @@ describe("Files", function() {
     it("should throw an exception if opts is empty", function() {
       expect(function() {
         files.filesWithExtensionSync({});
-      }).to.throw("dir cannot be undefined");
+      }).to.throw(TypeError);
     });
     it("should throw an exception if dir and ext are null", function() {
       expect(function() {
         files.filesWithExtensionSync({ dir: null, ext: null });
-      }).to.throw("dir cannot be undefined");
+      }).to.throw(TypeError);
     });
     it("should throw an exception if only ext is null", function() {
       expect(function() {
         files.filesWithExtensionSync({ dir: ".", ext: null });
-      }).to.throw("ext cannot be undefined");
+      }).to.throw(TypeError);
     });
     it("should throw an exception if only dir is null", function() {
       expect(function() {
         files.filesWithExtensionSync({ dir: null, ext: "json" });
-      }).to.throw("dir cannot be undefined");
+      }).to.throw(TypeError);
     });
     it("should throw an exception if dir does not exist", function() {
       expect(function() {

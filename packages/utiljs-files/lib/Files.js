@@ -64,74 +64,70 @@ module.exports = function Files(options) {
     });
   }
 
-  this.filesWithExtension = Files_filesWithExtension;
-  function Files_filesWithExtension(opts, cb) {
-    if (!cb)
-      return promises().promisifyAndCall(this, Files_filesWithExtension, opts);
+  this.filesWithExtension = filesWithExtension;
+  function filesWithExtension(params, callback) {
+    if (typeof callback === "function")
+      return promises().applyPromise(this, this.filesWithExtension, arguments);
+    const thiz = this;
+    return (async function() {
+      if (!objects().isDefined(params))
+        throw new TypeError(
+          `We expected params to be defined, but it was ${params}.`
+        );
 
-    if (!objects().isDefined(opts)) {
-      cb("opts cannot be undefined");
-      return;
-    }
-    if (typeof cb !== "function") {
-      throw "cb must be a function";
-      return;
-    }
+      const { dir, ext } = params;
 
-    var dir = opts.dir;
-    var ext = opts.ext;
+      if (!objects().isDefined(dir))
+        throw new TypeError(
+          `We expected params.dir to be defined, but it was ${dir}.`
+        );
+      if (!objects().isDefined(ext))
+        throw new TypeError(
+          `We expected params.ext to be defined, but it was ${ext}.`
+        );
 
-    if (!objects().isDefined(dir)) {
-      cb("dir cannot be undefined");
-      return;
-    }
-    if (!objects().isDefined(ext)) {
-      cb("ext cannot be undefined");
-      return;
-    }
-
-    fs().readdir(dir, (err, files) => {
-      if (objects().isDefined(err)) {
-        cb(err);
-        return;
-      }
-      var filesWithExt = [];
-
-      var divider = strings().endsWith(dir, "/") ? "" : "/";
-
-      function Files_filesWithExtension_forEach(file) {
+      const files = await thiz.readdir(dir);
+      const filesWithExt = [];
+      const divider = strings().endsWith(dir, "/") ? "" : "/";
+      files.forEach(file => {
         if (strings().endsWith(file.toLowerCase(), "." + ext)) {
           filesWithExt.push(dir + divider + file);
         }
-      }
-      files.forEach(Files_filesWithExtension_forEach);
-      cb(null, filesWithExt);
-    });
+      });
+      return filesWithExt;
+    })();
   }
 
   /**
    * Does not recursively search for files.
    * When specifying ext, do not include the period.
    */
-  this.filesWithExtensionSync = Files_filesWithExtensionSync;
-  function Files_filesWithExtensionSync(opts) {
-    var dir = opts.dir;
-    var ext = opts.ext;
+  this.filesWithExtensionSync = filesWithExtensionSync;
+  function filesWithExtensionSync(params) {
+    if (!objects().isDefined(params))
+      throw new TypeError(
+        `We expected params to be defined, but it was ${params}.`
+      );
 
-    if (!objects().isDefined(dir)) throw "dir cannot be undefined";
-    if (!objects().isDefined(ext)) throw "ext cannot be undefined";
+    const { dir, ext } = params;
 
-    var files = fs().readdirSync(dir);
-    var filesWithExt = [];
+    if (!objects().isDefined(dir))
+      throw new TypeError(
+        `We expected params.dir to be defined, but it was ${dir}.`
+      );
+    if (!objects().isDefined(ext))
+      throw new TypeError(
+        `We expected params.ext to be defined, but it was ${ext}.`
+      );
 
-    var divider = strings().endsWith(dir, "/") ? "" : "/";
-
-    function Files_filesWithExtension_forEach(file) {
+    const files = this.readdirSync(dir);
+    const filesWithExt = [];
+    const divider = strings().endsWith(dir, "/") ? "" : "/";
+    files.forEach(file => {
       if (strings().endsWith(file.toLowerCase(), "." + ext)) {
         filesWithExt.push(dir + divider + file);
       }
-    }
-    files.forEach(Files_filesWithExtension_forEach);
+    });
     return filesWithExt;
   }
 
