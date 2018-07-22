@@ -1,7 +1,6 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "async-waterfall": "0.1.5",
     "mkdirp": "0.5.1",
     "ncp": "2.0.0",
     "rimraf": "2.6.2",
@@ -11,6 +10,9 @@
     "utiljs-strings": "0.22.0"
   },
   "description": "JavaScript Node.js utility methods for files",
+  "devDependencies": {
+    "async-waterfall": "0.1.5"
+  },
   "keywords": [
     "file",
     "file system",

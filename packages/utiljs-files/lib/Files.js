@@ -1,9 +1,6 @@
 "use strict";
 
 module.exports = function Files(options) {
-  function _asyncwaterfall() {
-    return options.asyncwaterfall();
-  }
   function childProcess() {
     return options.child_process();
   }
@@ -185,43 +182,27 @@ module.exports = function Files(options) {
     return wrapCallback(arguments, readFile, fs().readFile);
   }
 
-  this.readFiles = Files_readFiles;
-  function Files_readFiles(files, options, cb) {
-    var opts;
-    var caba;
+  this.readFiles = readFiles;
+  function readFiles(files, options, callback) {
+    let localOptions;
+    let localCallback;
     if (typeof options === "function") {
-      opts = {};
-      caba = options;
+      localOptions = {};
+      localCallback = options;
     } else {
-      opts = options;
-      caba = cb;
+      localOptions = options;
+      localCallback = callback;
     }
-    if (typeof caba !== "function") {
-      throw "callback cb is not a function";
-    }
-    var string = "";
-    var tasks = [];
-    tasks.push(Files_readFiles_start);
-    files.forEach(function(file) {
-      tasks.push(Files_readFiles_readFile.bind({ file: file }));
-      tasks.push(fs().readFile);
-    });
-    _asyncwaterfall()(tasks, Files_readFiles_end);
-    function Files_readFiles_start(callback) {
-      callback(null, "");
-    }
-    function Files_readFiles_readFile(str, callback) {
-      string += str;
-      callback(null, this.file, opts);
-    }
-    function Files_readFiles_end(err, str) {
-      string += str;
-      if (objects().isDefined(err)) {
-        caba(err);
-        return;
+    if (typeof localCallback === "function")
+      return promises().applyPromise(this, this.readFiles, arguments);
+    const thiz = this;
+    return (async function() {
+      let string = "";
+      for (const file of files) {
+        string += await thiz.readFile(file, localOptions);
       }
-      caba(null, string);
-    }
+      return string;
+    })();
   }
 
   this.rmrf = rmrf;

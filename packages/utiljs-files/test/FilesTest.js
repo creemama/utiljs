@@ -654,76 +654,99 @@ describe("Files", function() {
       files.rmrf(targetDir, done);
     });
 
-    it("should successfully read three files when called without options", function(done) {
+    it("should successfully read three files when called without options", done => {
       files.readFiles(
         [targetDir + "/a.txt", targetDir + "/b.txt", targetDir + "/c.txt"],
-        function(err, string) {
-          expect(err).to.be.null;
-          expect(string).to.equal("abc");
-          done();
+        (error, string) => {
+          try {
+            expect(error).to.be.null;
+            expect(string).to.equal("abc");
+            done();
+          } catch (err) {
+            done(err);
+          }
         }
       );
     });
-    it("should successfully read three files when called with option 'utf8'", function(done) {
+    it("should successfully read three files when called with option 'utf8'", done => {
       files.readFiles(
         [targetDir + "/b.txt", targetDir + "/a.txt", targetDir + "/c.txt"],
         "utf8",
-        function(err, string) {
-          expect(err).to.be.null;
-          expect(string).to.equal("bac");
-          done();
+        (error, string) => {
+          try {
+            expect(error).to.be.null;
+            expect(string).to.equal("bac");
+            done();
+          } catch (err) {
+            done(err);
+          }
         }
       );
     });
-    it("should successfully read three files when called with options", function(done) {
-      files.readFiles(
+    it("should successfully read three files when called with options", async function() {
+      const string = await files.readFiles(
         [targetDir + "/c.txt", targetDir + "/a.txt", targetDir + "/c.txt"],
-        { encoding: "utf8", flag: "r" },
-        function(err, string) {
-          expect(err).to.be.null;
-          expect(string).to.equal("cac");
-          done();
-        }
+        { encoding: "utf8", flag: "r" }
       );
+      expect(string).to.equal("cac");
     });
-    it("should successfully read three files when called with null options", function(done) {
+    it("should successfully read three files when called with null options", done => {
       files.readFiles(
         [targetDir + "/c.txt", targetDir + "/a.txt", targetDir + "/c.txt"],
         null,
-        function(err, string) {
-          expect(err).to.be.null;
-          expect(string).to.equal("cac");
-          done();
+        (error, string) => {
+          try {
+            expect(error).to.be.null;
+            expect(string).to.equal("cac");
+            done();
+          } catch (err) {
+            done(err);
+          }
         }
       );
     });
-    it("should throw an error if callback is null", function() {
-      expect(function() {
-        files.readFiles([
-          targetDir + "/c.txt",
-          targetDir + "/a.txt",
-          targetDir + "/c.txt"
-        ]);
-      }).to.throw("callback cb is not a function");
+    it("should return a Promise if callback is null", async function() {
+      const string = await files.readFiles([
+        targetDir + "/c.txt",
+        targetDir + "/a.txt",
+        targetDir + "/c.txt"
+      ]);
+      expect(string).to.equal("cac");
     });
-    it("should throw an error if files argument is null", function() {
-      expect(function() {
-        files.readFiles(null, function() {});
-      }).to.throw("Cannot read property 'forEach' of null");
-    });
-    it("should return an empty string if files argument is empty", done => {
-      files.readFiles([], null, function(err, string) {
-        expect(err).to.be.null;
-        expect(string).to.equal("");
-        done();
+    it("should throw an error if files argument is null", done => {
+      files.readFiles(null, (error, string) => {
+        try {
+          expect(error).to.be.an.instanceof(TypeError);
+          expect(string).to.be.undefined;
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should throw an error if files does not have a forEach method", function() {
-      expect(function() {
-        files.readFiles("", function() {});
-      }).to.throw(TypeError);
+    it("should return an empty string if files argument is empty", done => {
+      files.readFiles([], null, (error, string) => {
+        try {
+          expect(error).to.be.null;
+          expect(string).to.equal("");
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
     });
-    it("should return with an error if one of the files does not exist", function(done) {
+    it("should return an empty string when given the empty string as input", done => {
+      files.readFiles("", (error, string) => {
+        try {
+          expect(error).to.be.null;
+          expect(string).to.eql("");
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    });
+    it("should return with an error if one of the files does not exist", done => {
       files.readFiles(
         [
           targetDir + "/c.txt",
@@ -731,11 +754,15 @@ describe("Files", function() {
           targetDir + "/b.txt"
         ],
         null,
-        function(err, string) {
-          expect(err).to.not.be.null;
-          expect(err).to.not.be.undefined;
-          expect(string).to.be.undefined;
-          done();
+        (error, string) => {
+          try {
+            expect(error).to.not.be.null;
+            expect(error).to.not.be.undefined;
+            expect(string).to.be.undefined;
+            done();
+          } catch (err) {
+            done(err);
+          }
         }
       );
     });
