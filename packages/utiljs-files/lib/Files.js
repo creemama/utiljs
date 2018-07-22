@@ -29,12 +29,12 @@ module.exports = function Files() {
 
   this.cp = cp;
   function cp() {
-    return promises().call(fs(), fs().copyFile, arguments);
+    return promises().applyCallback(fs(), fs().copyFile, arguments);
   }
 
   this.cpr = cpr;
   function cpr() {
-    return promises().call(null, ncp(), arguments);
+    return promises().applyCallback(null, ncp(), arguments);
   }
 
   this.createReadStream = fs().createReadStream;
@@ -43,7 +43,7 @@ module.exports = function Files() {
 
   this.diff = diff;
   function diff(pathA, pathB, callback) {
-    if (!callback) return promises().call(null, this.diff, arguments);
+    if (!callback) return promises().applyCallback(null, this.diff, arguments);
     if (!objects().isDefined(pathA))
       return callback(new TypeError("We expected pathA to be defined."));
     if (!objects().isDefined(pathB))
@@ -211,7 +211,7 @@ module.exports = function Files() {
   this.mkdir = fs().mkdir;
 
   this.mkdirp = function(path, cb) {
-    return promises().call(null, mkdirp(), arguments);
+    return promises().applyCallback(null, mkdirp(), arguments);
   };
 
   this.mkdirpSync = function(dir, opts) {
@@ -240,7 +240,7 @@ module.exports = function Files() {
 
   this.readFile = readFile;
   function readFile() {
-    return promises().call(fs(), fs().readFile, arguments);
+    return promises().applyCallback(fs(), fs().readFile, arguments);
   }
 
   this.readFileSync = fs().readFileSync;
@@ -294,7 +294,7 @@ module.exports = function Files() {
 
   this.rmrf = rmrf;
   function rmrf() {
-    return promises().call(null, rimraf(), arguments);
+    return promises().applyCallback(null, rimraf(), arguments);
   }
 
   this.rmrfSync = function(path, opts) {
@@ -303,7 +303,7 @@ module.exports = function Files() {
 
   this.stat = stat;
   function stat() {
-    return promises().call(fs(), fs().stat, arguments);
+    return promises().applyCallback(fs(), fs().stat, arguments);
   }
 
   this.statSync = fs().statSync;
@@ -340,7 +340,7 @@ module.exports = function Files() {
 
   this.writeFile = writeFile;
   function writeFile() {
-    return promises().call(fs(), fs().writeFile, arguments);
+    return promises().applyCallback(fs(), fs().writeFile, arguments);
   }
 
   this.writeFileSync = fs().writeFileSync;
