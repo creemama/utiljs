@@ -243,14 +243,14 @@ describe("Promises", function() {
     });
   });
 
-  describe("#call(object, functionOnObjectWithCallback, args)", () => {
+  describe("#applyCallback(object, functionOnObjectWithCallback, args)", () => {
     it("should call the callback if args contains a callback", callback => {
       function functionWithCallback(a, b, cb) {
         expect(a).to.eql("a");
         expect(b).to.eql("b");
         cb();
       }
-      const returnValue = promises.call(null, functionWithCallback, [
+      const returnValue = promises.applyCallback(null, functionWithCallback, [
         "a",
         "b",
         callback
@@ -267,26 +267,30 @@ describe("Promises", function() {
         expect(b).to.eql("b");
         cb();
       }
-      return promises.call(null, functionWithCallback, ["a", "b"]);
+      return promises.applyCallback(null, functionWithCallback, ["a", "b"]);
     });
     it("should throw an Error if functionWithCallback or args is null or undefined", () => {
       function functionWithCallback(cb) {
         cb();
       }
-      expect(() => promises.call(null, functionWithCallback)).to.throw(
+      expect(() => promises.applyCallback(null, functionWithCallback)).to.throw(
         TypeError
       );
-      expect(() => promises.call(null, functionWithCallback, null)).to.throw(
-        TypeError
-      );
+      expect(() =>
+        promises.applyCallback(null, functionWithCallback, null)
+      ).to.throw(TypeError);
       // The following line sends functionWithCallback the wrong number of arguments.
-      expect(() => promises.call(null, functionWithCallback, "a")).to.throw(
+      expect(() =>
+        promises.applyCallback(null, functionWithCallback, "a")
+      ).to.throw(TypeError);
+      expect(() => promises.applyCallback(null, null, [() => {}])).to.throw(
         TypeError
       );
-      expect(() => promises.call(null, null, [() => {}])).to.throw(TypeError);
-      expect(() => promises.call(null, "a", [() => {}])).to.throw(TypeError);
-      expect(() => promises.call(null, null, [])).to.throw(TypeError);
-      expect(() => promises.call(null, "a", [])).to.throw(TypeError);
+      expect(() => promises.applyCallback(null, "a", [() => {}])).to.throw(
+        TypeError
+      );
+      expect(() => promises.applyCallback(null, null, [])).to.throw(TypeError);
+      expect(() => promises.applyCallback(null, "a", [])).to.throw(TypeError);
     });
   });
 
@@ -369,12 +373,12 @@ describe("Promises", function() {
     });
   });
 
-  describe("#promisifyAndCall", () => {
+  describe("#callCallback", () => {
     it("should handle functions with only a callback", () => {
       function functionWithCallback(callback) {
         callback();
       }
-      return promises.promisifyAndCall(this, functionWithCallback);
+      return promises.callCallback(this, functionWithCallback);
     });
     it("should handle functions with multiple arguments", () => {
       function functionWithCallback(x, y, z, callback) {
@@ -384,7 +388,7 @@ describe("Promises", function() {
         callback(null, x + y + z);
       }
       return promises
-        .promisifyAndCall(this, functionWithCallback, 1, 2, 3)
+        .callCallback(this, functionWithCallback, 1, 2, 3)
         .then(result => {
           expect(result).to.equal(6);
         });
@@ -395,11 +399,11 @@ describe("Promises", function() {
       }
       // The following line sends functionWithCallback the wrong number of arguments.
       const a = promises
-        .promisifyAndCall(null, functionWithCallback, "a")
+        .callCallback(null, functionWithCallback, "a")
         .then(() => expect.fail("We expected call to throw an error."))
         .catch(error => expect(error).to.be.an.instanceof(TypeError));
-      expect(() => promises.promisifyAndCall(null, null)).to.throw(TypeError);
-      expect(() => promises.promisifyAndCall(null, "a")).to.throw(TypeError);
+      expect(() => promises.callCallback(null, null)).to.throw(TypeError);
+      expect(() => promises.callCallback(null, "a")).to.throw(TypeError);
       return a;
     });
   });

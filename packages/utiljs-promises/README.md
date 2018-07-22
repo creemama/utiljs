@@ -29,12 +29,10 @@ This class contains all the non-instance methods of [Promise](https://developer.
   - [.all(iterable)](#Promises+all) ⇒ <code>Promise</code>
   - [.applyCallback(object, functionOnObjectWithCallback, args)](#Promises+applyCallback) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.applyPromise(object, promiseFunctionOnObject, args)](#Promises+applyPromise) ⇒ <code>undefined</code> \| <code>Promise</code>
-  - ~~[.call()](#Promises+call)~~
   - [.callbackify(promiseFunction)](#Promises+callbackify) ⇒ <code>function</code>
   - [.callCallback(object, functionOnObjectWithCallback, [...args])](#Promises+callCallback) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.callPromise(object, promiseFunctionOnObject, [...args])](#Promises+callPromise) ⇒ <code>undefined</code> \| <code>Promise</code>
   - [.promisify(functionWithCallback)](#Promises+promisify) ⇒ <code>function</code>
-  - ~~[.promisifyAndCall()](#Promises+promisifyAndCall)~~
   - [.race(iterable)](#Promises+race) ⇒ <code>Promise</code>
   - [.reject(reason)](#Promises+reject) ⇒ <code>Promise</code>
   - [.resolve(value)](#Promises+resolve) ⇒ <code>Promise</code>
@@ -201,16 +199,6 @@ notify("Call back", "Hypnotoad", (error, message) => console.log(message));
 notify("Promise me", "Hypnotoad").then(console.log);
 ```
 
-<a name="Promises+call"></a>
-
-### ~~promises.call()~~
-
-**_Deprecated_**
-
-Use [applyCallback](#Promises+applyCallback) instead.
-
-**Kind**: instance method of [<code>Promises</code>](#Promises)  
-**Access**: public  
 <a name="Promises+callbackify"></a>
 
 ### promises.callbackify(promiseFunction) ⇒ <code>function</code>
@@ -365,16 +353,6 @@ const finished = promises.promisify(stream.finished);
 finished(readable).then(() => console.log("Finished as promised"));
 ```
 
-<a name="Promises+promisifyAndCall"></a>
-
-### ~~promises.promisifyAndCall()~~
-
-**_Deprecated_**
-
-Use [callCallback](#Promises+callCallback) instead.
-
-**Kind**: instance method of [<code>Promises</code>](#Promises)  
-**Access**: public  
 <a name="Promises+race"></a>
 
 ### promises.race(iterable) ⇒ <code>Promise</code>

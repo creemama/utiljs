@@ -150,17 +150,6 @@ class Promises {
   }
 
   /**
-   * Use {@link Promises#applyCallback} instead.
-   * @public
-   * @instance
-   * @function
-   * @deprecated
-   */
-  call(object, functionOnObjectWithCallback, args) {
-    return this.applyCallback(object, functionOnObjectWithCallback, args);
-  }
-
-  /**
    * Wraps the given promiseFunction such that calling the returned function with a callback notifies the callback with an error if promiseFunction rejects or the return value if promiseFunction resolves.
    *
    * Use {@link Promises#callPromise} if you would like to callbackify a method and call it in one line.
@@ -327,17 +316,6 @@ class Promises {
         }
       });
     };
-  }
-
-  /**
-   * Use {@link Promises#callCallback} instead.
-   * @public
-   * @instance
-   * @function
-   * @deprecated
-   */
-  promisifyAndCall(object, functionOnObjectWithCallback, ...args) {
-    return this.applyCallback(object, functionOnObjectWithCallback, args);
   }
 
   /**
