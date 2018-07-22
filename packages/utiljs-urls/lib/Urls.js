@@ -34,7 +34,7 @@ function Urls(options) {
   // http://stackoverflow.com/questions/11944932/how-to-download-a-file-with-node-js
   function download(url, destination, callback) {
     if (!callback)
-      return promises().promisifyAndCall(this, download, url, destination);
+      return promises().callCallback(this, download, url, destination);
 
     const parsedUrl = urlUtil().parse(url);
 
@@ -56,7 +56,7 @@ function Urls(options) {
   // http://stackoverflow.com/questions/5922842/getting-http-headers-with-node-js
   // http://stackoverflow.com/a/6001507
   function headers(url, callback) {
-    if (!callback) return promises().promisifyAndCall(this, headers, url);
+    if (!callback) return promises().callCallback(this, headers, url);
 
     const parsedUrl = urlUtil().parse(url);
     const port = parsedUrl.port

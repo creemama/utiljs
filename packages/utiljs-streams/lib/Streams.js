@@ -128,7 +128,7 @@ class Streams {
    */
   stringify(readable, callback) {
     if (!callback)
-      return promises().promisifyAndCall(this, this.stringify, readable);
+      return promises().callCallback(this, this.stringify, readable);
 
     let string = "";
     readable

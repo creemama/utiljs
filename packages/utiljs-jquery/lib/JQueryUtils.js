@@ -45,7 +45,7 @@ class JQueryUtils {
    */
   loadjQuery(params, callback) {
     if (!callback)
-      return promises().promisifyAndCall(this, this.loadjQuery, params);
+      return promises().callCallback(this, this.loadjQuery, params);
 
     const src =
       params.src ||
