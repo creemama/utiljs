@@ -176,17 +176,20 @@ class Promises {
     if (returnValue) return returnValue;
     if (typeof promiseFunction !== "function")
       throw new TypeError(
-        `We expected promiseFunction to be function but was ${promiseFunction}.`
+        `We expected promiseFunction to be function, but it was ${promiseFunction}.`
       );
-    returnValue = function() {
-      const thiz = this;
-      const callback = arguments[arguments.length - 1];
+    returnValue = function(...args) {
+      const callback = arguments[args.length - 1];
+      if (typeof callback !== "function")
+        throw new TypeError(
+          `We expected callback to be function, but it was ${callback}.`
+        );
       const argsWithoutCalback = arrays()
-        .from(arguments)
-        .slice(0, arguments.length - 1);
+        .from(args)
+        .slice(0, args.length - 1);
       let promise;
       try {
-        promise = promiseFunction.apply(thiz, argsWithoutCalback);
+        promise = promiseFunction.apply(this, argsWithoutCalback);
       } catch (error) {
         return callback(error);
       }
@@ -302,20 +305,17 @@ class Promises {
     if (returnValue) return returnValue;
     if (typeof functionWithCallback !== "function")
       throw new TypeError(
-        `We expected functionWithCallback to be a function but was ${functionWithCallback}.`
+        `We expected functionWithCallback to be a function, but it was ${functionWithCallback}.`
       );
-    returnValue = function() {
-      const args = arguments;
+    returnValue = function(...args) {
       const thiz = this;
       return new Promise((resolve, reject) => {
         try {
-          functionWithCallback.call(thiz, ...args, function(error) {
+          functionWithCallback.call(thiz, ...args, function(error, ...values) {
             if (error) return reject(error);
-            if (arguments.length == 1) return resolve.call(null);
-            if (arguments.length == 2) return resolve.call(null, arguments[1]);
-            const callbackArguments = arrays().from(arguments);
-            callbackArguments.shift(); // Remove the first element.
-            resolve.call(null, callbackArguments);
+            if (values.length == 0) return resolve();
+            if (values.length == 1) return resolve(values[0]);
+            resolve(values);
           });
         } catch (err) {
           reject(err);
