@@ -1,48 +1,75 @@
 "use strict";
 
-module.exports = function Files() {
-  this.access = fs().access;
+class Files {
+  access() {
+    return promises().applyCallback(fs(), fs().access, arguments);
+  }
 
-  this.accessSync = fs().accessSync;
+  accessSync() {
+    return fs().accessSync(...arguments);
+  }
 
-  this.appendFile = fs().appendFile;
+  appendFile() {
+    return promises().applyCallback(fs(), fs().appendFile, arguments);
+  }
 
-  this.appendFileSync = fs().appendFileSync;
+  appendFileSync() {
+    return fs().appendFileSync(...arguments);
+  }
 
-  this.basename = path().basename;
+  basename() {
+    return path().basename(...arguments);
+  }
 
-  this.chmod = fs().chmod;
+  chmod() {
+    return promises().applyCallback(fs(), fs().chmod, arguments);
+  }
 
-  this.chmodSync = fs().chmodSync;
+  chmodSync() {
+    return fs().chmodSync(...arguments);
+  }
 
-  this.chown = fs().chown;
+  chown() {
+    return promises().applyCallback(fs(), fs().chown, arguments);
+  }
 
-  this.chownSync = fs().chownSync;
+  chownSync() {
+    return fs().chownSync(...arguments);
+  }
 
-  this.close = fs().close;
+  close() {
+    return promises().applyCallback(fs(), fs().close, arguments);
+  }
 
-  this.closeSync = fs().closeSync;
+  closeSync() {
+    return fs().closeSync(...arguments);
+  }
 
-  this.copyFile = fs().copyFile;
-
-  this.copyFileSync = fs().copyFileSync;
-
-  this.cp = cp;
-  function cp() {
+  copyFile() {
     return promises().applyCallback(fs(), fs().copyFile, arguments);
   }
 
-  this.cpr = cpr;
-  function cpr() {
+  copyFileSync() {
+    return fs().copyFileSync(...arguments);
+  }
+
+  cp() {
+    return promises().applyCallback(fs(), fs().copyFile, arguments);
+  }
+
+  cpr() {
     return promises().applyCallback(null, ncp(), arguments);
   }
 
-  this.createReadStream = fs().createReadStream;
+  createReadStream() {
+    return fs().createReadStream(...arguments);
+  }
 
-  this.createWriteStream = fs().createWriteStream;
+  createWriteStream() {
+    return fs().createWriteStream(...arguments);
+  }
 
-  this.diff = diff;
-  function diff(pathA, pathB, callback) {
+  diff(pathA, pathB, callback) {
     if (!callback) return promises().applyCallback(null, this.diff, arguments);
     if (!objects().isDefined(pathA))
       return callback(new TypeError("We expected pathA to be defined."));
@@ -57,28 +84,47 @@ module.exports = function Files() {
     });
   }
 
-  this.dirname = path().dirname;
+  dirname() {
+    return path().dirname(...arguments);
+  }
 
-  this.exists = fs().exists;
+  exists() {
+    return promises().applyCallback(fs(), fs().exists, arguments);
+  }
 
-  this.existsSync = fs().existsSync;
+  existsSync() {
+    return fs().existsSync(...arguments);
+  }
 
-  this.extname = path().extname;
+  extname() {
+    return path().extname(...arguments);
+  }
 
-  this.fchmod = fs().fchmod;
+  fchmod() {
+    return promises().applyCallback(fs(), fs().fchmod, arguments);
+  }
 
-  this.fchmodSync = fs().fchmodSync;
+  fchmodSync() {
+    return fs().fchmodSync(...arguments);
+  }
 
-  this.fchown = fs().fchown;
+  fchown() {
+    return promises().applyCallback(fs(), fs().fchown, arguments);
+  }
 
-  this.fchownSync = fs().fchownSync;
+  fchownSync() {
+    return fs().fchownSync(...arguments);
+  }
 
-  this.fdatasync = fs().fdatasync;
+  fdatasync() {
+    return promises().applyCallback(fs(), fs().fdatasync, arguments);
+  }
 
-  this.fdatasyncSync = fs().fdatasyncSync;
+  fdatasyncSync() {
+    return fs().fdatasyncSync(...arguments);
+  }
 
-  this.filesWithExtension = filesWithExtension;
-  function filesWithExtension(params, callback) {
+  filesWithExtension(params, callback) {
     if (typeof callback === "function")
       return promises().applyPromise(this, this.filesWithExtension, arguments);
     const thiz = this;
@@ -114,8 +160,7 @@ module.exports = function Files() {
    * Does not recursively search for files.
    * When specifying ext, do not include the period.
    */
-  this.filesWithExtensionSync = filesWithExtensionSync;
-  function filesWithExtensionSync(params) {
+  filesWithExtensionSync(params) {
     if (!objects().isDefined(params))
       throw new TypeError(
         `We expected params to be defined, but it was ${params}.`
@@ -143,28 +188,47 @@ module.exports = function Files() {
     return filesWithExt;
   }
 
-  this.format = path().format;
+  format() {
+    return path().format(...arguments);
+  }
 
-  this.fstat = fs().fstat;
+  fstat() {
+    return promises().applyCallback(fs(), fs().fstat, arguments);
+  }
 
-  this.fstatSync = fs().fstatSync;
+  fstatSync() {
+    return fs().fstatSync(...arguments);
+  }
 
-  this.fsync = fs().fsync;
+  fsync() {
+    return promises().applyCallback(fs(), fs().fsync, arguments);
+  }
 
-  this.fsyncSync = fs().fsyncSync;
+  fsyncSync() {
+    return fs().fsyncSync(...arguments);
+  }
 
-  this.ftruncate = fs().ftruncate;
+  ftruncate() {
+    return promises().applyCallback(fs(), fs().ftruncate, arguments);
+  }
 
-  this.ftruncateSync = fs().ftruncateSync;
+  ftruncateSync() {
+    return fs().ftruncateSync(...arguments);
+  }
 
-  this.futimes = fs().futimes;
+  futimes() {
+    return promises().applyCallback(fs(), fs().futimes, arguments);
+  }
 
-  this.futimesSync = fs().futimesSync;
+  futimesSync() {
+    return fs().futimesSync(...arguments);
+  }
 
-  this.isAbsolute = path().isAbsolute;
+  isAbsolute() {
+    return path().isAbsolute(...arguments);
+  }
 
-  this.isDirectory = isDirectory;
-  function isDirectory(path, callback) {
+  isDirectory(path, callback) {
     if (typeof callback === "function")
       return promises().applyPromise(this, this.isDirectory, arguments);
     const thiz = this;
@@ -174,13 +238,11 @@ module.exports = function Files() {
     })();
   }
 
-  this.isDirectorySync = isDirectorySync;
-  function isDirectorySync(path) {
+  isDirectorySync(path) {
     return this.lstatSync(path).isDirectory();
   }
 
-  this.isFile = isFile;
-  function isFile(path, callback) {
+  isFile(path, callback) {
     if (typeof callback === "function")
       return promises().applyPromise(this, this.isFile, arguments);
     const thiz = this;
@@ -190,63 +252,91 @@ module.exports = function Files() {
     })();
   }
 
-  this.isFileSync = isFileSync;
-  function isFileSync(path) {
+  isFileSync(path) {
     return this.lstatSync(path).isFile();
   }
 
-  this.join = path().join;
+  join() {
+    return path().join(...arguments);
+  }
 
-  this.link = fs().link;
+  link() {
+    return promises().applyCallback(fs(), fs().link, arguments);
+  }
 
-  this.linkSync = fs().linkSync;
+  linkSync() {
+    return fs().linkSync(...arguments);
+  }
 
-  this.lstat = lstat;
-  function lstat() {
+  lstat() {
     return promises().applyCallback(fs(), fs().lstat, arguments);
   }
 
-  this.lstatSync = fs().lstatSync;
+  lstatSync() {
+    return fs().lstatSync(...arguments);
+  }
 
-  this.mkdir = fs().mkdir;
+  mkdir() {
+    return promises().applyCallback(fs(), fs().mkdir, arguments);
+  }
 
-  this.mkdirp = function(path, cb) {
+  mkdirp() {
     return promises().applyCallback(null, mkdirp(), arguments);
-  };
+  }
 
-  this.mkdirpSync = function(dir, opts) {
-    return mkdirp().sync(dir, opts);
-  };
+  mkdirpSync() {
+    return mkdirp().sync(...arguments);
+  }
 
-  this.mkdirSync = fs().mkdirSync;
+  mkdirSync() {
+    return fs().mkdirSync(...arguments);
+  }
 
-  this.mkdtemp = fs().mkdtemp;
+  mkdtemp() {
+    return promises().applyCallback(fs(), fs().mkdtemp, arguments);
+  }
 
-  this.mkdtempSync = fs().mkdtempSync;
+  mkdtempSync() {
+    return fs().mkdtempSync(...arguments);
+  }
 
-  this.normalize = path().normalize;
+  normalize() {
+    return path().normalize(...arguments);
+  }
 
-  this.open = fs().open;
+  open() {
+    return promises().applyCallback(fs(), fs().open, arguments);
+  }
 
-  this.openSync = fs().openSync;
+  openSync() {
+    return fs().openSync(...arguments);
+  }
 
-  this.parse = path().parse;
+  parse() {
+    return path().parse(...arguments);
+  }
 
-  this.read = fs().read;
+  read() {
+    return promises().applyCallback(fs(), fs().read, arguments);
+  }
 
-  this.readdir = promises().promisify(fs().readdir);
+  readdir() {
+    return promises().applyCallback(fs(), fs().readdir, arguments);
+  }
 
-  this.readdirSync = fs().readdirSync;
+  readdirSync() {
+    return fs().readdirSync(...arguments);
+  }
 
-  this.readFile = readFile;
-  function readFile() {
+  readFile() {
     return promises().applyCallback(fs(), fs().readFile, arguments);
   }
 
-  this.readFileSync = fs().readFileSync;
+  readFileSync() {
+    return fs().readFileSync(...arguments);
+  }
 
-  this.readFiles = readFiles;
-  function readFiles(files, options, callback) {
+  readFiles(files, options, callback) {
     let localOptions;
     let localCallback;
     if (typeof options === "function") {
@@ -268,105 +358,184 @@ module.exports = function Files() {
     })();
   }
 
-  this.readlink = fs().readlink;
+  readlink() {
+    return promises().applyCallback(fs(), fs().readlink, arguments);
+  }
 
-  this.readlinkSync = fs().readlinkSync;
+  readlinkSync() {
+    return fs().readlinkSync(...arguments);
+  }
 
-  this.readSync = fs().readSync;
+  readSync() {
+    return fs().readSync(...arguments);
+  }
 
-  this.realpath = fs().realpath;
-  // this.realpath.native
+  get realpath() {
+    const returnValue = promises()
+      .promisify(fs().realpath)
+      .bind(fs());
+    returnValue.native = promises()
+      .promisify(fs().realpath.native)
+      .bind(fs());
+    return returnValue;
+  }
 
-  this.realpathSync = fs().realpathSync;
-  // this.realpathSync.native
+  get realpathSync() {
+    const returnValue = fs().realpathSync.bind(fs());
+    returnValue.native = fs().realpathSync.native.bind(fs());
+    return returnValue;
+  }
 
-  this.relative = path().relative;
+  relative() {
+    return path().relative(...arguments);
+  }
 
-  this.rename = fs().rename;
+  rename() {
+    return promises().applyCallback(fs(), fs().rename, arguments);
+  }
 
-  this.renameSync = fs().renameSync;
+  renameSync() {
+    return fs().renameSync(...arguments);
+  }
 
-  this.resolve = path().resolve;
+  resolve() {
+    return path().resolve(...arguments);
+  }
 
-  this.rmdir = fs().rmdir;
+  rmdir() {
+    return promises().applyCallback(fs(), fs().rmdir, arguments);
+  }
 
-  this.rmdirSync = fs().rmdirSync;
+  rmdirSync() {
+    return fs().rmdirSync(...arguments);
+  }
 
-  this.rmrf = rmrf;
-  function rmrf() {
+  rmrf() {
     return promises().applyCallback(null, rimraf(), arguments);
   }
 
-  this.rmrfSync = function(path, opts) {
-    return rimraf().sync(path, opts);
-  };
+  rmrfSync() {
+    return rimraf().sync(...arguments);
+  }
 
-  this.stat = stat;
-  function stat() {
+  stat() {
     return promises().applyCallback(fs(), fs().stat, arguments);
   }
 
-  this.statSync = fs().statSync;
+  statSync() {
+    return fs().statSync(...arguments);
+  }
 
-  this.symlink = fs().symlink;
+  symlink() {
+    return promises().applyCallback(fs(), fs().symlink, arguments);
+  }
 
-  this.symlinkSync = fs().symlinkSync;
+  symlinkSync() {
+    return fs().symlinkSync(...arguments);
+  }
 
-  this.toNamespacedPath = path().toNamespacedPath;
+  toNamespacedPath() {
+    return path().toNamespacedPath(...arguments);
+  }
 
-  this.touch = function() {
+  touch() {
     return touch().apply(null, arguments);
-  };
+  }
 
-  this.truncate = fs().truncate;
+  truncate() {
+    return promises().applyCallback(fs(), fs().truncate, arguments);
+  }
 
-  this.truncateSync = fs().truncateSync;
+  truncateSync() {
+    return fs().truncateSync(...arguments);
+  }
 
-  this.unlink = fs().unlink;
+  unlink() {
+    return promises().applyCallback(fs(), fs().unlink, arguments);
+  }
 
-  this.unlinkSync = fs().unlinkSync;
+  unlinkSync() {
+    return fs().unlinkSync(...arguments);
+  }
 
-  this.unwatchFile = fs().unwatchFile;
+  unwatchFile() {
+    return fs().unwatchFile(...arguments);
+  }
 
-  this.utimes = fs().utimes;
+  utimes() {
+    return promises().applyCallback(fs(), fs().utimes, arguments);
+  }
 
-  this.utimesSync = fs().utimesSync;
+  utimesSync() {
+    return fs().utimesSync(...arguments);
+  }
 
-  this.watch = fs().watch;
+  watch() {
+    return promises().applyCallback(fs(), fs().watch, arguments);
+  }
 
-  this.watchFile = fs().watchFile;
+  watchFile() {
+    return fs().watchFile(...arguments);
+  }
 
-  this.write = fs().write;
+  write() {
+    return promises().applyCallback(fs(), fs().write, arguments);
+  }
 
-  this.writeFile = writeFile;
-  function writeFile() {
+  writeFile() {
     return promises().applyCallback(fs(), fs().writeFile, arguments);
   }
 
-  this.writeFileSync = fs().writeFileSync;
+  writeFileSync() {
+    return fs().writeFileSync(...arguments);
+  }
 
-  this.writeSync = fs().writeSync;
+  writeSync() {
+    return fs().writeSync(...arguments);
+  }
 
-  this.FileReadStream = fs().FileReadStream;
+  get FileReadStream() {
+    return fs().FileReadStream.bind(fs());
+  }
 
-  this.FileWriteStream = fs().FileWriteStream;
+  get FileWriteStream() {
+    return fs().FileWriteStream.bind(fs());
+  }
 
-  this.ReadStream = fs().ReadStream;
+  get ReadStream() {
+    return fs().ReadStream.bind(fs());
+  }
 
-  this.Stats = fs().Stats;
+  get Stats() {
+    return fs().Stats.bind(fs());
+  }
 
-  this.WriteStream = fs().WriteStream;
+  get WriteStream() {
+    return fs().WriteStream.bind(fs());
+  }
 
-  this.constants = fs().constants;
+  get constants() {
+    return fs().constants;
+  }
 
-  this.delimiter = path().delimiter;
+  get delimiter() {
+    return path().delimiter;
+  }
 
-  this.posix = path().posix;
+  get posix() {
+    return path().posix;
+  }
 
-  this.sep = path().sep;
+  get sep() {
+    return path().sep;
+  }
 
-  this.win32 = path().win32;
-};
+  get win32() {
+    return path().win32;
+  }
+}
+
+module.exports = Files;
 
 const dependencies = {};
 function get(dependency) {
