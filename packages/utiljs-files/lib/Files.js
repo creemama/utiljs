@@ -240,7 +240,7 @@ module.exports = function Files(options) {
 
   this.readFile = readFile;
   function readFile() {
-    return wrapCallback(arguments, readFile, fs().readFile);
+    return promises().call(fs(), fs().readFile, arguments);
   }
 
   this.readFileSync = fs().readFileSync;
@@ -303,7 +303,7 @@ module.exports = function Files(options) {
 
   this.stat = stat;
   function stat() {
-    return wrapCallback(arguments, stat, fs().stat);
+    return promises().call(fs(), fs().stat, arguments);
   }
 
   this.statSync = fs().statSync;
@@ -340,7 +340,7 @@ module.exports = function Files(options) {
 
   this.writeFile = writeFile;
   function writeFile() {
-    return wrapCallback(arguments, writeFile, fs().writeFile);
+    return promises().call(fs(), fs().writeFile, arguments);
   }
 
   this.writeFileSync = fs().writeFileSync;
@@ -398,18 +398,3 @@ module.exports = function Files(options) {
     return options.touch();
   }
 };
-
-function wrapCallback(args, localMethod, targetMethod) {
-  if (hasCallback(args)) return targetMethod.apply(null, args);
-  else
-    return new Promise((resolve, reject) => {
-      localMethod.call(null, ...args, (err, data) => {
-        if (err) reject(err);
-        else resolve(data);
-      });
-    });
-}
-
-function hasCallback(args) {
-  return args.length > 0 && typeof args[args.length - 1] === "function";
-}

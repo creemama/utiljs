@@ -620,6 +620,20 @@ describe("Files", function() {
     });
   });
 
+  describe("#readFile(path[, options, callback]", () => {
+    it("should read a file and notify a callback", callback => {
+      files.readFile(__filename, "utf8", (error, string) => {
+        if (error) return callback(error);
+        expect(string.includes("use stict")).to.be.true;
+        callback();
+      });
+    });
+    it("should read a file and resolve a Promise", async function() {
+      const string = await files.readFile(__filename, "utf8");
+      expect(string.includes("use stict")).to.be.true;
+    });
+  });
+
   describe("#readFiles(files, options, callback)", function(done) {
     var asyncwaterfall = resources.asyncwaterfall();
     before(function(done) {
@@ -768,6 +782,20 @@ describe("Files", function() {
     });
   });
 
+  describe("#stat(path[, options, cb])", () => {
+    it("should notify a callback with stats", callback => {
+      files.stat(__filename, (error, stats) => {
+        if (error) return callback(error);
+        expect(stats).to.be.an.instanceof(files.Stats);
+        callback();
+      });
+    });
+    it("should resolve a Promise with stats", async function() {
+      const stats = await files.stat(__filename);
+      expect(stats).to.be.an.instanceof(files.Stats);
+    });
+  });
+
   describe("#touch(filename, options, cb)", function() {
     before(function(done) {
       waterfall(
@@ -830,6 +858,35 @@ describe("Files", function() {
       await files
         .touch(null)
         .catch(error => expect(error).to.be.an.instanceof(TypeError));
+    });
+  });
+
+  describe("#writeFile(file, data[, options, callback]", () => {
+    it("should write a file and notify a callback", callback => {
+      const testFile = targetDir + "/writeFileTestCallback.txt";
+      files.rmrf(testFile, error => {
+        if (error) return calback(error);
+        files.mkdirp(targetDir, erro => {
+          if (erro) return callback(erro);
+          files.writeFile(testFile, "writeFileTest", "utf8", err => {
+            if (err) return callback(err);
+            files.readFile(testFile, "utf8", (er, string) => {
+              if (er) return callback(er);
+              expect(string).to.eql("writeFileTest");
+              files.rmrf(testFile, callback);
+            });
+          });
+        });
+      });
+    });
+    it("should write a file and resolve a Promise", async function() {
+      const testFile = targetDir + "/writeFileTestPromise.txt";
+      await files.rmrf(testFile);
+      await files.mkdirp(targetDir);
+      await files.writeFile(testFile, "writeFileTest", "utf8");
+      const string = await files.readFile(testFile, "utf8");
+      expect(string).to.eql("writeFileTest");
+      await files.rmrf(testFile);
     });
   });
 });
