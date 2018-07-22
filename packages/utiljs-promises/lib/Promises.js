@@ -409,8 +409,8 @@ function callbackifyCache() {
 }
 function promisifyCache() {
   return (
-    dependencies["callbackifyCache"] ||
-    (dependencies["callbackifyCache"] = new WeakMap())
+    dependencies["promisifyCache"] ||
+    (dependencies["promisifyCache"] = new WeakMap())
   );
 }
 
