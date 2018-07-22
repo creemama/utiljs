@@ -24,7 +24,7 @@ class Streams {
       throw new Error(
         "This version of Node.js does not support stream.finished."
       );
-    return promises().call(stream(), stream().finished, arguments);
+    return promises().applyCallback(stream(), stream().finished, arguments);
   }
 
   /**
@@ -111,7 +111,7 @@ class Streams {
       throw new Error(
         "This version of Node.js does not support stream.pipeline."
       );
-    return promises().call(stream(), stream().pipeline, arguments);
+    return promises().applyCallback(stream(), stream().pipeline, arguments);
   }
 
   /**
