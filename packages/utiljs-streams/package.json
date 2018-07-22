@@ -1,7 +1,7 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "utiljs-promises": "0.23.0",
+    "utiljs-promises": "0.23.1",
     "utiljs-strings": "0.22.0"
   },
   "description": "JavaScript utility methods for streams",
@@ -20,5 +20,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-streams"
   },
-  "version": "0.23.0"
+  "version": "0.23.1"
 }
