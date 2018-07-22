@@ -287,8 +287,6 @@ class Promises {
    *
    * Use {@link Promises#callCallback} if you would like to promisify a method and call it in one line.
    *
-   * The returned Promise rejects if functionWithCallback is not a function.
-   *
    * @example
    * const promises = require("utiljs-promises");
    * const stream = require("stream");
@@ -301,6 +299,7 @@ class Promises {
    *
    * @param {Function} functionWithCallback A function that takes a callback as its last argument
    * @return {Function} A function that returns a Promise
+   * @throws {TypeError} If functionWithCallback is not a function
    * @public
    * @instance
    * @function

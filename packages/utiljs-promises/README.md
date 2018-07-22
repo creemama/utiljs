@@ -340,10 +340,12 @@ Wraps the given functionWithCallback such that calling the returned function ret
 
 Use [callCallback](#Promises+callCallback) if you would like to promisify a method and call it in one line.
 
-The returned Promise rejects if functionWithCallback is not a function.
-
 **Kind**: instance method of [<code>Promises</code>](#Promises)  
 **Returns**: <code>function</code> - A function that returns a Promise  
+**Throws**:
+
+- <code>TypeError</code> If functionWithCallback is not a function
+
 **Access**: public
 
 | Param                | Type                  | Description                                           |
