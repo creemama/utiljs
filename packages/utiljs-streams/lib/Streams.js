@@ -58,9 +58,9 @@ class Streams {
    * @param {Object} [params]
    * @param {number} [params.highWaterMark=16384 (16kb) or 16 for objectMode streams] - The maximum number of bytes to store in the internal buffer before ceasing to read from the underlying resource
    * @param {string} [params.encoding=null] - If specified, then buffers will be decoded to strings using the specified encoding
-   * @param {boolean=} [params.objectMode=false] - Whether this stream should behave as a stream of objects meaning that stream.read(n) returns a single value instead of a Buffer of size n
-   * @param {Function=} [params.read] - Implementation for the stream._read() method
-   * @param {Function=} [params.destroy] - Implementation for the stream._destroy() method
+   * @param {boolean} [params.objectMode=false] - Whether this stream should behave as a stream of objects meaning that stream.read(n) returns a single value instead of a Buffer of size n
+   * @param {Function} [params.read] - Implementation for the stream._read() method
+   * @param {Function} [params.destroy] - Implementation for the stream._destroy() method
    * @returns {Readable} A new Readable instance
    * @public
    * @instance
