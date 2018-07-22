@@ -182,7 +182,7 @@ class Promises {
       const callback = arguments[args.length - 1];
       if (typeof callback !== "function")
         throw new TypeError(
-          `We expected callback to be function, but it was ${callback}.`
+          `We expected callback to be a function, but it was ${callback}.`
         );
       const argsWithoutCalback = arrays()
         .from(args)
