@@ -172,11 +172,13 @@ class Promises {
    * @function
    */
   callbackify(promiseFunction) {
+    let returnValue = callbackifyCache().get(promiseFunction);
+    if (returnValue) return returnValue;
     if (typeof promiseFunction !== "function")
       throw new TypeError(
         `We expected promiseFunction to be function but was ${promiseFunction}.`
       );
-    return function() {
+    returnValue = function() {
       const thiz = this;
       const callback = arguments[arguments.length - 1];
       const argsWithoutCalback = arrays()
@@ -197,6 +199,8 @@ class Promises {
       // This should be caught by
       // process.on('unhandledRejection', error => { ... });
     };
+    callbackifyCache().set(promiseFunction, returnValue);
+    return returnValue;
   }
 
   /**
@@ -294,11 +298,13 @@ class Promises {
    * @function
    */
   promisify(functionWithCallback) {
+    let returnValue = promisifyCache().get(functionWithCallback);
+    if (returnValue) return returnValue;
     if (typeof functionWithCallback !== "function")
       throw new TypeError(
         `We expected functionWithCallback to be a function but was ${functionWithCallback}.`
       );
-    return function() {
+    returnValue = function() {
       const args = arguments;
       const thiz = this;
       return new Promise((resolve, reject) => {
@@ -316,6 +322,8 @@ class Promises {
         }
       });
     };
+    promisifyCache().set(functionWithCallback, returnValue);
+    return returnValue;
   }
 
   /**
@@ -391,6 +399,18 @@ function arrays() {
   return (
     dependencies["utiljs-arrays"] ||
     (dependencies["utiljs-arrays"] = require("utiljs-arrays"))
+  );
+}
+function callbackifyCache() {
+  return (
+    dependencies["callbackifyCache"] ||
+    (dependencies["callbackifyCache"] = new WeakMap())
+  );
+}
+function promisifyCache() {
+  return (
+    dependencies["callbackifyCache"] ||
+    (dependencies["callbackifyCache"] = new WeakMap())
   );
 }
 

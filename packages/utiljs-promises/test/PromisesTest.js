@@ -337,6 +337,14 @@ describe("Promises", function() {
         }
       });
     });
+    it("should cache callbackified functions", () => {
+      function promiseFunction(a, b) {
+        return Promise.resolve(a + b);
+      }
+      const a = promises.callbackify(promiseFunction);
+      const b = promises.callbackify(promiseFunction);
+      expect(a == b).to.be.ok;
+    });
     it("should throw an error if promiseFunction is not a function", () => {
       expect(() => promises.callbackify()).to.throw(TypeError);
       expect(() => promises.callbackify(null)).to.throw(TypeError);
@@ -365,6 +373,16 @@ describe("Promises", function() {
         callback();
       }
       return promises.promisify(functionWithCallback)("a", "b");
+    });
+    it("should cache promisified functions", () => {
+      function functionWithCallback(a, b, callback) {
+        expect(a).to.eql("a");
+        expect(b).to.eql("b");
+        callback();
+      }
+      const a = promises.promisify(functionWithCallback);
+      const b = promises.promisify(functionWithCallback);
+      expect(a == b).to.be.ok;
     });
     it("should reject if functionWithCallback is not a function", () => {
       expect(() => promises.promisify()).to.throw(TypeError);
