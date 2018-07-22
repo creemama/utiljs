@@ -244,14 +244,16 @@ finished(readableToPromise).then(() => console.log("Finished as promised"));
 
 ### promises.callbackify(promiseFunction) ⇒ <code>function</code>
 
-Wraps the given promiseFunction such that calling the returned with a callback notifies the callback with an error if promiseFunction rejcts or the return value if promiseFunction resolves.
+Wraps the given promiseFunction such that calling the returned function with a callback notifies the callback with an error if promiseFunction rejects or the return value if promiseFunction resolves.
 
 Use [callPromise](#Promises+callPromise) if you would like to callbackify a method and call it in one line.
 
-The returned function notifies a callback of an error if promiseFunction is not a function.
-
 **Kind**: instance method of [<code>Promises</code>](#Promises)  
 **Returns**: <code>function</code> - A function that accepts a callback  
+**Throws**:
+
+- <code>TypeError</code> If promiseFunction is not a function
+
 **Access**: public
 
 | Param           | Type                  | Description                       |

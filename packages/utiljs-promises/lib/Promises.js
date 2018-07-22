@@ -185,11 +185,9 @@ class Promises {
   }
 
   /**
-   * Wraps the given promiseFunction such that calling the returned with a callback notifies the callback with an error if promiseFunction rejcts or the return value if promiseFunction resolves.
+   * Wraps the given promiseFunction such that calling the returned function with a callback notifies the callback with an error if promiseFunction rejects or the return value if promiseFunction resolves.
    *
    * Use {@link Promises#callPromise} if you would like to callbackify a method and call it in one line.
-   *
-   * The returned function notifies a callback of an error if promiseFunction is not a function.
    *
    * @example
    * const promises = require("utiljs-promises");
@@ -203,6 +201,7 @@ class Promises {
    *
    * @param {Function} promiseFunction A function that returns a Promise
    * @return {Function} A function that accepts a callback
+   * @throws {TypeError} If promiseFunction is not a function
    * @public
    * @instance
    * @function
