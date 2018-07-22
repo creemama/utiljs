@@ -1,4 +1,4 @@
 "use strict";
 
-var FilesFactory = require("./lib/FilesFactory");
-module.exports = new FilesFactory().newFiles();
+var Files = require("./lib/Files");
+module.exports = new Files();

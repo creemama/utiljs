@@ -1,17 +1,12 @@
 "use strict";
 
 const { expect } = require("chai"),
-  Factory = require("../lib/FilesFactory"),
-  Files = require("../lib/Files"),
-  Resources = require("../lib/FilesResources");
+  files = require("..");
 
 describe("Files", function() {
-  const resources = new Resources();
-  const fs = resources.fs();
-  const waterfall = resources.asyncwaterfall();
+  const waterfall = require("async-waterfall");
   const targetDir = __dirname + "/../target";
   const emptyDir = targetDir + "/emptyDir";
-  const files = new Factory().newFiles();
   const jsonDir = targetDir + "/filesWithExtension";
   files.mkdirpSync(targetDir);
   files.mkdirpSync(emptyDir);
@@ -635,9 +630,8 @@ describe("Files", function() {
   });
 
   describe("#readFiles(files, options, callback)", function(done) {
-    var asyncwaterfall = resources.asyncwaterfall();
     before(function(done) {
-      asyncwaterfall(
+      waterfall(
         [
           function(cb) {
             cb(null, targetDir);

@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function Files(options) {
+module.exports = function Files() {
   this.access = fs().access;
 
   this.accessSync = fs().accessSync;
@@ -366,35 +366,45 @@ module.exports = function Files(options) {
   this.sep = path().sep;
 
   this.win32 = path().win32;
-
-  function childProcess() {
-    return options.child_process();
-  }
-  function fs() {
-    return options.fs();
-  }
-  function mkdirp() {
-    return options.mkdirp();
-  }
-  function ncp() {
-    return options.ncp();
-  }
-  function objects() {
-    return options.objects();
-  }
-  function path() {
-    return options.path();
-  }
-  function promises() {
-    return options.promises();
-  }
-  function rimraf() {
-    return options.rimraf();
-  }
-  function strings() {
-    return options.strings();
-  }
-  function touch() {
-    return options.touch();
-  }
 };
+
+const dependencies = {};
+function get(dependency) {
+  return (
+    dependencies[dependency] || (dependencies[dependency] = require(dependency))
+  );
+}
+
+function asyncwaterfall() {
+  return get("async-waterfall");
+}
+function childProcess() {
+  return get("child_process");
+}
+function fs() {
+  return get("fs");
+}
+function mkdirp() {
+  return get("mkdirp");
+}
+function ncp() {
+  return get("ncp");
+}
+function objects() {
+  return get("utiljs-objects");
+}
+function path() {
+  return get("path");
+}
+function promises() {
+  return get("utiljs-promises");
+}
+function rimraf() {
+  return get("rimraf");
+}
+function strings() {
+  return get("utiljs-strings");
+}
+function touch() {
+  return get("touch");
+}
