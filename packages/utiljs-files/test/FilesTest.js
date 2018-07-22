@@ -389,122 +389,139 @@ describe("Files", function() {
   });
 
   describe("#isDirectory", function() {
-    it("should be true for the working directory", function(done) {
-      files.isDirectory(".", function(err, truth) {
-        expect(err).to.be.null;
-        expect(truth).to.be.ok;
-        done();
+    it("should be true for the working directory", done => {
+      files.isDirectory(".", function(error, truth) {
+        try {
+          expect(error).to.be.null;
+          expect(truth).to.be.ok;
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should be true for the directory containing FilesTest.js", function(done) {
-      files.isDirectory(__dirname, function(err, truth) {
-        expect(err).to.be.null;
-        expect(truth).to.be.ok;
-        done();
+    it("should be true for the directory containing FilesTest.js", async function() {
+      const truth = await files.isDirectory(__dirname);
+      expect(truth).to.be.ok;
+    });
+    it("should be false for FilesTest.js", done => {
+      files.isDirectory(__dirname + "/FilesTest.js", function(error, truth) {
+        try {
+          expect(error).to.be.null;
+          expect(truth).to.be.false;
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should be false for FilesTest.js", function(done) {
-      files.isDirectory(__dirname + "/FilesTest.js", function(err, truth) {
-        expect(err).to.be.null;
-        expect(truth).to.be.false;
-        done();
-      });
+    it("should error for UnlikelyToExist.js", async function() {
+      try {
+        await files.isDirectory(__dirname + "/UnlikelyToExist.js");
+        exect.fail("We expected #isDirectory to throw an exception.");
+      } catch (error) {
+        expect(error).to.be.an.instanceof(Error);
+      }
     });
-    it("should error for UnlikelyToExist.js", function(done) {
-      files.isDirectory(__dirname + "/UnlikelyToExist.js", function(
-        err,
-        truth
-      ) {
-        expect(err).to.be.an.instanceof(Error);
-        expect(truth).to.be.null;
-        done();
-      });
-    });
-    it("should error for /unlikely/to/exist/dir/", function(done) {
-      files.isDirectory("/unlikely/to/exist/dir/", function(err, truth) {
-        expect(err).to.be.an.instanceof(Error);
-        expect(truth).to.be.null;
-        done();
+    it("should error for /unlikely/to/exist/dir/", done => {
+      files.isDirectory("/unlikely/to/exist/dir/", (error, truth) => {
+        try {
+          expect(error).to.be.an.instanceof(Error);
+          expect(truth).to.be.undefined;
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
   });
 
-  describe("#isDirectorySync", function() {
-    it("should return true for the working directory", function() {
+  describe("#isDirectorySync", () => {
+    it("should return true for the working directory", () => {
       expect(files.isDirectorySync(".")).to.be.ok;
     });
-    it("should return true for the directory containing FilesTest.js", function() {
+    it("should return true for the directory containing FilesTest.js", () => {
       expect(files.isDirectorySync(__dirname)).to.be.ok;
     });
-    it("should return false for FilesTest.js", function() {
+    it("should return false for FilesTest.js", () => {
       expect(files.isDirectorySync(__dirname + "/FilesTest.js")).to.be.false;
     });
-    it("should throw an exception for UnlikelyToExist.js", function() {
-      expect(function() {
+    it("should throw an exception for UnlikelyToExist.js", () => {
+      expect(() => {
         files.isDirectorySync(__dirname + "/UnlikelyToExist.js");
       }).to.throw(/ENOENT.*/);
     });
-    it("should throw an exception for /unlikely/to/exist/dir/", function() {
-      expect(function() {
+    it("should throw an exception for /unlikely/to/exist/dir/", () => {
+      expect(() => {
         files.isDirectorySync("/unlikely/to/exist/dir/");
       }).to.throw(/ENOENT.*/);
     });
   });
 
   describe("#isFile", function() {
-    it("should be false for the working directory", function(done) {
-      files.isFile(".", function(err, truth) {
-        expect(err).to.be.null;
-        expect(truth).to.be.false;
-        done();
+    it("should be false for the working directory", done => {
+      files.isFile(".", function(error, truth) {
+        try {
+          expect(error).to.be.null;
+          expect(truth).to.be.false;
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should be false for the directory containing FilesTest.js", function(done) {
-      files.isFile(__dirname, function(err, truth) {
-        expect(err).to.be.null;
-        expect(truth).to.be.false;
-        done();
+    it("should be false for the directory containing FilesTest.js", async function() {
+      const truth = await files.isFile(__dirname);
+      expect(truth).to.be.false;
+    });
+    it("should be true for FilesTest.js", done => {
+      files.isFile(__dirname + "/FilesTest.js", (error, truth) => {
+        try {
+          expect(error).to.be.null;
+          expect(truth).to.be.ok;
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
-    it("should be true for FilesTest.js", function(done) {
-      files.isFile(__dirname + "/FilesTest.js", function(err, truth) {
-        expect(err).to.be.null;
-        expect(truth).to.be.ok;
-        done();
-      });
+    it("should error for UnlikelyToExist.js", async function() {
+      try {
+        await files.isFile(__dirname + "/UnlikelyToExist.js");
+        exect.fail("We expected #isFile to throw an exception.");
+      } catch (error) {
+        expect(error).to.be.an.instanceof(Error);
+      }
     });
-    it("should error for UnlikelyToExist.js", function(done) {
-      files.isFile(__dirname + "/UnlikelyToExist.js", function(err, truth) {
-        expect(err).to.be.an.instanceof(Error);
-        expect(truth).to.be.null;
-        done();
-      });
-    });
-    it("should error for /unlikely/to/exist/dir/", function(done) {
-      files.isFile("/unlikely/to/exist/dir/", function(err, truth) {
-        expect(err).to.be.an.instanceof(Error);
-        expect(truth).to.be.null;
-        done();
+    it("should error for /unlikely/to/exist/dir/", done => {
+      files.isFile("/unlikely/to/exist/dir/", function(error, truth) {
+        try {
+          expect(error).to.be.an.instanceof(Error);
+          expect(truth).to.be.undefined;
+          done();
+        } catch (err) {
+          done(err);
+        }
       });
     });
   });
 
-  describe("#isFileSync", function() {
-    it("should return false for the working directory", function() {
+  describe("#isFileSync", () => {
+    it("should return false for the working directory", () => {
       expect(files.isFileSync(".")).to.be.false;
     });
-    it("should return false for the directory containing FilesTest.js", function() {
+    it("should return false for the directory containing FilesTest.js", () => {
       expect(files.isFileSync(__dirname)).to.be.false;
     });
-    it("should return false for FilesTest.js", function() {
+    it("should return false for FilesTest.js", () => {
       expect(files.isFileSync(__dirname + "/FilesTest.js")).to.be.ok;
     });
-    it("should throw an exception for UnlikelyToExist.js", function() {
+    it("should throw an exception for UnlikelyToExist.js", () => {
       expect(function() {
         files.isFileSync(__dirname + "/UnlikelyToExist.js");
       }).to.throw(/ENOENT.*/);
     });
-    it("should throw an exception for /unlikely/to/exist/dir/", function() {
+    it("should throw an exception for /unlikely/to/exist/dir/", () => {
       expect(function() {
         files.isFileSync("/unlikely/to/exist/dir/");
       }).to.throw(/ENOENT.*/);
@@ -563,7 +580,7 @@ describe("Files", function() {
           function(cb) {
             cb(null, testFile);
           },
-          files.isFile,
+          files.isFile.bind(files),
           function(truth, cb) {
             expect(truth).to.be.true;
             cb(null);
@@ -760,7 +777,7 @@ describe("Files", function() {
             expect(res).to.be.undefined;
             cb(null, touchFile);
           },
-          files.isFile,
+          files.isFile.bind(files),
           function(truth, cb) {
             expect(truth).to.be.ok;
             cb(null, touchFile);
@@ -774,7 +791,7 @@ describe("Files", function() {
             expect(res).to.be.undefined;
             cb(null, touchFile);
           },
-          files.isFile
+          files.isFile.bind(files)
         ],
         done
       );

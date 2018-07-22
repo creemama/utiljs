@@ -131,44 +131,44 @@ module.exports = function Files(options) {
     return filesWithExt;
   }
 
-  this.isDirectory = Files_isDirectory;
-  function Files_isDirectory(path, cb) {
-    fs().lstat(path, function(err, stats) {
-      if (objects().isDefined(err)) {
-        cb(err, null);
-        return;
-      }
-      cb(null, stats.isDirectory());
-    });
+  this.isDirectory = isDirectory;
+  function isDirectory(path, callback) {
+    if (typeof callback === "function")
+      return promises().applyPromise(this, this.isDirectory, arguments);
+    const thiz = this;
+    return (async function() {
+      const stats = await thiz.lstat(path);
+      return stats.isDirectory();
+    })();
   }
 
-  this.isDirectorySync = Files_isDirectorySync;
-  function Files_isDirectorySync(path) {
-    return fs()
-      .lstatSync(path)
-      .isDirectory();
+  this.isDirectorySync = isDirectorySync;
+  function isDirectorySync(path) {
+    return this.lstatSync(path).isDirectory();
   }
 
-  this.isFile = Files_isFile;
-  function Files_isFile(path, callback) {
-    if (!callback) {
-      return promises().promisifyAndCall(this, Files_isFile, path);
-    }
-    fs().lstat(path, function(err, stats) {
-      if (objects().isDefined(err)) {
-        callback(err, null);
-        return;
-      }
-      callback(null, stats.isFile());
-    });
+  this.isFile = isFile;
+  function isFile(path, callback) {
+    if (typeof callback === "function")
+      return promises().applyPromise(this, this.isFile, arguments);
+    const thiz = this;
+    return (async function() {
+      const stats = await thiz.lstat(path);
+      return stats.isFile();
+    })();
   }
 
-  this.isFileSync = Files_isFileSync;
-  function Files_isFileSync(path) {
-    return fs()
-      .lstatSync(path)
-      .isFile();
+  this.isFileSync = isFileSync;
+  function isFileSync(path) {
+    return this.lstatSync(path).isFile();
   }
+
+  this.lstat = lstat;
+  function lstat() {
+    return promises().applyCallback(fs(), fs().lstat, arguments);
+  }
+
+  this.lstatSync = fs().lstatSync;
 
   this.mkdirp = function(path, cb) {
     return promises().call(null, mkdirp(), arguments);
