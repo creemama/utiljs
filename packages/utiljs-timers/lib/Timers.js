@@ -1,14 +1,12 @@
 "use strict";
 
-const util = require("util");
-
 class Timers {
   get setImmediate() {
     return setImmediate;
   }
 
   get setImmediatePromise() {
-    return util.promisify(setImmediate);
+    return util().promisify(setImmediate);
   }
 
   get setInterval() {
@@ -20,7 +18,7 @@ class Timers {
   }
 
   get setTimeoutPromise() {
-    return util.promisify(setTimeout);
+    return util().promisify(setTimeout);
   }
 
   get clearImmediate() {
@@ -37,3 +35,14 @@ class Timers {
 }
 
 module.exports = Timers;
+
+const dependencies = {};
+function get(dependency) {
+  return (
+    dependencies[dependency] || (dependencies[dependency] = require(dependency))
+  );
+}
+
+function util() {
+  return get("util");
+}
