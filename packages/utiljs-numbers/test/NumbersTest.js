@@ -3,6 +3,20 @@
 const { expect } = require("chai"),
   numbers = require("..");
 
+describe("Numbers#abs(x)", () => {
+  it("should calculate correctly", () => {
+    expect(numbers.abs(numbers.NEGATIVE_INFINITY)).to.eql(
+      numbers.POSITIVE_INFINITY
+    );
+  });
+});
+
+describe("Numbers#cos(x)", () => {
+  it("should calculate correctly", () => {
+    expect(numbers.cos(numbers.PI)).to.eql(-1);
+  });
+});
+
 describe("Numbers", () => {
   describe("#isInt(value)", () => {
     it("should return true for integers", () => {
