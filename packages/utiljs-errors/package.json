@@ -1,0 +1,19 @@
+{
+  "author": "Chris Topher <c@creemama.com>",
+  "description": "JavaScript utility methods for errors",
+  "keywords": [
+    "error",
+    "errors",
+    "RethrownError",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "utiljs-errors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-errors"
+  },
+  "version": "0.23.1"
+}

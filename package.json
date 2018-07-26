@@ -21,7 +21,7 @@
     "url": "https://github.com/creemama/utiljs"
   },
   "scripts": {
-    "build": "npx lerna exec --bail=false --ignore \"utiljs-{files,streams,timers,urls}\" -- ../../node_modules/.bin/babel lib --out-dir dist",
+    "build": "npx lerna exec --bail=false --ignore \"utiljs-{errors,files,streams,timers,urls}\" -- ../../node_modules/.bin/babel lib --out-dir dist",
     "clean": "git clean -fdxn --exclude \"node_modules\"",
     "test": "npm run build && npx lerna exec -- mocha"
   }
