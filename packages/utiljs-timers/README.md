@@ -5,3 +5,5 @@
 <p>
   <a href="https://www.npmjs.com/package/utiljs-timers"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-timers.svg?style=flat"></a>
 </p>
+
+utiljs-timers is part of [Util.js](https://github.com/creemama/utiljs).
