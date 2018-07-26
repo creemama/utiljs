@@ -1,17 +1,18 @@
 "use strict";
 
-module.exports = Urls;
+class Urls {
+  decodeURI() {
+    return decodeURI(...arguments);
+  }
 
-function Urls() {
-  this.decodeURI = decodeURI;
+  decodeURIComponent() {
+    return decodeURIComponent(...arguments);
+  }
 
-  this.decodeURIComponent = decodeURIComponent;
-
-  this.download = download;
   // http://stackoverflow.com/questions/11944932/how-to-download-a-file-with-node-js
-  function download(url, destination, callback) {
+  download(url, destination, callback) {
     if (!callback)
-      return promises().callCallback(this, download, url, destination);
+      return promises().callCallback(this, this.download, url, destination);
 
     const parsedUrl = urlUtil().parse(url);
 
@@ -30,15 +31,18 @@ function Urls() {
       });
   }
 
-  this.encodeURI = encodeURI;
+  encodeURI() {
+    return encodeURI(...arguments);
+  }
 
-  this.encodeURIComponent = encodeURIComponent;
+  encodeURIComponent() {
+    return encodeURIComponent(...arguments);
+  }
 
-  this.headers = headers;
   // http://stackoverflow.com/questions/5922842/getting-http-headers-with-node-js
   // http://stackoverflow.com/a/6001507
-  function headers(url, callback) {
-    if (!callback) return promises().callCallback(this, headers, url);
+  headers(url, callback) {
+    if (!callback) return promises().callCallback(this, this.headers, url);
 
     const parsedUrl = urlUtil().parse(url);
     const port = parsedUrl.port
@@ -62,6 +66,8 @@ function Urls() {
       .end();
   }
 }
+
+module.exports = Urls;
 
 const dependencies = {};
 function get(dependency) {
