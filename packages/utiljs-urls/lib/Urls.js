@@ -2,7 +2,7 @@
 
 module.exports = Urls;
 
-function Urls(options) {
+function Urls() {
   this.decodeURI = decodeURI;
 
   this.decodeURIComponent = decodeURIComponent;
@@ -61,25 +61,32 @@ function Urls(options) {
       })
       .end();
   }
+}
 
-  function files() {
-    return options.files();
-  }
-  function http() {
-    return options.http();
-  }
-  function https() {
-    return options.https();
-  }
-  function promises() {
-    return options.promises();
-  }
-  function urlUtil() {
-    return options.url();
-  }
+const dependencies = {};
+function get(dependency) {
+  return (
+    dependencies[dependency] || (dependencies[dependency] = require(dependency))
+  );
+}
 
-  function getProtocolObject(protocolStr) {
-    if (!protocolStr) return https();
-    return protocolStr === "https:" ? https() : http();
-  }
+function files() {
+  return get("utiljs-files");
+}
+function http() {
+  return get("http");
+}
+function https() {
+  return get("https");
+}
+function promises() {
+  return get("utiljs-promises");
+}
+function urlUtil() {
+  return get("url");
+}
+
+function getProtocolObject(protocolStr) {
+  if (!protocolStr) return https();
+  return protocolStr === "https:" ? https() : http();
 }
