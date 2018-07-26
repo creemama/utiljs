@@ -4,33 +4,10 @@ module.exports = Urls;
 
 function Urls(options) {
   this.decodeURI = decodeURI;
+
   this.decodeURIComponent = decodeURIComponent;
+
   this.download = download;
-  this.encodeURI = encodeURI;
-  this.encodeURIComponent = encodeURIComponent;
-  this.headers = headers;
-
-  function files() {
-    return options.files();
-  }
-  function http() {
-    return options.http();
-  }
-  function https() {
-    return options.https();
-  }
-  function promises() {
-    return options.promises();
-  }
-  function urlUtil() {
-    return options.url();
-  }
-
-  function getProtocolObject(protocolStr) {
-    if (!protocolStr) return https();
-    return protocolStr === "https:" ? https() : http();
-  }
-
   // http://stackoverflow.com/questions/11944932/how-to-download-a-file-with-node-js
   function download(url, destination, callback) {
     if (!callback)
@@ -53,6 +30,11 @@ function Urls(options) {
       });
   }
 
+  this.encodeURI = encodeURI;
+
+  this.encodeURIComponent = encodeURIComponent;
+
+  this.headers = headers;
   // http://stackoverflow.com/questions/5922842/getting-http-headers-with-node-js
   // http://stackoverflow.com/a/6001507
   function headers(url, callback) {
@@ -78,5 +60,26 @@ function Urls(options) {
         callback(error);
       })
       .end();
+  }
+
+  function files() {
+    return options.files();
+  }
+  function http() {
+    return options.http();
+  }
+  function https() {
+    return options.https();
+  }
+  function promises() {
+    return options.promises();
+  }
+  function urlUtil() {
+    return options.url();
+  }
+
+  function getProtocolObject(protocolStr) {
+    if (!protocolStr) return https();
+    return protocolStr === "https:" ? https() : http();
   }
 }
