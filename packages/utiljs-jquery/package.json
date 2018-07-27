@@ -2,7 +2,7 @@
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
     "babel-runtime": "6.26.0",
-    "utiljs-promises": "0.23.1"
+    "utiljs-promises": "0.24.0"
   },
   "description": "JavaScript utility methods for jQuery",
   "devDependencies": {
@@ -21,5 +21,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-jquery"
   },
-  "version": "0.23.1"
+  "version": "0.24.0"
 }
