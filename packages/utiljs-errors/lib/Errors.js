@@ -22,7 +22,7 @@ class Errors {
    *   try {
    *     throwATypeError();
    *   } catch (error) {
-   *     throw new RethrownError("Lorem Ipsum", error);
+   *     throw new RethrownError(error, "Lorem Ipsum");
    *   }
    * }
    *
@@ -41,6 +41,9 @@ class Errors {
    *   //     ...
    * }
    *
+   * @param {Error} error The error to rethrow
+   * @param {String} [message] A human-readable description of the error
+   * @throws {TypeError} if the given error is not defined
    * @public
    * @class
    */

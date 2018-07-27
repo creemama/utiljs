@@ -4,7 +4,7 @@
  * See {@link Errors#RethrownError}.
  */
 class RethrownError extends Error {
-  constructor(message, error) {
+  constructor(error, message) {
     super(message);
     if (!error)
       throw new TypeError(

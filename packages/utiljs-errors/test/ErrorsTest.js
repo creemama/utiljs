@@ -13,7 +13,11 @@ describe("new Errors#RethrownError(message, error)", () => {
       try {
         throwATypeError();
       } catch (error) {
-        throw new RethrownError("Lorem Ipsum", error);
+        expect(new RethrownError(error).stack).to.include("RethrownError\n");
+        expect(new RethrownError(error, "").stack).to.include(
+          "RethrownError\n"
+        );
+        throw new RethrownError(error, "Lorem Ipsum");
       }
     }
     try {
@@ -28,6 +32,7 @@ describe("new Errors#RethrownError(message, error)", () => {
     }
   });
   it("should throw an error when given an invalid error", () => {
-    expect(() => new RethrownError("Lorem Ipsum")).to.throw(TypeError);
+    expect(() => new RethrownError()).to.throw(TypeError);
+    expect(() => new RethrownError(null, "Lorem Ipsum")).to.throw(TypeError);
   });
 });

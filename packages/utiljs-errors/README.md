@@ -18,7 +18,7 @@ utiljs-errors is part of [Util.js](https://github.com/creemama/utiljs).
 
 - [Errors](#Errors)
   - [.RethrownError](#Errors+RethrownError)
-    - [new Errors#RethrownError()](#new_Errors+RethrownError_new)
+    - [new Errors#RethrownError(error, [message])](#new_Errors+RethrownError_new)
 
 <a name="Errors+RethrownError"></a>
 
@@ -28,13 +28,22 @@ utiljs-errors is part of [Util.js](https://github.com/creemama/utiljs).
 **Access**: public  
 <a name="new_Errors+RethrownError_new"></a>
 
-#### new Errors#RethrownError()
+#### new Errors#RethrownError(error, [message])
 
 A wrapper of another error used for rethrowing.
 
 This error preserves information about the original error and its stack trace.
 
 A [Stack Overflow](https://stackoverflow.com/questions/42754270/re-throwing-exception-in-nodejs-and-not-losing-stack-trace) article inspired this class.
+
+**Throws**:
+
+- <code>TypeError</code> if the given error is not defined
+
+| Param     | Type                | Description                               |
+| --------- | ------------------- | ----------------------------------------- |
+| error     | <code>Error</code>  | The error to rethrow                      |
+| [message] | <code>String</code> | A human-readable description of the error |
 
 **Example**
 
@@ -47,7 +56,7 @@ function rethrowTheTypeError() {
   try {
     throwATypeError();
   } catch (error) {
-    throw new RethrownError("Lorem Ipsum", error);
+    throw new RethrownError(error, "Lorem Ipsum");
   }
 }
 
