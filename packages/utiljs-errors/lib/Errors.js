@@ -9,7 +9,7 @@ class Errors {
   /**
    * Wraps the given promise so that errors caught preserve the stack trace of the calling thread.
    *
-   * The example compares the stack traces
+   * The example compares the stack trace of a rejected promise using this method and the stack trace of a rejected promise that does not use this method.
    *
    * @example
    * const errors = require("utiljs-errors");

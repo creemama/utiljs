@@ -99,7 +99,7 @@ try {
 
 Wraps the given promise so that errors caught preserve the stack trace of the calling thread.
 
-The example compares the stack traces
+The example compares the stack trace of a rejected promise using this method and the stack trace of a rejected promise that does not use this method.
 
 **Kind**: instance method of [<code>Errors</code>](#Errors)  
 **Returns**: <code>Promise</code> - A promise that upon rejection wraps the error in an AsyncError and rethrows  
