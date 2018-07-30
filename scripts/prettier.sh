@@ -6,12 +6,14 @@ cd "${scriptDir}"
 
 cd ..
 
+path="."
 prefix=""
 if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
+  path="./packages/${1}"
   prefix="\./packages/${1}/"
 fi
 
-find . -type f \
+find ${path} -type f \
 | egrep "^(\./\.babelrc|${prefix}.*\.(css|js|json|jsx|md|scss))$" \
 | egrep -v "^.*/(dist|node_modules|target)/.*$" \
 | egrep -v "^.*/package-lock\.json$" \

@@ -15,15 +15,17 @@ fi
 
 mkdir -p target/jsdoc2md
 
+path="."
 prefix=""
 filename="jsdoc2md.md"
 if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
+  path="./packages/${1}"
   prefix="\./packages/${1}/"
   filename="${1}.md"
 fi
 
 jsdoc2md \
-`find . -type f \
+`find ${path} -type f \
 | egrep "^${prefix}.*\.js$" \
 | egrep -v "^.*/(dist|node_modules|target)/.*$"` \
 > target/jsdoc2md/${filename}
