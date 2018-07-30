@@ -12,7 +12,7 @@
     "jsdoc-to-markdown": "4.0.1",
     "lerna": "2.11.0",
     "mocha": "5.2.0",
-    "prettier": "1.13.7"
+    "prettier": "1.14.0"
   },
   "license": "MIT",
   "name": "utiljs",
