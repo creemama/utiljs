@@ -2,7 +2,24 @@
 
 const { AssertionError, expect } = require("chai"),
   errors = require(".."),
-  { RethrownError } = errors;
+  { AsyncError, RethrownError } = errors;
+
+describe("Errors#catch(promise)", () => {
+  it("should return a Promise that throws an AsyncError upon rejection", () => {
+    function rejectAPromise() {
+      return Promise.reject(new TypeError("Fail!"));
+    }
+    return errors.catch(rejectAPromise()).catch(error => {
+      expect(error).to.be.an.instanceof(AsyncError);
+      expect(error.stack).to.include("AsyncError: Fail!");
+      expect(error.stack).to.include("at rejectAPromise");
+      expect(error.stack).to.include("TypeError: Fail!");
+    });
+  });
+  it("should throw a TypeError if the given promise is not defined", () => {
+    expect(() => errors.catch()).to.throw(TypeError);
+  });
+});
 
 describe("new Errors#RethrownError(message, error)", () => {
   it("should create a rethrown error with an appropriate stack trace", () => {
