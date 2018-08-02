@@ -27,7 +27,10 @@ class AsyncError extends Error {
         .split("    at ")
         .splice(2)
         .join("    at ");
-    this.stack = `${this.stack}\n${callerStack}\n${asyncError.stack}`;
+    // If asyncError.stack is falsy, then let us just try asyncError;
+    // asyncError may be a string.
+    this.stack = `${this.stack}\n${callerStack}\n${asyncError.stack ||
+      asyncError}`;
   }
 }
 
