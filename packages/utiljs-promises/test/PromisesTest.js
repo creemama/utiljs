@@ -241,6 +241,17 @@ describe("Promises", function() {
         expect(values).to.eql([3, 42, "foo"]);
       });
     });
+    it("should reject when given no arguments", () => {
+      return promises
+        .all()
+        .then(() => expect.fail("We expected promises#all to fail."))
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+    });
+    it("should resolve with [] when given [] as an argument", () => {
+      return promises.all([]).then(values => {
+        expect(values).to.eql([]);
+      });
+    });
   });
 
   describe("#applyCallback(object, functionOnObjectWithCallback, args)", () => {
