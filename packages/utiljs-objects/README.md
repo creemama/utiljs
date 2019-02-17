@@ -17,13 +17,15 @@ This class contains all the non-instance methods of [Object](https://developer.m
 
 <a name="Objects"></a>
 
-## Objects API
+## Objects
+
+JavaScript utility methods for [objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
 
 **Kind**: global class  
 **Access**: public  
 <a name="Objects+isDefined"></a>
 
-### objects.isDefined(object) ⇒ <code>boolean</code>
+### objects.isDefined(object) ⇒ <code>Boolean</code>
 
 Returns whether the specified obj is defined (i.e., not null and not undefined).
 
@@ -39,7 +41,7 @@ if (x) console.log("x is defined.");
 This happens for [0, -0, NaN, false, and the empty string ("")](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean).
 
 **Kind**: instance method of [<code>Objects</code>](#Objects)  
-**Returns**: <code>boolean</code> - true if the given object is defined or false otherwise  
+**Returns**: <code>Boolean</code> - true if the given object is defined or false otherwise  
 **Access**: public
 
 | Param  | Type            | Description         |

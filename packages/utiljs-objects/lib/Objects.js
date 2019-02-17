@@ -71,7 +71,7 @@ class Objects {
    * This happens for [0, -0, NaN, false, and the empty string ("")]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean}.
    *
    * @param {*} object The object to check
-   * @return {boolean} true if the given object is defined or false otherwise
+   * @return {Boolean} true if the given object is defined or false otherwise
    * @public
    * @instance
    * @function
