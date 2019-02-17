@@ -48,8 +48,8 @@ class Urls {
     const port = parsedUrl.port
       ? parsedUrl.port
       : parsedUrl.protocol === "https:"
-        ? 443
-        : 80;
+      ? 443
+      : 80;
     getProtocolObject(parsedUrl.protocol)
       .request(
         {
