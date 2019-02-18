@@ -9,16 +9,33 @@ NODE_HOME_DIR="${SCRIPT_DIR}"/../target/node-home-dir
 
 mkdir -p "${NODE_HOME_DIR}"
 
+DOCKER_IMAGE=utiljs-dev:0.28.1
+
+# https://stackoverflow.com/a/30543453
+if [[ "$(docker images -q ${DOCKER_IMAGE} 2> /dev/null)" == "" ]]; then
+  cd "${SCRIPT_DIR}/../docker"
+  docker build --tag ${DOCKER_IMAGE} .
+fi
+
+# We mount /tmp because of the following error:
+# ~/utiljs $ ./scripts/jsdoc2md.sh
+# /home/node/utiljs/node_modules/mkdirp2/index.js:87
+#           throw err0
+#           ^
+#
+# Error: EROFS: read-only file system, mkdir '/tmp/jsdoc-api'
+#     at Object.mkdirSync (fs.js:753:3)
+# ...
+
 docker run \
 --interactive \
+--name utiljs-dev \
+--read-only \
 --rm \
 --tty \
 --volume "${NODE_HOME_DIR}":/home/node \
---volume ~/.ssh:/home/node/.ssh \
+--volume ~/.ssh:/home/node/.ssh:ro \
 --volume "${SCRIPT_DIR}"/..:/home/node/utiljs \
+--volume /tmp \
 --workdir /home/node/utiljs \
-creemama/run-non-root:1.4.0-node \
-sh
-
-# To run `npx lerna version x.x.x`, execute the following command:
-# docker exec -it container-name sh -c "apk update && apk add git openssh --no-cache"
+${DOCKER_IMAGE}
