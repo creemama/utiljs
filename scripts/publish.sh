@@ -6,15 +6,13 @@ cd "${scriptDir}"
 
 cd ..
 
-npm adduser # Log into https://www.npmjs.com .
-if [[ ${?} -eq 0 ]]; then
-  npx lerna publish
-  if [[ ${?} -eq 0 ]]; then
-    exitCode=${?}
-  fi
-else
-  exitCode=${?}
-fi
+# Log into https://www.npmjs.com .
+git clean -f \
+&& npm run clean \
+&& npm run build \
+&& npm adduser \
+&& npx lerna publish
+exitCode=${?}
 
 cd "${curDir}"
 
