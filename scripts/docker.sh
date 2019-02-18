@@ -14,7 +14,11 @@ docker run \
 --rm \
 --tty \
 --volume "${NODE_HOME_DIR}":/home/node \
+--volume ~/.ssh:/home/node/.ssh \
 --volume "${SCRIPT_DIR}"/..:/home/node/utiljs \
 --workdir /home/node/utiljs \
 creemama/run-non-root:1.4.0-node \
 sh
+
+# To run `npx lerna version x.x.x`, execute the following command:
+# docker exec -it container-name sh -c "apk update && apk add git openssh --no-cache"
