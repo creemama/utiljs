@@ -1,0 +1,19 @@
+{
+  "author": "Chris Topher <c@creemama.com>",
+  "description": "JavaScript utility class for private member variables",
+  "keywords": [
+    "field",
+    "fields",
+    "member",
+    "members",
+    "private",
+    "privates"
+  ],
+  "license": "MIT",
+  "name": "utiljs-privates",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-privates"
+  },
+  "version": "0.28.1"
+}
