@@ -25,3 +25,7 @@ Util.js is a [Lerna](https://lernajs.io/) monorepo with the following packages:
 | [utiljs-urls](https://github.com/creemama/utiljs/tree/master/packages/utiljs-urls)         |     <a href="https://www.npmjs.com/package/utiljs-urls"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-urls.svg?style=flat"></a>     |
 
 The anatomy for each package is loosely based on ["Directory structure for JavaScript/Node Projects"](https://gist.github.com/tracker1/59f2c13044315f88bee9).
+
+Use [conventional commits](https://github.com/pvdlg/conventional-changelog-metahub) for commit messages.
+
+See scripts/README.md for information on the scripts used to maintain this project.
