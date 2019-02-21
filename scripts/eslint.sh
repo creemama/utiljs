@@ -16,18 +16,20 @@ if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
   prefix="\./packages/${1}/"
 fi
 
+mkdir -p target
+
 find ${path} -type f \
 | egrep "^${prefix}.*\.js$" \
 | egrep -v "^.*/(dist|node_modules|target)/.*$" \
-> eslint.txt
+> target/eslint.txt
 
-sort eslint.txt -o eslint.txt
+sort target/eslint.txt -o target/eslint.txt
 
 while read in; do
   echo $in
   npx eslint "$in"
-done < eslint.txt
+done < target/eslint.txt
 
-rm -rf eslint.txt
+rm -rf target/eslint.txt
 
 cd "${curDir}"
