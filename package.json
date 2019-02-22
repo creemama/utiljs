@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "npx lerna exec --bail=false --ignore \"utiljs-{errors,files,privates,streams,timers,urls}\" -- ../../node_modules/.bin/babel lib --out-dir dist",
-    "clean": "git clean -fdxn --exclude \"node_modules\"",
+    "clean": "git clean -fdx --exclude \"node_modules\" --exclude \"node-home-dir\"",
     "test": "npm run build && npx lerna exec -- mocha"
   }
 }
