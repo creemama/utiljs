@@ -2,9 +2,10 @@
   "author": "Chris Topher <c@creemama.com>",
   "description": "Util.js - JavaScript utility methods",
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-preset-env": "1.7.0",
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.3.3",
+    "@babel/plugin-transform-runtime": "7.2.0",
+    "@babel/preset-env": "7.3.1",
     "chai": "4.2.0",
     "eslint": "5.14.1",
     "eslint-config-prettier": "4.0.0",
@@ -14,6 +15,11 @@
     "mocha": "6.0.1",
     "prettier": "1.16.4"
   },
+  "devDependencies-comments": [
+    "Including @babel/core prevents the following warning: ",
+    "npm WARN @babel/cli@7.2.3 requires a peer of @babel/core@^7.0.0-0 but ",
+    "none is installed. You must install peer dependencies yourself."
+  ],
   "license": "MIT",
   "name": "utiljs",
   "repository": {
@@ -21,9 +27,9 @@
     "url": "https://github.com/creemama/utiljs"
   },
   "scripts": {
-    "build": "npx lerna exec --bail=false --ignore \"utiljs-{errors,files,privates,streams,timers,urls}\" -- ../../node_modules/.bin/babel lib --out-dir dist",
+    "build": "npm run clean && ./scripts/babel.sh",
     "clean": "git clean -fdx --exclude \"node_modules\" --exclude \"node-home-dir\"",
-    "package-lock": "git clean -fdx && npm install --save-exact && npx lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
+    "package-lock": "git clean -fdx --exclude \"node-home-dir\" && npm install --save-exact && npx lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
     "test": "npm run build && npx lerna exec -- mocha"
   },
   "scripts-comments": [

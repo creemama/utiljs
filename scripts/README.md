@@ -23,6 +23,8 @@ The scripts in this directory do the following:
   - `prettier.sh`
 
 - Test and publish.
+
+  - `babel.sh`
   - `mocha.sh`
   - `travis.sh`
   - `publish.sh`
