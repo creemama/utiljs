@@ -1,8 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "utiljs-files": "^0.28.1",
-    "utiljs-promises": "^0.28.1"
+    "utiljs-files": "0.29.0",
+    "utiljs-promises": "0.29.0"
   },
   "description": "JavaScript utility methods for URLs",
   "keywords": [
@@ -20,5 +20,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-urls"
   },
-  "version": "0.28.1"
+  "version": "0.29.0"
 }
