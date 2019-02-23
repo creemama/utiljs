@@ -13,6 +13,8 @@ if [[ ${?} -ne 0 ]]; then
   exitCode=${?}
 fi
 
+printf "\n\033[1m%s\033[0m\n\n" "** Consider running \"npm run package-lock\" as well. **"
+
 cd "${curDir}"
 
 echo "Exit code: ${exitCode}"

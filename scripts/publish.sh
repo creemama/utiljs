@@ -17,6 +17,12 @@ exitCode=${?}
 # You may need to use --force-publish, an intentionally undocumented option.
 # npx lerna publish --exact --force-publish=utiljs-objects,utiljs-strings
 
+npm run package-lock
+lastExitCode="${?}"
+if [[ "${lastExitCode}" -ne 0 ]]; then
+  exitCode="${lastExitCode}"
+fi
+
 cd "${curDir}"
 
 echo "Exit code: ${exitCode}"
