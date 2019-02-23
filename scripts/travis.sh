@@ -11,7 +11,7 @@ npm run clean \
 && git status \
 && npm run build \
 && ./scripts/mocha.sh \
-&& git push origin master:update
+&& git push origin master:update --force
 exitCode=${?}
 
 cd "${curDir}"
