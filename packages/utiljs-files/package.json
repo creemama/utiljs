@@ -5,9 +5,9 @@
     "ncp": "2.0.0",
     "rimraf": "2.6.3",
     "touch": "3.1.0",
-    "utiljs-objects": "0.29.0",
-    "utiljs-promises": "0.29.0",
-    "utiljs-strings": "0.29.0"
+    "@util.js/objects": "0.29.0",
+    "@util.js/promises": "0.29.0",
+    "@util.js/strings": "0.29.0"
   },
   "description": "JavaScript Node.js utility methods for files",
   "devDependencies": {
@@ -23,7 +23,14 @@
     "utiljs"
   ],
   "license": "MIT",
-  "name": "utiljs-files",
+  "name": "@util.js/files",
+  "publishConfig": {
+    "access": "public"
+  },
+  "publishConfig-comments": [
+    "publishConfig is necessary to publish packages with a scope. See ",
+    "https://github.com/lerna/lerna/tree/master/commands/publish ."
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-files"

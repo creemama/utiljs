@@ -1,8 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "utiljs-files": "0.29.0",
-    "utiljs-promises": "0.29.0"
+    "@util.js/files": "0.29.0",
+    "@util.js/promises": "0.29.0"
   },
   "description": "JavaScript utility methods for URLs",
   "keywords": [
@@ -15,7 +15,14 @@
     "utiljs"
   ],
   "license": "MIT",
-  "name": "utiljs-urls",
+  "name": "@util.js/urls",
+  "publishConfig": {
+    "access": "public"
+  },
+  "publishConfig-comments": [
+    "publishConfig is necessary to publish packages with a scope. See ",
+    "https://github.com/lerna/lerna/tree/master/commands/publish ."
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-urls"

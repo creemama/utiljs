@@ -12,7 +12,7 @@ class Errors {
    * The example compares the stack trace of a rejected promise using this method and the stack trace of a rejected promise that does not use this method.
    *
    * @example
-   * const errors = require("utiljs-errors");
+   * const errors = require("@util.js/errors");
    * function rejectAPromise() {
    *   return Promise.reject(new TypeError("Fail!"));
    * }

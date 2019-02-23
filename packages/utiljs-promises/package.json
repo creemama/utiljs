@@ -2,7 +2,7 @@
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
     "@babel/runtime-corejs2": "7.3.1",
-    "utiljs-arrays": "0.29.0"
+    "@util.js/arrays": "0.29.0"
   },
   "dependencies-comments": [
     "@babel/runtime-corejs2 is required by files in the dist directory to ",
@@ -17,7 +17,14 @@
     "utiljs"
   ],
   "license": "MIT",
-  "name": "utiljs-promises",
+  "name": "@util.js/promises",
+  "publishConfig": {
+    "access": "public"
+  },
+  "publishConfig-comments": [
+    "publishConfig is necessary to publish packages with a scope. See ",
+    "https://github.com/lerna/lerna/tree/master/commands/publish ."
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-promises"

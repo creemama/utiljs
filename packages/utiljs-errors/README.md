@@ -1,13 +1,13 @@
-# utiljs-errors
+# @util.js/errors
 
 > JavaScript utility methods for [errors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
 
 <p>
-  <a href="https://www.npmjs.com/package/utiljs-errors"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-errors.svg?style=flat"></a>
+  <a href="https://www.npmjs.com/package/@util.js/errors"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/errors.svg?style=flat"></a>
   <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
 </p>
 
-utiljs-errors is part of [Util.js](https://github.com/creemama/utiljs).
+@util.js/errors is part of [Util.js](https://github.com/creemama/utiljs).
 
 <a name="Errors"></a>
 
@@ -114,7 +114,7 @@ The example compares the stack trace of a rejected promise using this method and
 **Example**
 
 ```js
-const errors = require("utiljs-errors");
+const errors = require("@util.js/errors");
 function rejectAPromise() {
   return Promise.reject(new TypeError("Fail!"));
 }

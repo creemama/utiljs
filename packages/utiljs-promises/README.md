@@ -1,13 +1,13 @@
-# utiljs-promises
+# @util.js/promises
 
 > JavaScript utility methods for [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 <p>
-  <a href="https://www.npmjs.com/package/utiljs-promises"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-promises.svg?style=flat"></a>
+  <a href="https://www.npmjs.com/package/@util.js/promises"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/promises.svg?style=flat"></a>
   <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
 </p>
 
-utiljs-promises is part of [Util.js](https://github.com/creemama/utiljs).
+@util.js/promises is part of [Util.js](https://github.com/creemama/utiljs).
 
 This class contains all the non-instance methods of [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) in addition to:
 
@@ -64,7 +64,7 @@ There is one minor difference between Promise#all and this method. Promise#all o
 **Example**
 
 ```js
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 const promise1 = Promise.resolve(3);
 const promise2 = 42;
 const promise3 = new Promise((resolve, reject) => {
@@ -112,9 +112,9 @@ When trying to remember the difference between #apply and #call, think, "#apply 
 
 ```js
 // Wrap a function that only accepts a callback.
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 const stream = require("stream");
-const streams = require("utiljs-streams");
+const streams = require("@util.js/streams");
 // stream#finished only takes a callback.
 // Wrap stream#finished so that it handles both callbacks and Promises.
 function finished() {
@@ -130,7 +130,7 @@ finished(readableToPromise).then(() => console.log("Finished as promised"));
 
 ```js
 // Write a function that supports both callbacks and Promises.
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 function notify(message, who, callback) {
   if (!callback) return promises.applyCallback(null, notify, arguments);
   callback(null, `${message}, ${who}!`);
@@ -175,7 +175,7 @@ When trying to remember the difference between #apply and #call, think, "#apply 
 
 ```js
 // Wrap a function that only returns a Promise.
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 function notifyPromise(message, who) {
   return promises.resolve(`${message}, ${who}!`);
 }
@@ -192,7 +192,7 @@ notify("Promise me", "Hypnotoad").then(console.log);
 
 ```js
 // Write a function that supports both callbacks and Promises.
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 function notify(message, who, callback) {
   if (callback) return promises.applyPromise(null, notify, arguments);
   return promises.resolve(`${message}, ${who}!`);
@@ -224,7 +224,7 @@ Use [callPromise](#Promises+callPromise) if you would like to callbackify a meth
 **Example**
 
 ```js
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 function notifyPromise(message, who) {
   return promises.resolve(`${message}, ${who}!`);
 }
@@ -265,7 +265,7 @@ See [applyCallback](#Promises+applyCallback).
 **Example**
 
 ```js
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 function notifyCallback(message, who, callback) {
   callback(null, `${message}, ${who}!`);
 }
@@ -307,7 +307,7 @@ See [applyPromise](#Promises+applyPromise).
 **Example**
 
 ```js
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 function notifyPromise(message, who) {
   return promises.resolve(`${message}, ${who}!`);
 }
@@ -345,9 +345,9 @@ Use [callCallback](#Promises+callCallback) if you would like to promisify a meth
 **Example**
 
 ```js
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 const stream = require("stream");
-const streams = require("utiljs-streams");
+const streams = require("@util.js/streams");
 // stream#finished only takes a callback.
 // Let us wrap stream#finished so that it returns a Promise.
 const readable = streams.fromString("Promise me, Hypnotoad!");
@@ -376,7 +376,7 @@ There is one minor difference between Promise#race and this method. Promise#race
 **Example**
 
 ```js
-const promises = require("utiljs-promises");
+const promises = require("@util.js/promises");
 const promise1 = new Promise((resolve, reject) => {
   setTimeout(resolve, 500, "one");
 });

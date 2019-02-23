@@ -223,11 +223,11 @@ function get(dependency) {
 }
 
 function promises() {
-  return get("utiljs-promises");
+  return get("@util.js/promises");
 }
 function stream() {
   return get("stream");
 }
 function strings() {
-  return get("utiljs-strings");
+  return get("@util.js/strings");
 }

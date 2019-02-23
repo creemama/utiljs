@@ -10,14 +10,14 @@ class JQueryUtils {
    * Loads jQuery asynchronously and sends a notification when loading has finished
    *
    * @example
-   * const jQueryUtils = require("utiljs-jquery");
+   * const jQueryUtils = require("@util.js/jquery");
    * jQueryUtils
    *   .loadjQuery({ window })
    *   .then($ => console.log($))
    *   .catch(console.log);
    *
    * @example
-   * const jQueryUtils = require("utiljs-jquery");
+   * const jQueryUtils = require("@util.js/jquery");
    * jQueryUtils
    *   .loadjQuery({
    *     src: "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
@@ -27,7 +27,7 @@ class JQueryUtils {
    *   .catch(console.log);
    *
    * @example
-   * const jQueryUtils = require("utiljs-jquery");
+   * const jQueryUtils = require("@util.js/jquery");
    * jQueryUtils.loadjQuery({ window }, (error, $) => {
    *   if (error) return console.log(error);
    *   console.log($);
@@ -76,7 +76,7 @@ const dependencies = {};
 
 function promises() {
   return (
-    dependencies["utiljs-promises"] ||
-    (dependencies["utiljs-promises"] = require("utiljs-promises"))
+    dependencies["@util.js/promises"] ||
+    (dependencies["@util.js/promises"] = require("@util.js/promises"))
   );
 }

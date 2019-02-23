@@ -16,7 +16,7 @@ class Promises {
    * There is one minor difference between Promise#all and this method. Promise#all only takes one argument that must be iterable. This method, Promises#all, behaves the same as Promise#all when given one argument; when given multiple arguments, [arguments]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments} becomes the iterable.
    *
    * @example
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * const promise1 = Promise.resolve(3);
    * const promise2 = 42;
    * const promise3 = new Promise((resolve, reject) => {
@@ -57,9 +57,9 @@ class Promises {
    *
    * @example
    * // Wrap a function that only accepts a callback.
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * const stream = require("stream");
-   * const streams = require("utiljs-streams");
+   * const streams = require("@util.js/streams");
    * // stream#finished only takes a callback.
    * // Wrap stream#finished so that it handles both callbacks and Promises.
    * function finished() {
@@ -72,7 +72,7 @@ class Promises {
    *
    * @example
    * // Write a function that supports both callbacks and Promises.
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * function notify(message, who, callback) {
    *   if (!callback) return promises.applyCallback(null, notify, arguments);
    *   callback(null, `${message}, ${who}!`);
@@ -112,7 +112,7 @@ class Promises {
    *
    * @example
    * // Wrap a function that only returns a Promise.
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * function notifyPromise(message, who) {
    *   return promises.resolve(`${message}, ${who}!`);
    * }
@@ -126,7 +126,7 @@ class Promises {
    *
    * @example
    * // Write a function that supports both callbacks and Promises.
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * function notify(message, who, callback) {
    *   if (callback) return promises.applyPromise(null, notify, arguments);
    *   return promises.resolve(`${message}, ${who}!`);
@@ -155,7 +155,7 @@ class Promises {
    * Use {@link Promises#callPromise} if you would like to callbackify a method and call it in one line.
    *
    * @example
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * function notifyPromise(message, who) {
    *   return promises.resolve(`${message}, ${who}!`);
    * }
@@ -217,7 +217,7 @@ class Promises {
    * See {@link Promises#applyCallback}.
    *
    * @example
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * function notifyCallback(message, who, callback) {
    *   callback(null, `${message}, ${who}!`);
    * }
@@ -251,7 +251,7 @@ class Promises {
    * See {@link Promises#applyPromise}.
    *
    * @example
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * function notifyPromise(message, who) {
    *   return promises.resolve(`${message}, ${who}!`);
    * }
@@ -284,9 +284,9 @@ class Promises {
    * Use {@link Promises#callCallback} if you would like to promisify a method and call it in one line.
    *
    * @example
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * const stream = require("stream");
-   * const streams = require("utiljs-streams");
+   * const streams = require("@util.js/streams");
    * // stream#finished only takes a callback.
    * // Let us wrap stream#finished so that it returns a Promise.
    * const readable = streams.fromString("Promise me, Hypnotoad!");
@@ -334,7 +334,7 @@ class Promises {
    * There is one minor difference between Promise#race and this method. Promise#race only takes one argument that must be iterable. This method, Promises#race, behaves the same as Promise#race when given one argument; when given multiple arguments, [arguments]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments} becomes the iterable.
    *
    * @example
-   * const promises = require("utiljs-promises");
+   * const promises = require("@util.js/promises");
    * const promise1 = new Promise((resolve, reject) => {
    *   setTimeout(resolve, 500, "one");
    * });
@@ -397,8 +397,8 @@ const dependencies = {};
 
 function arrays() {
   return (
-    dependencies["utiljs-arrays"] ||
-    (dependencies["utiljs-arrays"] = require("utiljs-arrays"))
+    dependencies["@util.js/arrays"] ||
+    (dependencies["@util.js/arrays"] = require("@util.js/arrays"))
   );
 }
 function callbackifyCache() {

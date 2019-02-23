@@ -3,7 +3,7 @@
 const { expect } = require("chai"),
   jQueryUtils = require(".."),
   { JSDOM } = require("jsdom"),
-  promises = require("utiljs-promises");
+  promises = require("@util.js/promises");
 
 describe("JQueryUtils", () => {
   describe("#loadjQuery(params[, callback])", () => {

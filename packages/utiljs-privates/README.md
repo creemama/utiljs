@@ -1,12 +1,12 @@
-# utiljs-privates
+# @util.js/privates
 
 > JavaScript utility class for private member variables
 
 <p>
-  <a href="https://www.npmjs.com/package/utiljs-privates"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-privates.svg?style=flat"></a>
+  <a href="https://www.npmjs.com/package/@util.js/privates"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/privates.svg?style=flat"></a>
 </p>
 
-utiljs-privates is part of [Util.js](https://github.com/creemama/utiljs).
+@util.js/privates is part of [Util.js](https://github.com/creemama/utiljs).
 
 <a name="Privates"></a>
 

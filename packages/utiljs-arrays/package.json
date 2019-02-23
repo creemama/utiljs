@@ -18,7 +18,14 @@
     "utiljs"
   ],
   "license": "MIT",
-  "name": "utiljs-arrays",
+  "name": "@util.js/arrays",
+  "publishConfig": {
+    "access": "public"
+  },
+  "publishConfig-comments": [
+    "publishConfig is necessary to publish packages with a scope. See ",
+    "https://github.com/lerna/lerna/tree/master/commands/publish ."
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-arrays"

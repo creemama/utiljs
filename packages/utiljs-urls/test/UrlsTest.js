@@ -1,7 +1,7 @@
 "use strict";
 
 const expect = require("chai").expect,
-  files = require("utiljs-files"),
+  files = require("@util.js/files"),
   targetDir = __dirname + "/../target",
   urls = require("..");
 

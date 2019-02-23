@@ -1,13 +1,13 @@
-# utiljs-jquery
+# @util.js/jquery
 
 > JavaScript utility methods for [jQuery](https://jquery.com/)
 
 <p>
-  <a href="https://www.npmjs.com/package/utiljs-jquery"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-jquery.svg?style=flat"></a>
+  <a href="https://www.npmjs.com/package/@util.js/jquery"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/jquery.svg?style=flat"></a>
   <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
 </p>
 
-utiljs-jquery is part of [Util.js](https://github.com/creemama/utiljs).
+@util.js/jquery is part of [Util.js](https://github.com/creemama/utiljs).
 
 <a name="JQueryUtils"></a>
 
@@ -39,7 +39,7 @@ Loads jQuery asynchronously and sends a notification when loading has finished
 **Example**
 
 ```js
-const jQueryUtils = require("utiljs-jquery");
+const jQueryUtils = require("@util.js/jquery");
 jQueryUtils
   .loadjQuery({ window })
   .then($ => console.log($))
@@ -49,7 +49,7 @@ jQueryUtils
 **Example**
 
 ```js
-const jQueryUtils = require("utiljs-jquery");
+const jQueryUtils = require("@util.js/jquery");
 jQueryUtils
   .loadjQuery({
     src: "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
@@ -62,7 +62,7 @@ jQueryUtils
 **Example**
 
 ```js
-const jQueryUtils = require("utiljs-jquery");
+const jQueryUtils = require("@util.js/jquery");
 jQueryUtils.loadjQuery({ window }, (error, $) => {
   if (error) return console.log(error);
   console.log($);

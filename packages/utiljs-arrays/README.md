@@ -1,13 +1,13 @@
-# utiljs-arrays
+# @util.js/arrays
 
 > JavaScript utility methods for [arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
 <p>
-  <a href="https://www.npmjs.com/package/utiljs-arrays"><img alt="NPM Status" src="https://img.shields.io/npm/v/utiljs-arrays.svg?style=flat"></a>
+  <a href="https://www.npmjs.com/package/@util.js/arrays"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/arrays.svg?style=flat"></a>
   <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
 </p>
 
-utiljs-arrays is part of [Util.js](https://github.com/creemama/utiljs).
+@util.js/arrays is part of [Util.js](https://github.com/creemama/utiljs).
 
 This class contains all the non-instance methods of [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) in addition to:
 

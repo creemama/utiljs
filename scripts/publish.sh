@@ -7,10 +7,13 @@ cd "${scriptDir}"
 cd ..
 
 # Log into https://www.npmjs.com .
+
+# To create scoped packages, create an organization at https://www.npmjs.com.
+
 git clean -f \
 && npm run clean \
 && npm run build \
-&& npm adduser \
+&& npm login --scope=@util.js \
 && npx lerna publish --exact
 exitCode=${?}
 

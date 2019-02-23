@@ -560,19 +560,19 @@ function ncp() {
   return get("ncp");
 }
 function objects() {
-  return get("utiljs-objects");
+  return get("@util.js/objects");
 }
 function path() {
   return get("path");
 }
 function promises() {
-  return get("utiljs-promises");
+  return get("@util.js/promises");
 }
 function rimraf() {
   return get("rimraf");
 }
 function strings() {
-  return get("utiljs-strings");
+  return get("@util.js/strings");
 }
 function touch() {
   return get("touch");

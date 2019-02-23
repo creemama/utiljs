@@ -77,7 +77,7 @@ function get(dependency) {
 }
 
 function files() {
-  return get("utiljs-files");
+  return get("@util.js/files");
 }
 function http() {
   return get("http");
@@ -86,7 +86,7 @@ function https() {
   return get("https");
 }
 function promises() {
-  return get("utiljs-promises");
+  return get("@util.js/promises");
 }
 function urlUtil() {
   return get("url");
