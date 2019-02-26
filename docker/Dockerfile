@@ -1,7 +1,7 @@
 # This is a development container. To use this container, run:
 # ../scripts/docker.sh
 
-FROM creemama/run-non-root:1.4.0-node-10.15.1
+FROM creemama/run-non-root:1.4.0-node-10.15.1-1
 
 # When upgrading versions for Alpine, run:
 # docker run -it --rm node:version-alpine sh
@@ -20,5 +20,3 @@ RUN apk --no-cache --update add \
  && run-non-root -- true
 
 USER node
-
-ENTRYPOINT ["sh"]
