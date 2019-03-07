@@ -6,6 +6,7 @@
     "@babel/core": "7.3.3",
     "@babel/plugin-transform-runtime": "7.2.0",
     "@babel/preset-env": "7.3.1",
+    "@util.js/lerna": "file:packages/utiljs-lerna",
     "chai": "4.2.0",
     "eslint": "5.14.1",
     "eslint-config-prettier": "4.0.0",
@@ -27,10 +28,11 @@
     "url": "https://github.com/creemama/utiljs"
   },
   "scripts": {
+    "audit": "npx utiljs-lerna-audit ./packages @util.js/",
     "build": "npm run clean && ./scripts/babel.sh",
     "clean": "git clean -fdx --exclude \"node_modules\" --exclude \"node-home-dir\"",
     "package-lock": "git clean -fdx --exclude \"node-home-dir\" && npm install --save-exact && npx lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
-    "test": "npm run build && npx lerna exec -- mocha"
+    "test": "npm run build && npx lerna exec --ignore \"@util.js/lerna\" -- mocha"
   },
   "scripts-comments": [
     "The package-lock script comes from ",

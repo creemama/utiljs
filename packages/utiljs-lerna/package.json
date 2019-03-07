@@ -1,0 +1,35 @@
+{
+  "author": "Chris Topher <c@creemama.com>",
+  "bin": {
+    "utiljs-lerna-audit": "./cli.js"
+  },
+  "dependencies": {
+    "@util.js/files": "0.29.1",
+    "@util.js/numbers": "0.29.1",
+    "@util.js/objects": "0.29.1",
+    "@util.js/privates": "0.29.1",
+    "@util.js/promises": "0.29.1",
+    "@util.js/strings": "0.29.1"
+  },
+  "description": "JavaScript utility methods for Lerna",
+  "keywords": [
+    "lerna",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "@util.js/lerna",
+  "publishConfig": {
+    "access": "public"
+  },
+  "publishConfig-comments": [
+    "publishConfig is necessary to publish packages with a scope. See ",
+    "https://github.com/lerna/lerna/tree/master/commands/publish ."
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-lerna"
+  },
+  "version": "0.29.1"
+}
