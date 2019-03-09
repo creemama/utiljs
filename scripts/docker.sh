@@ -9,7 +9,7 @@ NODE_HOME_DIR="${SCRIPT_DIR}"/../target/node-home-dir
 
 mkdir -p "${NODE_HOME_DIR}"
 
-DOCKER_IMAGE=utiljs-dev:0.28.1
+DOCKER_IMAGE=utiljs-dev:0.30.0
 
 # https://stackoverflow.com/a/30543453
 if [[ "$(docker images -q ${DOCKER_IMAGE} 2> /dev/null)" == "" ]]; then
