@@ -5,11 +5,11 @@ babel () {
 
   local packages=arrays
   packages=`printf "%s\t%s" "${packages}" emails`
-	packages=`printf "%s\t%s" "${packages}" jquery`
-	packages=`printf "%s\t%s" "${packages}" numbers`
-	packages=`printf "%s\t%s" "${packages}" objects`
-	packages=`printf "%s\t%s" "${packages}" promises`
-	packages=`printf "%s\t%s" "${packages}" strings`
+  packages=`printf "%s\t%s" "${packages}" jquery`
+  packages=`printf "%s\t%s" "${packages}" numbers`
+  packages=`printf "%s\t%s" "${packages}" objects`
+  packages=`printf "%s\t%s" "${packages}" promises`
+  packages=`printf "%s\t%s" "${packages}" strings`
 
   for package in ${packages}; do
     printf "\033[1m%s\033[0m ... " "utiljs-${package}"
