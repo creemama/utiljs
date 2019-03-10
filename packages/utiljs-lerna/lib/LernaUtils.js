@@ -9,37 +9,37 @@ class LernaUtils {
   }
 
   audit() {
-    if (process(this).argv.length <= 3) {
-      console(this).error(
+    if (_process(this).argv.length <= 3) {
+      _console(this).error(
         "Usage: npx utiljs-lerna-audit packages-dir package-prefix"
       );
-      process(this).exit(1);
+      _process(this).exit(1);
     }
 
-    let packagesDir = process(this).argv[2];
+    let packagesDir = _process(this).argv[2];
     if (strings(this).endsWith(packagesDir, "/"))
       packagesDir = packagesDir.substring(0, packagesDir.length - 1);
 
-    let packagePrefix = process(this).argv[3];
+    let packagePrefix = _process(this).argv[3];
 
     internalAudit(this, packagesDir, packagePrefix).catch(error => {
-      console(this).error(error);
-      process(this).exit(2);
+      _console(this).error(error);
+      _process(this).exit(2);
     });
   }
 }
 
 async function internalAudit(thiz, packagesDir, packagePrefix) {
-  console(thiz).log(`Visiting ${packagesDir}/.. ...`);
+  _console(thiz).log(`Visiting ${packagesDir}/.. ...`);
 
   const { stdout, stderr } = await promises(thiz).promisify(execute)(
     thiz,
     "npm audit",
     { cwd: `${packagesDir}/..` }
   );
-  console(thiz).log(stdout);
-  if (stderr) console(thiz).error(stdout);
-  console(thiz).log();
+  _console(thiz).log(stdout);
+  if (stderr) _console(thiz).error(stdout);
+  _console(thiz).log();
 
   const packages = (await files(thiz).readdir(packagesDir, {
     withFileTypes: true
@@ -51,16 +51,16 @@ async function internalAudit(thiz, packagesDir, packagePrefix) {
   for (let i = 0; i < packages.length; i++) {
     const pkg = packages[i];
     await processPackage(thiz, packages[i], packagePrefix).catch(error => {
-      console(thiz).log(`Skipping ${pkg} ...`);
+      _console(thiz).log(`Skipping ${pkg} ...`);
       if (numbers(thiz).isInteger(error.code) && error.code != 0)
         errorCode = error.code;
       else errorCode = 2;
-      console(thiz).log(error);
-      console(thiz).log();
+      _console(thiz).log(error);
+      _console(thiz).log();
     });
   }
 
-  if (errorCode) process(thiz).exit(errorCode);
+  if (errorCode) _process(thiz).exit(errorCode);
 }
 
 async function processPackage(thiz, pkg, packagePrefix) {
@@ -98,16 +98,16 @@ async function processPackage(thiz, pkg, packagePrefix) {
       );
     }
 
-    console(thiz).log(`Visiting ${pkg} ...`);
+    _console(thiz).log(`Visiting ${pkg} ...`);
 
     const { stdout, stderr } = await promises(thiz).promisify(execute)(
       thiz,
       "npm audit",
       { cwd: pkg }
     );
-    console(thiz).log(stdout);
-    if (stderr) console(thiz).error(stdout);
-    console(thiz).log();
+    _console(thiz).log(stdout);
+    if (stderr) _console(thiz).error(stdout);
+    _console(thiz).log();
   } finally {
     if (packageMissingFromLockFile) {
       await files(thiz).copyFile(
@@ -136,7 +136,7 @@ function get(thiz, privatePart) {
 function child_process(thiz) {
   return get(thiz, "child_process");
 }
-function console(thiz) {
+function _console(thiz) {
   return get(thiz, "console");
 }
 function files(thiz) {
@@ -151,7 +151,7 @@ function numbers(thiz) {
 function objects(thiz) {
   return get(thiz, "objects");
 }
-function process(thiz) {
+function _process(thiz) {
   return get(thiz, "process");
 }
 function promises(thiz) {
