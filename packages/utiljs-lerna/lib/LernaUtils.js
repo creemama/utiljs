@@ -51,6 +51,7 @@ async function internalAudit(thiz, packagesDir) {
     .map(
       async packageDir =>
         await describePackage(thiz, packageDir).catch(error => {
+          _console(thiz).log(`Skipping ${packageDir} ...`);
           errorCode = handleError(thiz, error, packageDir);
           return null;
         })
@@ -95,12 +96,15 @@ async function describePackage(thiz, packageDir) {
 }
 
 function handleError(thiz, error, packageDir) {
-  _console(thiz).log(`Skipping ${packageDir} ...`);
   let errorCode;
-  if (numbers(thiz).isInteger(error.code) && error.code != 0)
+  if (numbers(thiz).isInteger(error.code) && error.code != 0) {
     errorCode = error.code;
-  else errorCode = 2;
-  _console(thiz).log(error);
+    if (error.stdout) _console(thiz).log(error.stdout);
+    if (error.stderr) _console(thiz).log(error.stderr);
+  } else {
+    errorCode = 2;
+    _console(thiz).log(error);
+  }
   _console(thiz).log();
   return errorCode;
 }
@@ -161,8 +165,11 @@ async function processPackage(thiz, packageDescriptor, packages) {
 
 function execute(thiz, command, options, callback) {
   child_process(thiz).exec(command, options, (error, stdout, stderr) => {
-    if (error) callback(error);
-    else callback(null, { stdout, stderr });
+    if (error) {
+      error.stdout = stdout;
+      error.stderr = stderr;
+      callback(error);
+    } else callback(null, { stdout, stderr });
   });
 }
 
