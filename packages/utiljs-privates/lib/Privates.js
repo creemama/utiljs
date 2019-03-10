@@ -47,6 +47,17 @@ class Privates {
     );
   }
 
+  lazyLoad(thiz, lazyMap) {
+    const lazy = {};
+    const obj = {};
+    Object.entries(lazyMap).forEach(([prop, lazyLoadFunction]) => {
+      lazy[prop] = () => {
+        return obj[prop] ? obj[prop] : (obj[prop] = lazyLoadFunction());
+      };
+    });
+    this.set(thiz, lazy);
+  }
+
   set(thiz, options) {
     let thizPrivates;
     if (!options) {

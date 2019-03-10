@@ -1,11 +1,24 @@
 "use strict";
 
-const LernaResources = require("./LernaResources"),
-  Privates = require("@util.js/privates");
+const Privates = require("@util.js/privates");
+
+function resources() {
+  return {
+    child_process: () => require("child_process"),
+    console: () => console,
+    files: () => require("@util.js/files"),
+    json: () => JSON,
+    numbers: () => require("@util.js/numbers"),
+    objects: () => require("@util.js/objects"),
+    promises: () => require("@util.js/promises"),
+    process: () => process,
+    strings: () => require("@util.js/strings")
+  };
+}
 
 class LernaUtils {
   constructor() {
-    privates.set(this, new LernaResources());
+    privates.lazyLoad(this, resources());
   }
 
   audit() {
@@ -136,6 +149,8 @@ function get(thiz, privatePart) {
 function child_process(thiz) {
   return get(thiz, "child_process");
 }
+// We start this function name with an underscore (_) to not conflict with the
+// global console object.
 function _console(thiz) {
   return get(thiz, "console");
 }
@@ -151,6 +166,8 @@ function numbers(thiz) {
 function objects(thiz) {
   return get(thiz, "objects");
 }
+// We start this function name with an underscore (_) to not conflict with the
+// global process object.
 function _process(thiz) {
   return get(thiz, "process");
 }
