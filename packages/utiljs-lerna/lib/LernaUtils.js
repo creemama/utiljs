@@ -48,17 +48,17 @@ async function internalAudit(thiz, packagesDir, packagePrefix) {
   if (stderr) _console(thiz).error(stdout);
   _console(thiz).log();
 
-  const packages = (await files(thiz).readdir(packagesDir, {
+  const packageDirs = (await files(thiz).readdir(packagesDir, {
     withFileTypes: true
   }))
     .filter(pkg => pkg.isDirectory())
     .map(pkg => `${packagesDir}/${pkg.name}`);
 
   let errorCode = 0;
-  for (let i = 0; i < packages.length; i++) {
-    const pkg = packages[i];
-    await processPackage(thiz, packages[i], packagePrefix).catch(error => {
-      _console(thiz).log(`Skipping ${pkg} ...`);
+  for (let i = 0; i < packageDirs.length; i++) {
+    const packageDir = packageDirs[i];
+    await processPackage(thiz, packageDir, packagePrefix).catch(error => {
+      _console(thiz).log(`Skipping ${packageDir} ...`);
       if (numbers(thiz).isInteger(error.code) && error.code != 0)
         errorCode = error.code;
       else errorCode = 2;
@@ -70,10 +70,13 @@ async function internalAudit(thiz, packagesDir, packagePrefix) {
   if (errorCode) _process(thiz).exit(errorCode);
 }
 
-async function processPackage(thiz, pkg, packagePrefix) {
-  const packageJson = await files(thiz).readFile(`${pkg}/package.json`, "utf8");
+async function processPackage(thiz, packageDir, packagePrefix) {
+  const packageJson = await files(thiz).readFile(
+    `${packageDir}/package.json`,
+    "utf8"
+  );
   const packageLockJson = await files(thiz).readFile(
-    `${pkg}/package-lock.json`,
+    `${packageDir}/package-lock.json`,
     "utf8"
   );
   const packageObj = json(thiz).parse(packageJson);
@@ -95,22 +98,22 @@ async function processPackage(thiz, pkg, packagePrefix) {
   try {
     if (packageMissingFromLockFile) {
       await files(thiz).copyFile(
-        `${pkg}/package-lock.json`,
-        `${pkg}/package-lock.json.bak`
+        `${packageDir}/package-lock.json`,
+        `${packageDir}/package-lock.json.bak`
       );
       await files(thiz).writeFile(
-        `${pkg}/package-lock.json`,
+        `${packageDir}/package-lock.json`,
         json(thiz).stringify(packageLockObj, null, "\t"),
         "utf8"
       );
     }
 
-    _console(thiz).log(`Visiting ${pkg} ...`);
+    _console(thiz).log(`Visiting ${packageDir} ...`);
 
     const { stdout, stderr } = await promises(thiz).promisify(execute)(
       thiz,
       "npm audit",
-      { cwd: pkg }
+      { cwd: packageDir }
     );
     _console(thiz).log(stdout);
     if (stderr) _console(thiz).error(stdout);
@@ -118,10 +121,10 @@ async function processPackage(thiz, pkg, packagePrefix) {
   } finally {
     if (packageMissingFromLockFile) {
       await files(thiz).copyFile(
-        `${pkg}/package-lock.json.bak`,
-        `${pkg}/package-lock.json`
+        `${packageDir}/package-lock.json.bak`,
+        `${packageDir}/package-lock.json`
       );
-      await files(thiz).rmrf(`${pkg}/package-lock.json.bak`);
+      await files(thiz).rmrf(`${packageDir}/package-lock.json.bak`);
     }
   }
 }
