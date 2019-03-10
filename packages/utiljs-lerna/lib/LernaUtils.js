@@ -21,22 +21,15 @@ class LernaUtils {
   }
 
   audit() {
-    if (_process(this).argv.length <= 2) {
-      _console(this).error("Usage: npx utiljs-lerna-audit package-prefix");
-      _process(this).exit(1);
-    }
-
     const packagesDir = _process(this).cwd() + "/packages";
-    let packagePrefix = _process(this).argv[2];
-
-    internalAudit(this, packagesDir, packagePrefix).catch(error => {
+    internalAudit(this, packagesDir).catch(error => {
       _console(this).error(error);
-      _process(this).exit(2);
+      _process(this).exit(1);
     });
   }
 }
 
-async function internalAudit(thiz, packagesDir, packagePrefix) {
+async function internalAudit(thiz, packagesDir) {
   _console(thiz).log(`Visiting ${packagesDir}.. ...`);
 
   const { stdout, stderr } = await promises(thiz).promisify(execute)(
@@ -48,29 +41,40 @@ async function internalAudit(thiz, packagesDir, packagePrefix) {
   if (stderr) _console(thiz).error(stdout);
   _console(thiz).log();
 
-  const packageDirs = (await files(thiz).readdir(packagesDir, {
+  let errorCode = 0;
+
+  let packageDescriptors = (await files(thiz).readdir(packagesDir, {
     withFileTypes: true
   }))
     .filter(pkg => pkg.isDirectory())
-    .map(pkg => `${packagesDir}/${pkg.name}`);
+    .map(pkg => `${packagesDir}/${pkg.name}`)
+    .map(
+      async packageDir =>
+        await describePackage(thiz, packageDir).catch(error => {
+          errorCode = handleError(thiz, error, packageDir);
+          return null;
+        })
+    );
 
-  let errorCode = 0;
-  for (let i = 0; i < packageDirs.length; i++) {
-    const packageDir = packageDirs[i];
-    await processPackage(thiz, packageDir, packagePrefix).catch(error => {
-      _console(thiz).log(`Skipping ${packageDir} ...`);
-      if (numbers(thiz).isInteger(error.code) && error.code != 0)
-        errorCode = error.code;
-      else errorCode = 2;
-      _console(thiz).log(error);
-      _console(thiz).log();
-    });
+  packageDescriptors = (await promises(thiz).all(packageDescriptors)).filter(
+    packageDesc => packageDesc != null
+  );
+
+  const packages = packageDescriptors.map(
+    packageDescriptor => packageDescriptor.packageObj.name
+  );
+
+  for (let i = 0; i < packageDescriptors.length; i++) {
+    await processPackage(thiz, packageDescriptors[i], packages).catch(
+      error =>
+        (errorCode = handleError(thiz, error, packageDescriptors[i].packageDir))
+    );
   }
 
   if (errorCode) _process(thiz).exit(errorCode);
 }
 
-async function processPackage(thiz, packageDir, packagePrefix) {
+async function describePackage(thiz, packageDir) {
   const packageJson = await files(thiz).readFile(
     `${packageDir}/package.json`,
     "utf8"
@@ -81,22 +85,48 @@ async function processPackage(thiz, packageDir, packagePrefix) {
   );
   const packageObj = json(thiz).parse(packageJson);
   const packageLockObj = json(thiz).parse(packageLockJson);
+  return {
+    packageDir,
+    packageJson,
+    packageLockJson,
+    packageLockObj,
+    packageObj
+  };
+}
+
+function handleError(thiz, error, packageDir) {
+  _console(thiz).log(`Skipping ${packageDir} ...`);
+  let errorCode;
+  if (numbers(thiz).isInteger(error.code) && error.code != 0)
+    errorCode = error.code;
+  else errorCode = 2;
+  _console(thiz).log(error);
+  _console(thiz).log();
+  return errorCode;
+}
+
+async function processPackage(thiz, packageDescriptor, packages) {
+  const {
+    packageDir,
+    packageJson,
+    packageLockJson,
+    packageLockObj,
+    packageObj
+  } = packageDescriptor;
 
   const dependencies = objects(thiz).entries(packageObj.dependencies || {});
   const lockDependencies =
     packageLockObj.dependencies || (packageLockObj.dependencies = {});
 
-  let packageMissingFromLockFile = false;
+  let packageFound = false;
   for (let i = 0; i < dependencies.length; i++) {
-    if (dependencies[i][0].startsWith(packagePrefix)) {
-      if (!lockDependencies[dependencies[i][0]]) {
-        lockDependencies[dependencies[i][0]] = { version: dependencies[i][1] };
-        packageMissingFromLockFile = true;
-      }
+    if (packages.includes(dependencies[i][0])) {
+      lockDependencies[dependencies[i][0]] = { version: dependencies[i][1] };
+      packageFound = true;
     }
   }
   try {
-    if (packageMissingFromLockFile) {
+    if (packageFound) {
       await files(thiz).copyFile(
         `${packageDir}/package-lock.json`,
         `${packageDir}/package-lock.json.bak`
@@ -119,7 +149,7 @@ async function processPackage(thiz, packageDir, packagePrefix) {
     if (stderr) _console(thiz).error(stdout);
     _console(thiz).log();
   } finally {
-    if (packageMissingFromLockFile) {
+    if (packageFound) {
       await files(thiz).copyFile(
         `${packageDir}/package-lock.json.bak`,
         `${packageDir}/package-lock.json`
