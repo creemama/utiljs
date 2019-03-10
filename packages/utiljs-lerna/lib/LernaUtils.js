@@ -11,8 +11,7 @@ function resources() {
     numbers: () => require("@util.js/numbers"),
     objects: () => require("@util.js/objects"),
     promises: () => require("@util.js/promises"),
-    process: () => process,
-    strings: () => require("@util.js/strings")
+    process: () => process
   };
 }
 
@@ -22,18 +21,13 @@ class LernaUtils {
   }
 
   audit() {
-    if (_process(this).argv.length <= 3) {
-      _console(this).error(
-        "Usage: npx utiljs-lerna-audit packages-dir package-prefix"
-      );
+    if (_process(this).argv.length <= 2) {
+      _console(this).error("Usage: npx utiljs-lerna-audit package-prefix");
       _process(this).exit(1);
     }
 
-    let packagesDir = _process(this).argv[2];
-    if (strings(this).endsWith(packagesDir, "/"))
-      packagesDir = packagesDir.substring(0, packagesDir.length - 1);
-
-    let packagePrefix = _process(this).argv[3];
+    const packagesDir = _process(this).cwd() + "/packages";
+    let packagePrefix = _process(this).argv[2];
 
     internalAudit(this, packagesDir, packagePrefix).catch(error => {
       _console(this).error(error);
@@ -43,7 +37,7 @@ class LernaUtils {
 }
 
 async function internalAudit(thiz, packagesDir, packagePrefix) {
-  _console(thiz).log(`Visiting ${packagesDir}/.. ...`);
+  _console(thiz).log(`Visiting ${packagesDir}.. ...`);
 
   const { stdout, stderr } = await promises(thiz).promisify(execute)(
     thiz,
@@ -173,7 +167,4 @@ function _process(thiz) {
 }
 function promises(thiz) {
   return get(thiz, "promises");
-}
-function strings(thiz) {
-  return get(thiz, "strings");
 }

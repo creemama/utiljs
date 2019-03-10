@@ -28,7 +28,7 @@
     "url": "https://github.com/creemama/utiljs"
   },
   "scripts": {
-    "audit": "npx utiljs-lerna-audit ./packages @util.js/",
+    "audit": "npx utiljs-lerna-audit @util.js/",
     "build": "npm run clean && ./scripts/babel.sh",
     "clean": "git clean -fdx --exclude \"node_modules\" --exclude \"node-home-dir\"",
     "package-lock": "git clean -fdx --exclude \"node-home-dir\" && npm install --save-exact && npx lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",

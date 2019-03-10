@@ -8,8 +8,7 @@
     "@util.js/numbers": "0.30.0",
     "@util.js/objects": "0.30.0",
     "@util.js/privates": "0.30.0",
-    "@util.js/promises": "0.30.0",
-    "@util.js/strings": "0.30.0"
+    "@util.js/promises": "0.30.0"
   },
   "description": "JavaScript utility methods for Lerna",
   "keywords": [

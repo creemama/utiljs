@@ -9,5 +9,5 @@
 
 @util.js/lerna is part of [Util.js](https://github.com/creemama/utiljs).
 
-Use `npx utiljs-lerna-audit packages-dir package-prefix` to run `npm audit` in
-each package of your Lerna monorepo.
+Use `npx utiljs-lerna-audit package-prefix` to run `npm audit` in each package
+of your Lerna monorepo.
