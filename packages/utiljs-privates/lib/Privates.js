@@ -60,6 +60,14 @@ class Privates {
     }
   }
 
+  getCallProxy(thiz) {
+    return new Proxy(this.getProps(thiz), {
+      get: function(obj, prop) {
+        return obj[prop]();
+      }
+    });
+  }
+
   getProps(thiz) {
     try {
       let properties = this.privates.get(thiz);

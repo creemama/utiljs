@@ -21,29 +21,30 @@ class LernaUtils {
   }
 
   audit() {
-    const packagesDir = _process(this).cwd() + "/packages";
-    internalAudit(this, packagesDir).catch(error => {
-      _console(this).error(error);
-      _process(this).exit(1);
+    const thiz = privates.getCallProxy(this);
+    const packagesDir = thiz.process.cwd() + "/packages";
+    internalAudit(thiz, packagesDir).catch(error => {
+      thiz.console.error(error);
+      thiz.process.exit(1);
     });
   }
 }
 
 async function internalAudit(thiz, packagesDir) {
-  _console(thiz).log(`Visiting ${packagesDir}.. ...`);
+  thiz.console.log(`Visiting ${packagesDir}.. ...`);
 
-  const { stdout, stderr } = await promises(thiz).promisify(execute)(
+  const { stdout, stderr } = await thiz.promises.promisify(execute)(
     thiz,
     "npm audit",
     { cwd: `${packagesDir}/..` }
   );
-  _console(thiz).log(stdout);
-  if (stderr) _console(thiz).error(stdout);
-  _console(thiz).log();
+  thiz.console.log(stdout);
+  if (stderr) thiz.console.error(stdout);
+  thiz.console.log();
 
   let errorCode = 0;
 
-  let packageDescriptors = (await files(thiz).readdir(packagesDir, {
+  let packageDescriptors = (await thiz.files.readdir(packagesDir, {
     withFileTypes: true
   }))
     .filter(pkg => pkg.isDirectory())
@@ -51,13 +52,13 @@ async function internalAudit(thiz, packagesDir) {
     .map(
       async packageDir =>
         await describePackage(thiz, packageDir).catch(error => {
-          _console(thiz).log(`Skipping ${packageDir} ...`);
+          thiz.console.log(`Skipping ${packageDir} ...`);
           errorCode = handleError(thiz, error, packageDir);
           return null;
         })
     );
 
-  packageDescriptors = (await promises(thiz).all(packageDescriptors)).filter(
+  packageDescriptors = (await thiz.promises.all(packageDescriptors)).filter(
     packageDesc => packageDesc != null
   );
 
@@ -72,20 +73,20 @@ async function internalAudit(thiz, packagesDir) {
     );
   }
 
-  if (errorCode) _process(thiz).exit(errorCode);
+  if (errorCode) thiz.process.exit(errorCode);
 }
 
 async function describePackage(thiz, packageDir) {
-  const packageJson = await files(thiz).readFile(
+  const packageJson = await thiz.files.readFile(
     `${packageDir}/package.json`,
     "utf8"
   );
-  const packageLockJson = await files(thiz).readFile(
+  const packageLockJson = await thiz.files.readFile(
     `${packageDir}/package-lock.json`,
     "utf8"
   );
-  const packageObj = json(thiz).parse(packageJson);
-  const packageLockObj = json(thiz).parse(packageLockJson);
+  const packageObj = thiz.json.parse(packageJson);
+  const packageLockObj = thiz.json.parse(packageLockJson);
   return {
     packageDir,
     packageJson,
@@ -97,15 +98,15 @@ async function describePackage(thiz, packageDir) {
 
 function handleError(thiz, error, packageDir) {
   let errorCode;
-  if (numbers(thiz).isInteger(error.code) && error.code != 0) {
+  if (thiz.numbers.isInteger(error.code) && error.code != 0) {
     errorCode = error.code;
-    if (error.stdout) _console(thiz).log(error.stdout);
-    if (error.stderr) _console(thiz).log(error.stderr);
+    if (error.stdout) thiz.console.log(error.stdout);
+    if (error.stderr) thiz.console.log(error.stderr);
   } else {
     errorCode = 2;
-    _console(thiz).log(error);
+    thiz.console.log(error);
   }
-  _console(thiz).log();
+  thiz.console.log();
   return errorCode;
 }
 
@@ -118,7 +119,7 @@ async function processPackage(thiz, packageDescriptor, packages) {
     packageObj
   } = packageDescriptor;
 
-  const dependencies = objects(thiz).entries(packageObj.dependencies || {});
+  const dependencies = thiz.objects.entries(packageObj.dependencies || {});
   const lockDependencies =
     packageLockObj.dependencies || (packageLockObj.dependencies = {});
 
@@ -131,40 +132,40 @@ async function processPackage(thiz, packageDescriptor, packages) {
   }
   try {
     if (packageFound) {
-      await files(thiz).copyFile(
+      await thiz.files.copyFile(
         `${packageDir}/package-lock.json`,
         `${packageDir}/package-lock.json.bak`
       );
-      await files(thiz).writeFile(
+      await thiz.files.writeFile(
         `${packageDir}/package-lock.json`,
-        json(thiz).stringify(packageLockObj, null, "\t"),
+        thiz.json.stringify(packageLockObj, null, "\t"),
         "utf8"
       );
     }
 
-    _console(thiz).log(`Visiting ${packageDir} ...`);
+    thiz.console.log(`Visiting ${packageDir} ...`);
 
-    const { stdout, stderr } = await promises(thiz).promisify(execute)(
+    const { stdout, stderr } = await thiz.promises.promisify(execute)(
       thiz,
       "npm audit",
       { cwd: packageDir }
     );
-    _console(thiz).log(stdout);
-    if (stderr) _console(thiz).error(stdout);
-    _console(thiz).log();
+    thiz.console.log(stdout);
+    if (stderr) thiz.console.error(stdout);
+    thiz.console.log();
   } finally {
     if (packageFound) {
-      await files(thiz).copyFile(
+      await thiz.files.copyFile(
         `${packageDir}/package-lock.json.bak`,
         `${packageDir}/package-lock.json`
       );
-      await files(thiz).rmrf(`${packageDir}/package-lock.json.bak`);
+      await thiz.files.rmrf(`${packageDir}/package-lock.json.bak`);
     }
   }
 }
 
 function execute(thiz, command, options, callback) {
-  child_process(thiz).exec(command, options, (error, stdout, stderr) => {
+  thiz.child_process.exec(command, options, (error, stdout, stderr) => {
     if (error) {
       error.stdout = stdout;
       error.stderr = stderr;
@@ -176,35 +177,3 @@ function execute(thiz, command, options, callback) {
 module.exports = LernaUtils;
 
 const privates = new Privates();
-function get(thiz, privatePart) {
-  return privates.call(thiz, privatePart);
-}
-
-function child_process(thiz) {
-  return get(thiz, "child_process");
-}
-// We start this function name with an underscore (_) to not conflict with the
-// global console object.
-function _console(thiz) {
-  return get(thiz, "console");
-}
-function files(thiz) {
-  return get(thiz, "files");
-}
-function json(thiz) {
-  return get(thiz, "json");
-}
-function numbers(thiz) {
-  return get(thiz, "numbers");
-}
-function objects(thiz) {
-  return get(thiz, "objects");
-}
-// We start this function name with an underscore (_) to not conflict with the
-// global process object.
-function _process(thiz) {
-  return get(thiz, "process");
-}
-function promises(thiz) {
-  return get(thiz, "promises");
-}
