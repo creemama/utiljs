@@ -1,5 +1,7 @@
 "use strict";
 
+const { RethrownError } = require("@util.js/errors");
+
 /**
  * JavaScript utility class for private member variables.
  *
@@ -41,6 +43,18 @@ class Privates {
         `thiz cannot be falsy when trying to get ${property}.`
       );
     return this.privates.get(thiz)[property];
+  }
+
+  getProps(thiz) {
+    try {
+      let properties = this.privates.get(thiz);
+      if (!properties) this.privates.set(thiz, (properties = {}));
+      return properties;
+    } catch (e) {
+      if (thiz == null)
+        throw new RethrownError(e, `thiz cannot be null or undefined.`);
+      throw e;
+    }
   }
 
   lazyLoad(thiz, lazyMap) {

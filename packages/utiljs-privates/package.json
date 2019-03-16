@@ -1,5 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
+  "dependencies": {
+    "@util.js/errors": "0.32.0"
+  },
   "description": "JavaScript utility class for private member variables",
   "keywords": [
     "field",
