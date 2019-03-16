@@ -30,19 +30,34 @@ class Privates {
     this.privates = new WeakMap();
   }
 
+  /**
+   * Calls `this.get(thiz, property)()`.
+   */
   call(thiz, property) {
-    // this.get(thiz, property)() does not work all the time unless we
-    // call bind, which we do in the set method. See
-    // https://javascript.info/object-methods.
-    return this.get(thiz, property)();
+    try {
+      // this.get(thiz, property)() does not work all the time unless we
+      // call bind, which we do in the set method. See
+      // https://javascript.info/object-methods.
+      return this.get(thiz, property)();
+    } catch (e) {
+      const propertyStr = getPropertyErrorString(property);
+      throw new RethrownError(
+        e,
+        `privates.call(${thiz}, ${propertyStr}) failed. ${e.message}`
+      );
+    }
   }
 
   get(thiz, property) {
-    if (!thiz)
-      throw new Error(
-        `thiz cannot be falsy when trying to get ${property}.`
+    try {
+      return this.getProps(thiz)[property];
+    } catch (e) {
+      const propertyStr = getPropertyErrorString(property);
+      throw new RethrownError(
+        e,
+        `privates.get(${thiz}, ${propertyStr}) failed. ${e.message}`
       );
-    return this.privates.get(thiz)[property];
+    }
   }
 
   getProps(thiz) {
@@ -88,6 +103,13 @@ class Privates {
       object[properties[i]] = this.get(thiz, properties[i]);
     return object;
   }
+}
+
+function getPropertyErrorString(property) {
+  // https://stackoverflow.com/a/7772724
+  if (typeof property === "string" || property instanceof String)
+    return `"${property}"`;
+  return `${property}`;
 }
 
 // https://stackoverflow.com/questions/31054910/get-functions-methods-of-a-class
