@@ -22,11 +22,14 @@ and
 ["Privates In ES2015 Javascript Classes"](https://ilikekillnerds.com/2015/09/privates-in-es2015-javascript-classes/).
 This utility handles shallow copying at construction.
 
-Use of this class should end once private fields become a part of the ECMA
-standard. The following is a StackOverflow answer to the question
+Private fields may become a part of the ECMA standard. The following is a
+StackOverflow answer to the question
 ["Private properties in JavaScript ES6 classes"](https://stackoverflow.com/a/52237988):
 "Private fields are being implemented in the ECMA standard. You can start
-using them today with babel 7 and stage 3 preset."
+using them today with babel 7 and stage 3 preset." Wouldn't private fields
+make this class obsolete? Not necessarily. If each of your privates is a
+function (e.g., you want to lazy load all member variables), this class has
+convenience methods for that.
 
 **Kind**: global class  
 **Access**: public
