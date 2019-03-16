@@ -1,0 +1,28 @@
+{
+  "author": "Chris Topher <c@creemama.com>",
+  "dependencies": {
+    "@util.js/privates": "0.32.0",
+    "@util.js/promises": "0.32.0"
+  },
+  "description": "JavaScript utility class for the AWS SDK",
+  "keywords": [
+    "aws",
+    "utilities",
+    "utility",
+    "utiljs"
+  ],
+  "license": "MIT",
+  "name": "@util.js/aws",
+  "publishConfig": {
+    "access": "public"
+  },
+  "publishConfig-comments": [
+    "publishConfig is necessary to publish packages with a scope. See ",
+    "https://github.com/lerna/lerna/tree/master/commands/publish ."
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-aws"
+  },
+  "version": "0.32.0"
+}
