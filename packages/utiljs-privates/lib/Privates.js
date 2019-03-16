@@ -84,7 +84,7 @@ class Privates {
 }
 
 // https://stackoverflow.com/questions/31054910/get-functions-methods-of-a-class
-const getAllMethods = obj => {
+function getAllMethods(obj) {
   if (!Object.getPrototypeOf(obj)) return [];
 
   let props = [];
@@ -107,6 +107,6 @@ const getAllMethods = obj => {
   );
 
   return props;
-};
+}
 
 module.exports = Privates;
