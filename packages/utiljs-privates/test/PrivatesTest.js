@@ -1,14 +1,15 @@
 "use strict";
 
 const { expect } = require("chai"),
-  Privates = require("..");
+  Privates = require(".."),
+  { RethrownError } = require("@util.js/errors");
 
 const ExampleUsingGet = (function() {
   const privates = new Privates();
 
   class ExampleUsingGet {
     constructor(options) {
-      privates.set(this, options);
+      privates.setProps(this, options);
     }
     getProperty1() {
       return property1(this);
@@ -36,7 +37,7 @@ const ExampleUsingCall = (function() {
 
   class ExampleUsingCall {
     constructor(options) {
-      privates.set(this, options);
+      privates.setProps(this, options);
     }
     getProperty1() {
       return property1(this);

@@ -72,29 +72,56 @@ class Privates {
     }
   }
 
-  lazyLoad(thiz, lazyMap) {
-    const lazy = {};
-    const obj = {};
-    Object.entries(lazyMap).forEach(([prop, lazyLoadFunction]) => {
-      lazy[prop] = () => {
-        return obj[prop] ? obj[prop] : (obj[prop] = lazyLoadFunction());
-      };
+  lazyLoad(thiz, property, lazyLoadFunction) {
+    if (typeof lazyLoadFunction !== "function")
+      throw new TypeError(
+        `lazyLoadFunction (${lazyLoadFunction}) must be a function.`
+      );
+    let value;
+    let loaded = false;
+    this.set(thiz, property, () => {
+      if (!loaded) {
+        value = lazyLoadFunction();
+        loaded = true;
+      }
+      return value;
     });
-    this.set(thiz, lazy);
   }
 
-  set(thiz, options) {
-    let thizPrivates;
-    if (!options) {
-      thizPrivates = {};
-    } else {
-      thizPrivates = Object.assign({}, options);
-      const methods = getAllMethods(options);
-      for (let i = 0; i < methods.length; i++) {
-        thizPrivates[methods[i]] = options[methods[i]].bind(options);
-      }
+  lazyLoadProps(thiz, ...lazilyLoadedProperties) {
+    const t = this;
+    lazilyLoadedProperties.forEach(currentProperties => {
+      Object.entries(currentProperties).forEach(
+        ([property, lazyLoadFunction]) =>
+          t.lazyLoad(thiz, property, lazyLoadFunction)
+      );
+    });
+  }
+
+  set(thiz, property, newValue) {
+    try {
+      this.getProps(thiz)[property] = newValue;
+    } catch (e) {
+      const propertyStr = getPropertyErrorString(property);
+      throw new RethrownError(
+        e,
+        `privates.set(${thiz}, ${propertyStr}, ${newValue}) failed. ${
+          e.message
+        }`
+      );
     }
-    this.privates.set(thiz, thizPrivates);
+  }
+
+  setProps(thiz, ...properties) {
+    const t = this;
+    properties.forEach(currentProperties => {
+      Object.entries(currentProperties).forEach(([property, value]) =>
+        t.set(thiz, property, value)
+      );
+      getAllMethods(currentProperties).forEach(method =>
+        t.set(thiz, method, currentProperties[method].bind(currentProperties))
+      );
+    });
   }
 
   subset(thiz, ...properties) {

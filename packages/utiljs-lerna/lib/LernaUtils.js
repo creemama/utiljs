@@ -17,7 +17,7 @@ function resources() {
 
 class LernaUtils {
   constructor() {
-    privates.lazyLoad(this, resources());
+    privates.lazyLoadProps(this, resources());
   }
 
   audit() {
