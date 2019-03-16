@@ -28,19 +28,19 @@ class Privates {
     this.privates = new WeakMap();
   }
 
-  call(thiz, privatePart) {
-    // this.get(thiz, privatePart)() does not work all the time unless we
+  call(thiz, property) {
+    // this.get(thiz, property)() does not work all the time unless we
     // call bind, which we do in the set method. See
     // https://javascript.info/object-methods.
-    return this.get(thiz, privatePart)();
+    return this.get(thiz, property)();
   }
 
-  get(thiz, privatePart) {
+  get(thiz, property) {
     if (!thiz)
       throw new Error(
-        `thiz cannot be falsy when trying to get ${privatePart}.`
+        `thiz cannot be falsy when trying to get ${property}.`
       );
-    return this.privates.get(thiz)[privatePart];
+    return this.privates.get(thiz)[property];
   }
 
   lazyLoad(thiz, lazyMap) {
@@ -68,10 +68,10 @@ class Privates {
     this.privates.set(thiz, thizPrivates);
   }
 
-  subset(thiz, ...privateParts) {
+  subset(thiz, ...properties) {
     const object = {};
-    for (let i = 0; i < privateParts.length; i++)
-      object[privateParts[i]] = this.get(thiz, privateParts[i]);
+    for (let i = 0; i < properties.length; i++)
+      object[properties[i]] = this.get(thiz, properties[i]);
     return object;
   }
 }
