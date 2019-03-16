@@ -43,13 +43,6 @@ class Privates {
     return this.privates.get(thiz)[privatePart];
   }
 
-  require(thiz, privatePart) {
-    return (
-      this.get(thiz, privatePart) ||
-      (this.privates.get(thiz)[privatePart] = require(privatePart))
-    );
-  }
-
   lazyLoad(thiz, lazyMap) {
     const lazy = {};
     const obj = {};
