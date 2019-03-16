@@ -10,7 +10,10 @@
     "member",
     "members",
     "private",
-    "privates"
+    "privates",
+    "utilities",
+    "utility",
+    "utiljs"
   ],
   "license": "MIT",
   "name": "@util.js/privates",
