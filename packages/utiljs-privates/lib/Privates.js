@@ -80,6 +80,19 @@ class Privates {
     }
   }
 
+  lambdaize(properties) {
+    try {
+      const lambdaProperties = {};
+      Object.entries(properties).forEach(
+        ([property, value]) => (lambdaProperties[property] = () => value)
+      );
+      return lambdaProperties;
+    } catch (e) {
+      if (properties == null)
+        throw new RethrownError(e, `properties cannot be null or undefined.`);
+    }
+  }
+
   lazyLoad(thiz, property, lazyLoadFunction) {
     if (typeof lazyLoadFunction !== "function")
       throw new TypeError(

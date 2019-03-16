@@ -163,3 +163,33 @@ describe("Privates#call", () => {
     expect(() => privates.call(thiz, "notafunction")).to.throw(RethrownError);
   });
 });
+
+describe("Privates#lambdaize", () => {
+  const privates = new Privates();
+  it("should convert an object's properties to lambda properties", () => {
+    const obj = privates.lambdaize({
+      a: 0,
+      b: 1
+    });
+    expect(obj.a()).to.eql(0);
+    expect(obj.b()).to.eql(1);
+
+    expect(privates.lambdaize(true)).to.eql({});
+    expect(privates.lambdaize(1)).to.eql({});
+    expect(Object.keys(privates.lambdaize("string"))).to.eql([
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]);
+    expect(privates.lambdaize(Symbol("string"))).to.eql({});
+    expect(privates.lambdaize({})).to.eql({});
+  });
+  it("should fail with invalid arguments", () => {
+    expect(() => privates.lambdaize()).to.throw(RethrownError);
+    expect(() => privates.lambdaize(null)).to.throw(RethrownError);
+    expect(() => privates.lambdaize(undefined)).to.throw(RethrownError);
+  });
+});
