@@ -16,6 +16,6 @@ cache:
 # If you update the version of npm, update docker/Dockerfile too:
 # https://www.npmjs.com/package/npm
 before_install:
-  - npm install --global npm@6.8.0
+  - npm install --global npm@6.9.0
 
 install: ./scripts/install.sh
