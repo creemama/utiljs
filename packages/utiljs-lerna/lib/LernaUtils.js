@@ -1,6 +1,7 @@
 "use strict";
 
 const Privates = require("@util.js/privates");
+const privates = new Privates();
 
 function resources() {
   return {
@@ -15,7 +16,7 @@ function resources() {
   };
 }
 
-class LernaUtils {
+module.exports = class LernaUtils {
   constructor() {
     privates.lazyLoadProps(this, resources());
   }
@@ -28,7 +29,7 @@ class LernaUtils {
       thiz.process.exit(1);
     });
   }
-}
+};
 
 async function internalAudit(thiz, packagesDir) {
   thiz.console.log(`Visiting ${packagesDir}.. ...`);
@@ -173,7 +174,3 @@ function execute(thiz, command, options, callback) {
     } else callback(null, { stdout, stderr });
   });
 }
-
-module.exports = LernaUtils;
-
-const privates = new Privates();
