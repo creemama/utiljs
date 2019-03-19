@@ -1,5 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
+  "dependencies": {
+    "@util.js/privates": "0.33.1"
+  },
   "description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
   "keywords": [
     "timer",

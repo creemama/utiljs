@@ -1,12 +1,26 @@
 "use strict";
 
-class Timers {
+const Privates = require("@util.js/privates");
+const privates = new Privates();
+
+function resources() {
+  return {
+    util: () => require("util")
+  };
+}
+
+module.exports = class Timers {
+  constructor() {
+    privates.lazyLoadProps(this, resources());
+  }
+
   get setImmediate() {
     return setImmediate;
   }
 
   get setImmediatePromise() {
-    return util().promisify(setImmediate);
+    const thiz = privates.getCallProxy(this);
+    return thiz.util.promisify(setImmediate);
   }
 
   get setInterval() {
@@ -18,7 +32,8 @@ class Timers {
   }
 
   get setTimeoutPromise() {
-    return util().promisify(setTimeout);
+    const thiz = privates.getCallProxy(this);
+    return thiz.util.promisify(setTimeout);
   }
 
   get clearImmediate() {
@@ -32,17 +47,4 @@ class Timers {
   get clearTimeout() {
     return clearTimeout;
   }
-}
-
-module.exports = Timers;
-
-const dependencies = {};
-function get(dependency) {
-  return (
-    dependencies[dependency] || (dependencies[dependency] = require(dependency))
-  );
-}
-
-function util() {
-  return get("util");
-}
+};
