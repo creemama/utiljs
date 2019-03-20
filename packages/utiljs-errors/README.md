@@ -21,7 +21,7 @@
     - [new Errors#AsyncError()](#new_Errors+AsyncError_new)
   - [.RethrownError](#Errors+RethrownError)
     - [new Errors#RethrownError(error, [message])](#new_Errors+RethrownError_new)
-  - [.catch(promise)](#Errors+catch) ⇒ <code>Promise</code>
+  - [.catch(promise, [message])](#Errors+catch) ⇒ <code>Promise</code>
 
 <a name="Errors+AsyncError"></a>
 
@@ -95,7 +95,7 @@ try {
 
 <a name="Errors+catch"></a>
 
-### errors.catch(promise) ⇒ <code>Promise</code>
+### errors.catch(promise, [message]) ⇒ <code>Promise</code>
 
 Wraps the given promise so that errors caught preserve the stack trace of the calling thread.
 
@@ -107,9 +107,10 @@ The example compares the stack trace of a rejected promise using this method and
 
 - <code>TypeError</code> If the given promise is not an instance of Promise
 
-| Param   | Type                 | Description         |
-| ------- | -------------------- | ------------------- |
-| promise | <code>Promise</code> | The promise to wrap |
+| Param     | Type                 | Description                               |
+| --------- | -------------------- | ----------------------------------------- |
+| promise   | <code>Promise</code> | The promise to wrap                       |
+| [message] | <code>String</code>  | A human-readable description of the error |
 
 **Example**
 

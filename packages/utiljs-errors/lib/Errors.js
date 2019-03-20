@@ -65,13 +65,14 @@ class Errors {
    * //     at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
    *
    * @param {Promise} promise The promise to wrap
+   * @param {String} [message] A human-readable description of the error
    * @return {Promise} A promise that upon rejection wraps the error in an AsyncError and rethrows
    * @throws {TypeError} If the given promise is not an instance of Promise
    */
-  catch(promise) {
+  catch(promise, message) {
     const callerError = new Error();
     return promise.catch(error => {
-      throw new this.AsyncError(callerError, error);
+      throw new this.AsyncError(callerError, error, message);
     });
   }
 
