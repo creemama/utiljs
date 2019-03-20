@@ -5,6 +5,7 @@
   },
   "description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
   "keywords": [
+    "throttle",
     "timer",
     "timers",
     "utilities",

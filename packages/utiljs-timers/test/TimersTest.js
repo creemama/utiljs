@@ -1,6 +1,6 @@
 "use strict";
 
-const { expect } = require("chai"),
+const { assert, expect } = require("chai"),
   timers = require("..");
 
 describe("Timers#setImmediate(callback[, ...args])", () => {
@@ -129,5 +129,80 @@ describe("Timers#clearTimeout(timeout)", () => {
       "foobar"
     );
     timers.clearTimeout(timeout);
+  });
+});
+
+describe("Times#throttle(func, limit)", () => {
+  async function testThrottle(limitInSeconds, n) {
+    const internalPromises = [];
+    const expectedInternalResults = [];
+
+    function func(number) {
+      if (number <= n) {
+        for (let i = 1; i <= n - number; i++) {
+          const derivedNum = number * 10 + i;
+          internalPromises.push(throttledFunction(derivedNum));
+          expectedInternalResults.push("result " + derivedNum);
+        }
+      }
+      if (number == 2) throw new Error("error " + 2);
+      return "result " + number;
+    }
+
+    const throttledFunction = timers.throttle(func, limitInSeconds);
+
+    const initialPromises = [];
+    const expectedResult = [];
+    let errorPromise;
+    for (let i = 1; i <= n; i++) {
+      if (i != 2) {
+        initialPromises.push(throttledFunction(i));
+        expectedResult.push("result " + i);
+      } else {
+        errorPromise = throttledFunction(i);
+      }
+    }
+
+    let errorPassed = false;
+    try {
+      await errorPromise;
+      errorPassed = true;
+    } catch (e) {
+      expect(e.message).to.eql("error 2");
+    }
+    if (errorPassed) assert.fail("We expected error 2.");
+
+    const results = await Promise.all(initialPromises);
+    expect(results).to.eql(expectedResult);
+
+    const internalResults = await Promise.all(internalPromises);
+    expect(internalResults).to.eql(expectedInternalResults);
+  }
+
+  it("should throttle a function", async function() {
+    this.timeout(7000);
+    await testThrottle(0, 10);
+    await testThrottle(400, 4);
+  });
+
+  it("should correctly handle bad input", async function() {
+    expect(() => timers.throttle(true, 5)).to.throw(TypeError);
+    expect(() => timers.throttle(null, 5)).to.throw(TypeError);
+    expect(() => timers.throttle(undefined, 5)).to.throw(TypeError);
+    expect(() => timers.throttle(5, 5)).to.throw(TypeError);
+    expect(() => timers.throttle("foo", 5)).to.throw(TypeError);
+    expect(() => timers.throttle(Symbol("foo"), 5)).to.throw(TypeError);
+
+    // The limitInMilliseconds is 1 in this case.
+    expect(await timers.throttle(() => "foo", true)()).to.eql("foo");
+
+    // The limitInMilliseconds is 0 in these cases.
+    expect(await timers.throttle(() => "foo", null)()).to.eql("foo");
+    expect(await timers.throttle(() => "foo")()).to.eql("foo");
+    expect(await timers.throttle(() => "foo", "foo")()).to.eql("foo");
+
+    expect(() => timers.throttle(() => "foo", Symbol("foo"))).to.throw(
+      TypeError
+    );
   });
 });
