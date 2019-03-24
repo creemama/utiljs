@@ -6,9 +6,6 @@ cd "${scriptDir}"
 
 cd ..
 
-# Put eslint on the PATH.
-PATH=`pwd`/node_modules/.bin:$PATH
-
 path="."
 prefix=""
 if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then

@@ -9,14 +9,18 @@ NODE_HOME_DIR="${SCRIPT_DIR}"/../target/node-home-dir
 
 mkdir -p "${NODE_HOME_DIR}"
 
-DOCKER_IMAGE=utiljs-dev:0.33.1
+DOCKER_IMAGE=utiljs-dev:0.36.0
 
 # https://stackoverflow.com/a/30543453
 if [[ "$(docker images -q ${DOCKER_IMAGE} 2> /dev/null)" == "" ]]; then
+  cp "${SCRIPT_DIR}/install-dev-globals.sh" "${SCRIPT_DIR}/../docker"
+  cp "${SCRIPT_DIR}/install-globals.sh" "${SCRIPT_DIR}/../docker"
   cd "${SCRIPT_DIR}/../docker"
   if ! docker build --tag ${DOCKER_IMAGE} .; then
     exit "${?}"
   fi
+  rm "${SCRIPT_DIR}/../docker/install-dev-globals.sh" \
+    "${SCRIPT_DIR}/../docker/install-globals.sh"
 fi
 
 # We mount /tmp because of the following error:

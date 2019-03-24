@@ -6,9 +6,6 @@ cd "${scriptDir}"
 
 cd ..
 
-# Put jsdoc on the PATH.
-PATH=`pwd`/node_modules/.bin:$PATH
-
 if [ -d "target/jsdoc2md" ]; then
   rm -rf target/jsdoc2md
 fi

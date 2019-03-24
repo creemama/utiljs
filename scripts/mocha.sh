@@ -6,9 +6,6 @@ cd "${scriptDir}"
 
 cd ..
 
-# Put mocha on the PATH.
-PATH=`pwd`/node_modules/.bin:$PATH
-
 exitCode=0
 if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
 	cd "packages/${1}"
