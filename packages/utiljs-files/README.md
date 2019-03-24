@@ -22,6 +22,7 @@ This class contains all the methods of [fs](https://nodejs.org/api/fs.html) and 
 - mkdirp
 - mkdirpSync
 - readFiles
+- readLastLines
 - rmrf
 - rmrfSync
 - touch
