@@ -1,6 +1,10 @@
 "use strict";
 
-class Files {
+/**
+ * JavaScript Node.js utility methods for files
+ * @exports Files
+ */
+module.exports = class Files {
   access() {
     return promises().applyCallback(fs(), fs().access, arguments);
   }
@@ -358,6 +362,27 @@ class Files {
     })();
   }
 
+  /**
+   * Reads in the last `n` lines of a file.
+   *
+   * This function just delegates to https://github.com/alexbbt/read-last-lines .
+   *
+   * @param {Buffer|String|URL} path absolute or relative path to a file;
+   * `URL`s must use the file:// scheme
+   * @param {Number} maxLineCount max number of lines to read
+   * @param {String} [encoding="utf8"] specifies the character encoding to use
+   * or `"buffer"`
+   * @param {Function} [callback] an optional callback
+   * @return {Promise|undefined} a `Promise` that resolves with the lines (as a
+   * `String` or a `Buffer`) or rejects with an error or `undefined` if a
+   * `callback` is specified
+   *
+   * @alias module:Files#readLastLines
+   */
+  readLastLines() {
+    return promises().applyPromise(this, readLastLines().read, arguments);
+  }
+
   readlink() {
     return promises().applyCallback(fs(), fs().readlink, arguments);
   }
@@ -533,9 +558,7 @@ class Files {
   get win32() {
     return path().win32;
   }
-}
-
-module.exports = Files;
+};
 
 const dependencies = {};
 function get(dependency) {
@@ -567,6 +590,9 @@ function path() {
 }
 function promises() {
   return get("@util.js/promises");
+}
+function readLastLines() {
+  return get("read-last-lines");
 }
 function rimraf() {
   return get("rimraf");

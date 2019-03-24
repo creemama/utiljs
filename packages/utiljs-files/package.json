@@ -6,6 +6,7 @@
     "@util.js/strings": "0.35.0",
     "mkdirp": "0.5.1",
     "ncp": "2.0.0",
+    "read-last-lines": "1.7.0",
     "rimraf": "2.6.3",
     "touch": "3.1.0"
   },

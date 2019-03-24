@@ -1,6 +1,6 @@
 "use strict";
 
-const { expect } = require("chai"),
+const { assert, expect } = require("chai"),
   files = require("..");
 
 describe("Files", function() {
@@ -26,6 +26,234 @@ describe("Files", function() {
     await files.mkdirp(jsonDir + "/test");
     await files.mkdirp(jsonDir + "/views");
   }
+
+  describe("#readLastLines()", () => {
+    it("should read the last n lines of a file", async function() {
+      let lines;
+
+      lines = await files.readLastLines(__filename, 3);
+      expect(lines).to.eql("    });\n  });\n});\n");
+
+      lines = await files.readLastLines(__filename, 3, "utf8");
+      expect(lines).to.eql("    });\n  });\n});\n");
+
+      lines = await files.readLastLines(__filename, 3, "buffer");
+      expect(lines).to.be.an.instanceof(Buffer);
+      expect(lines.toString("utf8")).to.eql("    });\n  });\n});\n");
+
+      if (global.URL) {
+        lines = await files.readLastLines(
+          new URL("file://" + __filename),
+          3,
+          "utf8"
+        );
+        expect(lines).to.eql("    });\n  });\n});\n");
+      }
+
+      lines = await files.readLastLines(
+        Buffer.from(__filename, "utf8"),
+        3,
+        "utf8"
+      );
+      expect(lines).to.eql("    });\n  });\n});\n");
+
+      lines = await files.readLastLines(
+        Buffer.from(__filename, "utf8"),
+        3,
+        Buffer.from("utf8", "utf8")
+      );
+      expect(lines).to.eql("    });\n  });\n});\n");
+    });
+    it("should read the last n lines of a file without an encoding and with a callback", callback => {
+      files.readLastLines(__filename, 3, (error, lines) => {
+        if (error) {
+          callback(error);
+          return;
+        }
+        try {
+          expect(lines).to.eql("    });\n  });\n});\n");
+          callback();
+        } catch (e) {
+          callback(e);
+        }
+      });
+    });
+    it("should read the last n lines of a file with an encoding and with a callback", callback => {
+      files.readLastLines(__filename, 3, "utf8", (error, lines) => {
+        if (error) {
+          callback(error);
+          return;
+        }
+        try {
+          expect(lines).to.eql("    });\n  });\n});\n");
+          callback();
+        } catch (e) {
+          callback(e);
+        }
+      });
+    });
+    it("should read the last n lines with weird maxLineCounts", async function() {
+      let lines;
+
+      const src = targetDir + "/readLastLines.txt";
+      await files.mkdirp(targetDir);
+      await files.writeFile(src, "a", "utf8");
+
+      lines = await files.readLastLines(src, Buffer.from("3", "utf8"));
+      expect(lines).to.eql("a");
+
+      lines = await files.readLastLines(src, null);
+      expect(lines).to.eql("");
+
+      lines = await files.readLastLines(src, false);
+      expect(lines).to.eql("");
+
+      lines = await files.readLastLines(src, undefined);
+      expect(lines).to.eql("a");
+
+      lines = await files.readLastLines(src, "5");
+      expect(lines).to.eql("a");
+
+      lines = await files.readLastLines(src, "0");
+      expect(lines).to.eql("");
+
+      lines = await files.readLastLines(src, files);
+      expect(lines).to.eql("a");
+
+      lines = await files.readLastLines(src, Number.NEGATIVE_INFINITY);
+      expect(lines).to.eql("");
+
+      lines = await files.readLastLines(__filename, -1);
+      expect(lines).to.eql("");
+
+      lines = await files.readLastLines(__filename, 0);
+      expect(lines).to.eql("");
+
+      lines = await files.readLastLines(__filename, 2.3);
+      expect(lines).to.eql("    });\n  });\n});\n");
+
+      lines = await files.readLastLines(src, Number.POSITIVE_INFINITY);
+      expect(lines).to.eql("a");
+
+      lines = await files.readLastLines(src, NaN);
+      expect(lines).to.eql("a");
+    });
+    it("should read the last n lines with weird encodings", async function() {
+      const lines = await files.readLastLines(__filename, 3, null);
+      expect(lines).to.eql("    });\n  });\n});\n");
+    });
+    it("should fail if the path argument is invalid", async function() {
+      // The method fails if a URL as a string, not a URL object.
+      await files
+        .readLastLines("file://" + __filename, 3)
+        .then(lines => assert.fail())
+        .catch(error => expect(error.message).to.eql("file does not exist"));
+
+      // The method fails if a URL does not use the file scheme.
+      await files
+        .readLastLines("http://www.google.com", 3)
+        .then(lines => assert.fail())
+        .catch(error => expect(error.message).to.eql("file does not exist"));
+      if (global.URL)
+        await files
+          .readLastLines(new URL("http://www.google.com"), 3)
+          .then(lines => assert.fail())
+          .catch(error =>
+            expect(error.message).to.eql("The URL must be of scheme file")
+          );
+
+      // The method fails if path is a directory.
+      await files
+        .readLastLines(__dirname, 3)
+        .then(lines => assert.fail())
+        .catch(error =>
+          expect(error.message).to.eql(
+            "EISDIR: illegal operation on a directory, read"
+          )
+        );
+
+      // The method fails if path is one of the primitive types other than string.
+      await files
+        .readLastLines(true, 3)
+        .then(lines => assert.fail())
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      await files
+        .readLastLines(null, 3)
+        .then(lines => assert.fail())
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      await files
+        .readLastLines(undefined, 3)
+        .then(lines => assert.fail())
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      await files
+        .readLastLines(1, 3)
+        .then(lines => assert.fail())
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+      await files
+        .readLastLines(Symbol(__filename), 3)
+        .then(lines => assert.fail())
+        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+    });
+    it("should fail with a callback if the path argument is invalid", callback => {
+      files.readLastLines(__dirname, 3, (error, lines) => {
+        try {
+          expect(error.message).to.eql(
+            "EISDIR: illegal operation on a directory, read"
+          );
+          callback();
+        } catch (e) {
+          callback(e);
+        }
+      });
+    });
+    it("should fail if the maxLineCount is invalid", async function() {
+      await files
+        .readLastLines(__filename, Symbol("5"))
+        .then(lines => assert.fail())
+        .catch(error =>
+          expect(error.message).to.eql(
+            "Cannot convert a Symbol value to a number"
+          )
+        );
+    });
+    it("should fail if the encoding is invalid", async function() {
+      await files
+        .readLastLines(__filename, 3, false)
+        .then(lines => assert.fail())
+        .catch(error =>
+          expect(error.message).to.eql("Unknown encoding: false")
+        );
+
+      await files
+        .readLastLines(__filename, 3, NaN)
+        .then(lines => assert.fail())
+        .catch(error => expect(error.message).to.eql("Unknown encoding: NaN"));
+
+      await files
+        .readLastLines(__filename, 3, 0)
+        .then(lines => assert.fail())
+        .catch(error => expect(error.message).to.eql("Unknown encoding: 0"));
+
+      await files
+        .readLastLines(__filename, 3, "")
+        .then(lines => assert.fail())
+        .catch(error => expect(error.message).to.eql("Unknown encoding: "));
+
+      await files
+        .readLastLines(__filename, 3, "frog")
+        .then(lines => assert.fail())
+        .catch(error => expect(error.message).to.eql("Unknown encoding: frog"));
+
+      await files
+        .readLastLines(__filename, 3, Symbol("utf8"))
+        .then(lines => assert.fail())
+        .catch(error =>
+          expect(error.message).to.eql(
+            "Cannot convert a Symbol value to a string"
+          )
+        );
+    });
+  });
 
   describe("#cp(src, dest)", function() {
     it("should successfully copy a file", async function() {
