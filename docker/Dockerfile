@@ -1,8 +1,6 @@
 # This is a development container. To use this container, run:
 # ../scripts/docker.sh
 
-# If you update this base image, update .travis.yml to match the base image's
-# npm version. Update the utiljs-dev version in ../scripts/docker.sh as well.
 FROM creemama/run-non-root:1.5.1-node-10.15.3
 
 # When upgrading versions for Alpine, run:
