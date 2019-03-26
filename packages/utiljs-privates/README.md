@@ -13,6 +13,17 @@
 
 ## Privates
 
+**Kind**: global class  
+**Access**: public
+
+- [Privates](#Privates)
+  - [new Privates()](#new_Privates_new)
+  - [.call()](#Privates+call)
+
+<a name="new_Privates_new"></a>
+
+### new Privates()
+
 JavaScript utility class for private member variables.
 
 This class decreases some of the boilerplate of the
@@ -32,5 +43,11 @@ make this class obsolete? Not necessarily. If each of your privates is a
 function (e.g., you want to lazy load all member variables), this class has
 convenience methods for that.
 
-**Kind**: global class  
+<a name="Privates+call"></a>
+
+### privates.call()
+
+Calls `this.get(thiz, property)()`.
+
+**Kind**: instance method of [<code>Privates</code>](#Privates)  
 **Access**: public

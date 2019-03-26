@@ -23,15 +23,18 @@ const { RethrownError } = require("@util.js/errors");
  * convenience methods for that.
  *
  * @public
- * @class
+ * @class Privates
  */
-class Privates {
+module.exports = class Privates {
   constructor() {
     this.privates = new WeakMap();
   }
 
   /**
    * Calls `this.get(thiz, property)()`.
+   *
+   * @public
+   * @function Privates#call
    */
   call(thiz, property) {
     try {
@@ -151,7 +154,7 @@ class Privates {
       object[properties[i]] = this.get(thiz, properties[i]);
     return object;
   }
-}
+};
 
 function getPropertyErrorString(property) {
   // https://stackoverflow.com/a/7772724
@@ -185,5 +188,3 @@ function getAllMethods(obj) {
 
   return props;
 }
-
-module.exports = Privates;

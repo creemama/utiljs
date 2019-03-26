@@ -3,7 +3,7 @@
 /*
  * See {@link Errors#RethrownError}.
  */
-class RethrownError extends Error {
+module.exports = class RethrownError extends Error {
   constructor(error, message) {
     super(message || error.message);
     if (!error)
@@ -15,6 +15,4 @@ class RethrownError extends Error {
     this.newStack = this.stack;
     this.stack = `${this.stack}\n${error.stack}`;
   }
-}
-
-module.exports = RethrownError;
+};

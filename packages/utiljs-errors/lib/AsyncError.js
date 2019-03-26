@@ -3,7 +3,7 @@
 /*
  * See {@link Errors#AsyncError}.
  */
-class AsyncError extends Error {
+module.exports = class AsyncError extends Error {
   constructor(callerError, asyncError, message) {
     super(message || asyncError.message);
     if (!callerError)
@@ -32,6 +32,4 @@ class AsyncError extends Error {
     this.stack = `${this.stack}\n${callerStack}\n${asyncError.stack ||
       asyncError}`;
   }
-}
-
-module.exports = AsyncError;
+};

@@ -18,9 +18,9 @@
 
 - [Errors](#Errors)
   - [.AsyncError](#Errors+AsyncError)
-    - [new Errors#AsyncError()](#new_Errors+AsyncError_new)
+    - [new AsyncError()](#new_Errors+AsyncError_new)
   - [.RethrownError](#Errors+RethrownError)
-    - [new Errors#RethrownError(error, [message])](#new_Errors+RethrownError_new)
+    - [new RethrownError(error, [message])](#new_Errors+RethrownError_new)
   - [.catch(promise, [message])](#Errors+catch) ⇒ <code>Promise</code>
 
 <a name="Errors+AsyncError"></a>
@@ -31,7 +31,7 @@
 **Access**: public  
 <a name="new_Errors+AsyncError_new"></a>
 
-#### new Errors#AsyncError()
+#### new AsyncError()
 
 An error that preserves the stack trace of the thread that calls an asynchronous function.
 
@@ -45,7 +45,7 @@ Use [catch](#Errors+catch) to use this class. Use this class directly for instan
 **Access**: public  
 <a name="new_Errors+RethrownError_new"></a>
 
-#### new Errors#RethrownError(error, [message])
+#### new RethrownError(error, [message])
 
 A wrapper of another error used for rethrowing.
 
@@ -106,6 +106,8 @@ The example compares the stack trace of a rejected promise using this method and
 **Throws**:
 
 - <code>TypeError</code> If the given promise is not an instance of Promise
+
+**Access**: public
 
 | Param     | Type                 | Description                               |
 | --------- | -------------------- | ----------------------------------------- |

@@ -2,10 +2,11 @@
 
 /**
  * JavaScript utility methods for [errors]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error}
+ *
  * @public
- * @class
+ * @class Errors
  */
-class Errors {
+module.exports = class Errors {
   /**
    * Wraps the given promise so that errors caught preserve the stack trace of the calling thread.
    *
@@ -68,6 +69,9 @@ class Errors {
    * @param {String} [message] A human-readable description of the error
    * @return {Promise} A promise that upon rejection wraps the error in an AsyncError and rethrows
    * @throws {TypeError} If the given promise is not an instance of Promise
+   *
+   * @public
+   * @function Errors#catch
    */
   catch(promise, message) {
     const callerError = new Error();
@@ -82,7 +86,7 @@ class Errors {
    * Use {@link Errors#catch} to use this class. Use this class directly for instanceof checks.
    *
    * @public
-   * @class
+   * @class Errors#AsyncError
    */
   get AsyncError() {
     return require("./AsyncError");
@@ -126,12 +130,11 @@ class Errors {
    * @param {Error} error The error to rethrow
    * @param {String} [message] A human-readable description of the error
    * @throws {TypeError} if the given error is not defined
+   *
    * @public
-   * @class
+   * @class Errors#RethrownError
    */
   get RethrownError() {
     return require("./RethrownError");
   }
-}
-
-module.exports = Errors;
+};
