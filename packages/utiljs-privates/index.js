@@ -1,4 +1,4 @@
 "use strict";
 
-var Privates = require("./lib/Privates");
+var Privates = require("./dist/Privates");
 module.exports = Privates;

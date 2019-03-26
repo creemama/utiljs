@@ -4,10 +4,12 @@ babel () {
   cd ..
 
   local packages=arrays
+  packages=`printf "%s\t%s" "${packages}" errors`
   packages=`printf "%s\t%s" "${packages}" emails`
   packages=`printf "%s\t%s" "${packages}" jquery`
   packages=`printf "%s\t%s" "${packages}" numbers`
   packages=`printf "%s\t%s" "${packages}" objects`
+  packages=`printf "%s\t%s" "${packages}" privates`
   packages=`printf "%s\t%s" "${packages}" promises`
   packages=`printf "%s\t%s" "${packages}" strings`
 

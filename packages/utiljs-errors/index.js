@@ -1,4 +1,4 @@
 "use strict";
 
-var Errors = require("./lib/Errors");
+var Errors = require("./dist/Errors");
 module.exports = new Errors();
