@@ -3,10 +3,13 @@
 const Privates = require("@util.js/privates");
 const privates = new Privates();
 
-function resources() {
-  return {
-    util: () => require("util")
-  };
+function delegate(thiz, functionName) {
+  if (!privates.get(thiz, functionName))
+    throw new ReferenceError(
+      "Timers#" + functionName + " is undefined. It is not in this build."
+    );
+  const proxy = privates.getCallProxy(thiz);
+  return proxy[functionName](proxy);
 }
 
 /**
@@ -14,8 +17,16 @@ function resources() {
  * @exports Timers
  */
 module.exports = class Timers {
-  constructor() {
-    privates.lazyLoadProps(this, resources());
+  constructor(functions) {
+    let resources = {};
+    if (functions) {
+      for (let i = 0; i < functions.length; i++) {
+        resources = Object.assign(resources, functions[i].dependencies);
+        const func = functions[i].function;
+        resources[functions[i].name] = () => func;
+      }
+    }
+    privates.lazyLoadProps(this, resources);
   }
 
   get setImmediate() {
@@ -23,8 +34,7 @@ module.exports = class Timers {
   }
 
   get setImmediatePromise() {
-    const thiz = privates.getCallProxy(this);
-    return thiz.util.promisify(setImmediate);
+    return delegate(this, "setImmediatePromise");
   }
 
   get setInterval() {
@@ -36,8 +46,7 @@ module.exports = class Timers {
   }
 
   get setTimeoutPromise() {
-    const thiz = privates.getCallProxy(this);
-    return thiz.util.promisify(setTimeout);
+    return delegate(this, "setTimeoutPromise");
   }
 
   get clearImmediate() {
