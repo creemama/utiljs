@@ -1,7 +1,7 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@babel/runtime-corejs2": "7.3.4",
+    "@babel/runtime-corejs2": "7.4.3",
     "knuth-shuffle": "1.0.8"
   },
   "dependencies-comments": [
