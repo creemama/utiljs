@@ -1,6 +1,6 @@
 "use strict";
 
-const { RethrownError } = require("@util.js/errors");
+const RethrownError = require("@util.js/errors/RethrownError");
 
 /**
  * JavaScript utility class for private member variables.
