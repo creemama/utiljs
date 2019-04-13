@@ -14,5 +14,5 @@ fi
 
 npm install --global npm@6.9.0 \
 && npm install --global \
-  lerna@3.13.1 \
-  mocha@6.0.2
+  lerna@3.13.2 \
+  mocha@6.1.3

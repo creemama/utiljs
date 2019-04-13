@@ -7,6 +7,7 @@ cd "${scriptDir}"
 cd ..
 
 exitCode=0
+npm outdated -g
 npm outdated
 cd packages
 for package in */; do
