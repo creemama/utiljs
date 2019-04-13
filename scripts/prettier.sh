@@ -24,7 +24,7 @@ find ${path} -type f \
 
 sort target/prettier.txt -o target/prettier.txt
 
-while read in; do npx prettier --write "$in"; done < target/prettier.txt
+while read in; do prettier --write "$in"; done < target/prettier.txt
 
 rm -rf target/prettier.txt
 

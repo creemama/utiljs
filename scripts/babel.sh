@@ -15,6 +15,8 @@ babel () {
 
   for package in ${packages}; do
     printf "\033[1m%s\033[0m ... " "utiljs-${package}"
+    # babel is not installed using the global option, so we cannot call babel directly
+    # without adding utiljs/node_modules/.bin to the PATH.
     npx babel \
       "packages/utiljs-${package}/lib" \
       --out-dir "packages/utiljs-${package}/dist"

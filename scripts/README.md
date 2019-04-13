@@ -14,7 +14,7 @@ The scripts in this directory do the following:
 
   - `prettier.sh` (Use [style] as the commit type.)
   - `eslint.sh`
-  - `` npx prettier --write `git ls-files -m` ``
+  - `` prettier --write `git ls-files -m` ``
 
 - Update documentation. Use [docs] as the commit type.
 

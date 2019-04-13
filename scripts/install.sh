@@ -7,7 +7,7 @@ cd ..
 
 npm install --save-exact
 exitCode=${?}
-npx lerna bootstrap -- --save-exact
+lerna bootstrap -- --save-exact
 if [ ${?} -ne 0 ]; then
   exitCode=${?}
 fi

@@ -14,11 +14,11 @@ git clean -f \
 && npm run clean \
 && npm run build \
 && npm login --scope=@util.js \
-&& npx lerna publish --exact
+&& lerna publish --exact
 exitCode=${?}
 
 # You may need to use --force-publish, an intentionally undocumented option.
-# npx lerna publish --exact --force-publish=utiljs-objects,utiljs-strings
+# lerna publish --exact --force-publish=utiljs-objects,utiljs-strings
 
 npm run package-lock
 lastExitCode="${?}"

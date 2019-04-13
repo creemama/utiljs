@@ -24,7 +24,7 @@ sort target/eslint.txt -o target/eslint.txt
 
 while read in; do
   echo $in
-  npx eslint "$in"
+  eslint "$in"
 done < target/eslint.txt
 
 rm -rf target/eslint.txt
