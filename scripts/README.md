@@ -6,9 +6,12 @@ The scripts in this directory do the following:
 
 - Install and update dependencies. Use [fix] as the commit type.
 
+  - `install-globals.sh`
+  - `install-dev-globals.sh`
   - `outdated.sh`
   - `install.sh`
-  - `audit.sh`
+  - `npm run package-lock` - BE CAREFUL! This runs `git clean -fdx`; called by publish.sh
+  - `npm run audit`
 
 - Format and run a linter.
 
@@ -24,7 +27,10 @@ The scripts in this directory do the following:
 
 - Test and publish.
 
+  - `npm run clean` - called by travis.sh and publish.sh
   - `babel.sh`
+  - `npm run build` - cleans and then calls babel; called by travis.sh and publish.sh
   - `mocha.sh`
+  - `npm run test`
   - `travis.sh`
   - `publish.sh`
