@@ -64,11 +64,7 @@ module.exports = class Privates {
   }
 
   getCallProxy(thiz) {
-    return new Proxy(this.getProps(thiz), {
-      get: function(obj, prop) {
-        return obj[prop]();
-      }
-    });
+    return new Proxy(this.getProps(thiz), { get: callProp });
   }
 
   getProps(thiz) {
@@ -161,6 +157,14 @@ function getPropertyErrorString(property) {
   if (typeof property === "string" || property instanceof String)
     return `"${property}"`;
   return `${property}`;
+}
+
+function callProp(obj, property) {
+  try {
+    return obj[property]();
+  } catch (e) {
+    throw new RethrownError(e, `Calling "${property}" as a function failed.`);
+  }
 }
 
 // https://stackoverflow.com/questions/31054910/get-functions-methods-of-a-class
