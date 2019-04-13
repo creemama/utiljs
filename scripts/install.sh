@@ -1,18 +1,15 @@
 #!/bin/sh
 
-scriptDir=`dirname "${0}"`
-cd "${scriptDir}"
-
-cd ..
-
-npm install --save-exact
-exitCode=${?}
-lerna bootstrap -- --save-exact
-if [ ${?} -ne 0 ]; then
-  exitCode=${?}
+set -o errexit -o nounset
+IFS="$(printf '\n\t' '')"
+if [ -n "${BASH_VERSION:-}" ]; then
+  set -o pipefail
 fi
 
-printf "\n\033[1m%s\033[0m\n\n" "** Consider running \"npm run package-lock\" as well. **"
+script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
+cd "${script_dir}/.."
 
-echo "Exit code: ${exitCode}"
-exit ${exitCode}
+npm install --save-exact
+lerna bootstrap -- --save-exact
+
+printf "\n\033[1m%s\033[0m\n\n" "** Consider running \"npm run package-lock\" as well. **"

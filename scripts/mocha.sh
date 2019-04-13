@@ -1,16 +1,17 @@
 #!/bin/sh
 
-curDir=`pwd`
-scriptDir=`dirname "${0}"`
-cd "${scriptDir}"
+set -o errexit -o nounset
+IFS="$(printf '\n\t' '')"
+if [ -n "${BASH_VERSION:-}" ]; then
+  set -o pipefail
+fi
 
-cd ..
+script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
+cd "${script_dir}/.."
 
-exitCode=0
-if [ ! -z "${1}" ] && [ -d "packages/${1}" ]; then
+if [ ! -z "${1:-}" ] && [ -d "packages/${1}" ]; then
 	cd "packages/${1}"
 	mocha
-	exitCode=${?}
 else
 	cd packages
 	for package in */; do
@@ -18,10 +19,6 @@ else
 		if [ -d "test" ]; then
 			echo "Visting ${package}"
 			mocha ${@}
-			latestExitCode=${?}
-			if [[ ${latestExitCode} -ne 0 ]]; then
-				exitCode=${latestExitCode}
-			fi
 		else
 			echo "Skipping ${package}"
 			echo
@@ -29,8 +26,3 @@ else
 		cd ..
 	done
 fi
-
-cd "${curDir}"
-
-echo "Exit code: ${exitCode}"
-exit ${exitCode}

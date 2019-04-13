@@ -6,20 +6,20 @@ if [ -n "${BASH_VERSION:-}" ]; then
   set -o pipefail
 fi
 
-SCRIPT_DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
 
-DOCKER_IMAGE=utiljs-dev:0.36.1
+docker_image=utiljs-dev:0.36.1
 
 # https://stackoverflow.com/a/30543453
-if [[ "$(docker images -q ${DOCKER_IMAGE} 2> /dev/null)" == "" ]]; then
-  cp "${SCRIPT_DIR}/install-dev-globals.sh" "${SCRIPT_DIR}/../docker"
-  cp "${SCRIPT_DIR}/install-globals.sh" "${SCRIPT_DIR}/../docker"
-  cd "${SCRIPT_DIR}/../docker"
-  if ! docker build --tag ${DOCKER_IMAGE} .; then
+if [[ "$(docker images -q ${docker_image} 2> /dev/null)" == "" ]]; then
+  cp "${script_dir}/install-dev-globals.sh" "${script_dir}/../docker"
+  cp "${script_dir}/install-globals.sh" "${script_dir}/../docker"
+  cd "${script_dir}/../docker"
+  if ! docker build --tag ${docker_image} .; then
     exit "${?}"
   fi
-  rm "${SCRIPT_DIR}/../docker/install-dev-globals.sh" \
-    "${SCRIPT_DIR}/../docker/install-globals.sh"
+  rm "${script_dir}/../docker/install-dev-globals.sh" \
+    "${script_dir}/../docker/install-globals.sh"
 fi
 
 # We mount /tmp because of the following error:
@@ -52,7 +52,7 @@ docker run \
   --volume /home/node \
   --volume ~/.gnupg:/home/node/.gnupg \
   --volume ~/.ssh:/home/node/.ssh:ro \
-  --volume "${SCRIPT_DIR}/..:/home/node/utiljs" \
+  --volume "${script_dir}/..:/home/node/utiljs" \
   --volume /tmp \
   --workdir /home/node/utiljs \
-  "${DOCKER_IMAGE}"
+  "${docker_image}"

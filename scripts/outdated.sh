@@ -1,12 +1,15 @@
 #!/bin/sh
 
-curDir=`pwd`
-scriptDir=`dirname "${0}"`
-cd "${scriptDir}"
+set -o nounset
+IFS="$(printf '\n\t' '')"
+if [ -n "${BASH_VERSION:-}" ]; then
+  set -o pipefail
+fi
 
-cd ..
+script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
+cd "${script_dir}/.."
 
-exitCode=0
+exit_code=0
 npm outdated -g
 npm outdated
 cd packages
@@ -14,14 +17,11 @@ for package in */; do
 	cd ${package}
 	echo "Visting ${package}"
 	npm outdated
-	latestExitCode=${?}
-	if [[ ${latestExitCode} -ne 0 ]]; then
-		exitCode=${latestExitCode}
+	latest_exit_code=${?}
+	if [[ ${latest_exit_code} -ne 0 ]]; then
+		exit_code=${latest_exit_code}
 	fi
 	cd ..
 done
 
-cd "${curDir}"
-
-echo "Exit code: ${exitCode}"
-exit ${exitCode}
+exit ${exit_code}
