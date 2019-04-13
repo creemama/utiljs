@@ -132,6 +132,25 @@ describe("Timers#clearTimeout(timeout)", () => {
   });
 });
 
+describe("Timers#schedule", () => {
+  it("should schedule a job at a certain time", done => {
+    timers.schedule(new Date(Date.now() + 150), done).start();
+  });
+  it("should schedule a regularly recurring job", function(done) {
+    this.timeout(5000);
+    let count = 0;
+    timers
+      .schedule("* * * * * *", function() {
+        count++;
+        if (count > 3) {
+          this.stop();
+          done();
+        }
+      })
+      .start();
+  });
+});
+
 describe("Times#throttle(func, limit)", () => {
   async function testThrottle(limitInSeconds, n) {
     const internalPromises = [];

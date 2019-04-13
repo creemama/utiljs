@@ -61,6 +61,10 @@ module.exports = class Timers {
     return clearTimeout;
   }
 
+  get schedule() {
+    return delegate(this, "schedule");
+  }
+
   /**
    * Returns an asynchronous function that throttles the specified
    * functionToThrottle calling it once every limitInMilliseconds.
