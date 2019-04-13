@@ -23,8 +23,8 @@
   "scripts": {
     "audit": "npx utiljs-lerna-audit",
     "build": "npm run clean && ./scripts/babel.sh",
-    "clean": "git clean -fdx --exclude \"node_modules\" --exclude \"node-home-dir\"",
-    "package-lock": "git clean -fdx --exclude \"node-home-dir\" && npm install --save-exact && npx lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
+    "clean": "git clean -fdx --exclude \"node_modules\"",
+    "package-lock": "git clean -fdx && npm install --save-exact && npx lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
     "test": "npm run build && npx lerna exec --ignore \"@util.js/lerna\" --ignore \"@util.js/aws\" -- mocha"
   },
   "scripts-comments": [
