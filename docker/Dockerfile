@@ -7,6 +7,9 @@ FROM creemama/node-no-yarn:10.15.3-alpine
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
+# I got /dev/console from https://hub.docker.com/r/vladgh/gpg/ .
+ENV GPG_TTY=/dev/console
+
 # When upgrading versions for Alpine, run:
 # docker run -it --rm -u root creemama/node-no-yarn:version-alpine sh
 # apk update
@@ -16,6 +19,7 @@ ENV PATH=$PATH:/home/node/.npm-global/bin
 
 RUN apk --no-cache --update add \
       git=2.20.1-r0 \
+      gnupg=2.2.12-r0 \
       openssh=7.9_p1-r4
 
 USER node

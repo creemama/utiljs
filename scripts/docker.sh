@@ -32,6 +32,11 @@ fi
 #     at Object.mkdirSync (fs.js:753:3)
 # ...
 
+# /home/node/.gnupg cannot be read-only because of the following error:
+# ~/utiljs $ git commit
+# error: gpg failed to sign the data
+# fatal: failed to write commit object
+
 docker run \
   --cap-drop=ALL \
   --cpu-shares=1024 \
@@ -45,6 +50,7 @@ docker run \
   --security-opt=no-new-privileges:true \
   --tty \
   --volume /home/node \
+  --volume ~/.gnupg:/home/node/.gnupg \
   --volume ~/.ssh:/home/node/.ssh:ro \
   --volume "${SCRIPT_DIR}/..:/home/node/utiljs" \
   --volume /tmp \
