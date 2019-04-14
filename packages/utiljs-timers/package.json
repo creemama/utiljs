@@ -1,8 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "cron": "1.7.0",
-    "@util.js/privates": "0.36.1"
+    "@util.js/privates": "0.37.0",
+    "cron": "1.7.0"
   },
   "description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
   "keywords": [
@@ -26,5 +26,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-timers"
   },
-  "version": "0.36.1"
+  "version": "0.37.0"
 }
