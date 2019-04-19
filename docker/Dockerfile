@@ -5,7 +5,7 @@ FROM creemama/node-no-yarn:10.15.3-alpine
 
 # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-ENV PATH=$PATH:/home/node/.npm-global/bin
+ENV PATH=/home/node/.npm-global/bin:$PATH
 
 # I got /dev/console from https://hub.docker.com/r/vladgh/gpg/ .
 ENV GPG_TTY=/dev/console
