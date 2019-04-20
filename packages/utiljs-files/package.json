@@ -4,6 +4,7 @@
     "@util.js/objects": "0.37.0",
     "@util.js/promises": "0.37.0",
     "@util.js/strings": "0.37.0",
+    "graceful-fs": "4.1.15",
     "mkdirp": "0.5.1",
     "ncp": "2.0.0",
     "read-last-lines": "1.7.1",

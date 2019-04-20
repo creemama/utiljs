@@ -574,7 +574,13 @@ function childProcess() {
   return get("child_process");
 }
 function fs() {
-  return get("fs");
+  // Using graceful-fs over vanilla fs solves the following problem:
+  // Error: EMFILE: too many open files
+
+  // See
+  // https://stackoverflow.com/questions/8965606/node-and-error-emfile-too-many-open-files.
+
+  return get("graceful-fs");
 }
 function mkdirp() {
   return get("mkdirp");
