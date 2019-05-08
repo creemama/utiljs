@@ -20,7 +20,7 @@ ENV GPG_TTY=/dev/console
 RUN apk --no-cache --update add \
       git=2.20.1-r0 \
       gnupg=2.2.12-r0 \
-      openssh=7.9_p1-r4
+      openssh=7.9_p1-r5
 
 USER node
 WORKDIR /home/node
