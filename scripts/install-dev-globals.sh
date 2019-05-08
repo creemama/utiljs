@@ -10,7 +10,7 @@ fi
 
 npm install --global \
   eslint@5.16.0 \
-  eslint-config-prettier@4.1.0 \
-  jsdoc@3.5.5 \
+  eslint-config-prettier@4.2.0 \
+  jsdoc@3.6.1 \
   jsdoc-to-markdown@4.0.1 \
   prettier@1.17.0

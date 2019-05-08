@@ -1,7 +1,7 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@babel/runtime-corejs2": "7.4.3",
+    "@babel/runtime-corejs2": "7.4.4",
     "@util.js/arrays": "0.37.1"
   },
   "dependencies-comments": [
