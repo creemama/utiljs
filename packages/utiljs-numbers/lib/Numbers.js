@@ -13,6 +13,19 @@ class Numbers {
     return Math.acosh(...arguments);
   }
 
+  ascendingComparator() {
+    const thiz = this;
+    return (a, b) => {
+      if (thiz.isNaN(a)) {
+        if (thiz.isNaN(b)) return 0;
+        else return 1;
+      } else if (thiz.isNaN(b)) {
+        return -1;
+      }
+      return a - b;
+    };
+  }
+
   asin() {
     return Math.asin(...arguments);
   }
@@ -51,6 +64,19 @@ class Numbers {
 
   cosh() {
     return Math.cosh(...arguments);
+  }
+
+  descendingComparator() {
+    const thiz = this;
+    return (a, b) => {
+      if (thiz.isNaN(a)) {
+        if (thiz.isNaN(b)) return 0;
+        else return -1;
+      } else if (thiz.isNaN(b)) {
+        return 1;
+      }
+      return b - a;
+    };
   }
 
   exp() {

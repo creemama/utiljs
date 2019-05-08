@@ -18,6 +18,56 @@ describe("Numbers#cos(x)", () => {
 });
 
 describe("Numbers", () => {
+  describe("#ascendingComparator", () => {
+    it("should order arrays of numbers in ascending order", () => {
+      const expected = [
+        numbers.NEGATIVE_INFINITY,
+        -33,
+        0,
+        33.33,
+        numbers.POSITIVE_INFINITY,
+        numbers.NaN,
+        numbers.NaN
+      ];
+      const actual = [
+        numbers.POSITIVE_INFINITY,
+        0,
+        numbers.NaN,
+        numbers.NEGATIVE_INFINITY,
+        -33,
+        numbers.NaN,
+        33.33
+      ].sort(numbers.ascendingComparator());
+      expect(actual).to.deep.equal(expected);
+    });
+  });
+
+  describe("#descendingComparator", () => {
+    it("should order arrays of numbers in descending order", () => {
+      const expected = [
+        numbers.NaN,
+        numbers.NaN,
+        numbers.NaN,
+        numbers.POSITIVE_INFINITY,
+        33.33,
+        0,
+        -33,
+        numbers.NEGATIVE_INFINITY
+      ];
+      const actual = [
+        numbers.NaN,
+        numbers.POSITIVE_INFINITY,
+        0,
+        numbers.NaN,
+        numbers.NEGATIVE_INFINITY,
+        -33,
+        numbers.NaN,
+        33.33
+      ].sort(numbers.descendingComparator());
+      expect(actual).to.deep.equal(expected);
+    });
+  });
+
   describe("#isInt(value)", () => {
     it("should return true for integers", () => {
       expect(numbers.isInt(-33)).to.be.true;
