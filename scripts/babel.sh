@@ -1,7 +1,15 @@
 #!/bin/sh
 
-babel () {
+exec_babel () {
   cd ..
+
+  if [ ! -z "${1:-}" ] && [ -d "packages/${1}" ]; then
+    printf "\033[1m%s\033[0m ... " "${1}"
+    babel \
+      "packages/${1}/lib" \
+      --out-dir "packages/${1}/dist"
+    return $?
+  fi
 
   local packages=arrays
   packages=`printf "%s\t%s" "${packages}" errors`
@@ -15,13 +23,11 @@ babel () {
 
   for package in ${packages}; do
     printf "\033[1m%s\033[0m ... " "utiljs-${package}"
-    # babel is not installed using the global option, so we cannot call babel directly
-    # without adding utiljs/node_modules/.bin to the PATH.
-    npx babel \
+    babel \
       "packages/utiljs-${package}/lib" \
       --out-dir "packages/utiljs-${package}/dist"
   done
 }
 
 . "`dirname "${0}"`/main.sh"
-main babel "$@"
+main exec_babel "$@"

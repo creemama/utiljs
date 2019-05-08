@@ -2,7 +2,6 @@
   "author": "Chris Topher <c@creemama.com>",
   "description": "Util.js - JavaScript utility methods",
   "devDependencies": {
-    "@babel/cli": "7.4.4",
     "@babel/core": "7.4.4",
     "@babel/plugin-transform-runtime": "7.4.4",
     "@babel/preset-env": "7.4.4",
@@ -11,8 +10,8 @@
   },
   "devDependencies-comments": [
     "Including @babel/core prevents the following warning: ",
-    "npm WARN @babel/cli@7.2.3 requires a peer of @babel/core@^7.0.0-0 but ",
-    "none is installed. You must install peer dependencies yourself."
+    "npm WARN @babel/preset-env@7.4.4 requires a peer of @babel/core@^7.0.0-0 ",
+    "but none is installed. You must install peer dependencies yourself."
   ],
   "license": "MIT",
   "name": "utiljs",
