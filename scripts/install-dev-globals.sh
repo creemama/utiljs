@@ -13,4 +13,5 @@ npm install --global \
   eslint-config-prettier@4.2.0 \
   jsdoc@3.6.1 \
   jsdoc-to-markdown@4.0.1 \
+  nyc@14.1.0 \
   prettier@1.17.0

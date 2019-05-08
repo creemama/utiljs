@@ -11,14 +11,22 @@ cd "${script_dir}/.."
 
 if [ ! -z "${1:-}" ] && [ -d "packages/${1}" ]; then
 	cd "packages/${1}"
-	mocha
+	nyc \
+	  --reporter html \
+		--reporter text \
+		--report-dir target/coverage \
+		mocha
 else
 	cd packages
 	for package in */; do
 		cd ${package}
 		if [ -d "test" ]; then
 			echo "Visting ${package}"
-			mocha ${@}
+			nyc \
+				--reporter html \
+				--reporter text \
+				--report-dir target/coverage \
+				mocha ${@}
 		else
 			echo "Skipping ${package}"
 			echo

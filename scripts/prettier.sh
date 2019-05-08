@@ -20,7 +20,7 @@ mkdir -p target
 
 find ${path} -type f \
   | egrep "^(\./\.babelrc|${prefix}.*\.(css|js|json|jsx|md|scss))$" \
-  | egrep -v "^.*/(dist|node_modules|target)/.*$" \
+  | egrep -v "^.*/(.nyc_output|dist|node_modules|target)/.*$" \
   | egrep -v "^.*/package-lock\.json$" \
   | egrep -v "^\./lerna\.json$" \
   > target/prettier.txt
