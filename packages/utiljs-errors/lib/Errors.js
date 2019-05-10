@@ -92,6 +92,14 @@ module.exports = class Errors {
     return require("./AsyncError");
   }
 
+  get FalsyError() {
+    return require("./FalsyError");
+  }
+
+  get MissingError() {
+    return require("./MissingError");
+  }
+
   /**
    * A wrapper of another error used for rethrowing.
    *
