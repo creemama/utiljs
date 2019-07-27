@@ -1,7 +1,7 @@
 # This is a development container. To use this container, run:
 # ../scripts/docker.sh
 
-FROM creemama/node-no-yarn:10.15.3-alpine
+FROM creemama/node-no-yarn:10.16.0-alpine
 
 # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
