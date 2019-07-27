@@ -6,12 +6,17 @@
     "@babel/plugin-transform-runtime": "7.5.5",
     "@babel/preset-env": "7.5.5",
     "@util.js/lerna": "file:packages/utiljs-lerna",
-    "chai": "4.2.0"
+    "chai": "4.2.0",
+    "eslint-config-prettier": "6.0.0"
   },
   "devDependencies-comments": [
     "Including @babel/core prevents the following warning: ",
     "npm WARN @babel/preset-env@7.4.4 requires a peer of @babel/core@^7.0.0-0 ",
-    "but none is installed. You must install peer dependencies yourself."
+    "but none is installed. You must install peer dependencies yourself.",
+    "",
+    "Including eslint-config-prettier here prevents the following error:",
+    "ESLint couldn't find the config \"prettier\" to extend from. Please ",
+    "check that the name of the config is correct."
   ],
   "license": "MIT",
   "name": "utiljs",
