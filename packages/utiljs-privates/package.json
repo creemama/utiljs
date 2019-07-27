@@ -2,7 +2,7 @@
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
     "@babel/runtime-corejs2": "7.5.5",
-    "@util.js/errors": "0.39.0"
+    "@util.js/errors": "0.39.1"
   },
   "description": "JavaScript utility class for private member variables",
   "keywords": [
@@ -29,5 +29,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-privates"
   },
-  "version": "0.39.0"
+  "version": "0.39.1"
 }
