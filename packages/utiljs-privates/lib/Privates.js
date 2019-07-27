@@ -125,9 +125,7 @@ module.exports = class Privates {
       const propertyStr = getPropertyErrorString(property);
       throw new RethrownError(
         e,
-        `privates.set(${thiz}, ${propertyStr}, ${newValue}) failed. ${
-          e.message
-        }`
+        `privates.set(${thiz}, ${propertyStr}, ${newValue}) failed. ${e.message}`
       );
     }
   }

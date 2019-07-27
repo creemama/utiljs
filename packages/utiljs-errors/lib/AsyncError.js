@@ -8,15 +8,11 @@ module.exports = class AsyncError extends Error {
     super(message || asyncError.message);
     if (!callerError)
       throw new TypeError(
-        `${
-          this.constructor.name
-        }'s constructor expects a defined callerError, but it was ${callerError}.`
+        `${this.constructor.name}'s constructor expects a defined callerError, but it was ${callerError}.`
       );
     if (!asyncError)
       throw new TypeError(
-        `${
-          this.constructor.name
-        }'s constructor expects a defined asyncError, but it was ${asyncError}.`
+        `${this.constructor.name}'s constructor expects a defined asyncError, but it was ${asyncError}.`
       );
     this.name = this.constructor.name;
     this.original = asyncError;
