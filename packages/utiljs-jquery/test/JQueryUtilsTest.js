@@ -16,9 +16,9 @@ describe("JQueryUtils", () => {
       global.document = window.document;
       return jQueryUtils.loadjQuery({ window }).then($ => {
         expect(window.document.body.innerHTML).to.eql(
-          '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script></script>'
+          '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script></script>'
         );
-        expect($.fn.jquery).to.eql("3.3.1");
+        expect($.fn.jquery).to.eql("3.4.1");
       });
     });
 
@@ -54,9 +54,9 @@ describe("JQueryUtils", () => {
         if (error) return callback(error);
         try {
           expect(window.document.body.innerHTML).to.eql(
-            '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script></script>'
+            '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script></script>'
           );
-          expect($.fn.jquery).to.eql("3.3.1");
+          expect($.fn.jquery).to.eql("3.4.1");
           callback();
         } catch (err) {
           callback(err);
