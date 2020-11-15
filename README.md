@@ -7,7 +7,7 @@
   <a href="https://github.com/prettier/prettier"><img alt="Code Style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"></a>
 </p>
 
-Util.js is a [Lerna](https://lernajs.io/) monorepo with the following packages:
+Util.js is a [Lerna](https://lerna.js.org/) monorepo with the following packages:
 
 | Package                                                                                      |                                                                        NPM Status                                                                        |
 | -------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------: |
