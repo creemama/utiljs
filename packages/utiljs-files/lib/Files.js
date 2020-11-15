@@ -443,6 +443,10 @@ module.exports = class Files {
     return rimraf().sync(...arguments);
   }
 
+  sanitizeFilename() {
+    return sanitizeFilename()(...arguments);
+  }
+
   stat() {
     return promises().applyCallback(fs(), fs().stat, arguments);
   }
@@ -602,6 +606,9 @@ function readLastLines() {
 }
 function rimraf() {
   return get("rimraf");
+}
+function sanitizeFilename() {
+  return get("sanitize-filename");
 }
 function strings() {
   return get("@util.js/strings");

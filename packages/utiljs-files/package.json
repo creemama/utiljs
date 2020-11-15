@@ -9,6 +9,7 @@
     "ncp": "2.0.0",
     "read-last-lines": "1.7.1",
     "rimraf": "2.6.3",
+    "sanitize-filename": "1.6.3",
     "touch": "3.1.0"
   },
   "description": "JavaScript Node.js utility methods for files",

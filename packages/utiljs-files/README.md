@@ -25,6 +25,7 @@ This class contains all the methods of [fs](https://nodejs.org/api/fs.html) and 
 - readLastLines
 - rmrf
 - rmrfSync
+- sanitizeFilename
 - touch
   <a name="module_Files"></a>
 
