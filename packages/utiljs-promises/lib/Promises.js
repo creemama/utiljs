@@ -184,9 +184,7 @@ class Promises {
         throw new TypeError(
           `We expected callback to be a function, but it was ${callback}.`
         );
-      const argsWithoutCalback = arrays()
-        .from(args)
-        .slice(0, args.length - 1);
+      const argsWithoutCalback = Array.from(args).slice(0, args.length - 1);
       let promise;
       try {
         promise = promiseFunction.apply(this, argsWithoutCalback);
@@ -395,12 +393,6 @@ module.exports = Promises;
 
 const dependencies = {};
 
-function arrays() {
-  return (
-    dependencies["@util.js/arrays"] ||
-    (dependencies["@util.js/arrays"] = require("@util.js/arrays"))
-  );
-}
 function callbackifyCache() {
   return (
     dependencies["callbackifyCache"] ||
