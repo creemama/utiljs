@@ -12,8 +12,8 @@ exec_babel () {
   fi
 
   local packages=arrays
-  packages=`printf "%s\t%s" "${packages}" errors`
   packages=`printf "%s\t%s" "${packages}" emails`
+  packages=`printf "%s\t%s" "${packages}" errors`
   packages=`printf "%s\t%s" "${packages}" jquery`
   packages=`printf "%s\t%s" "${packages}" numbers`
   packages=`printf "%s\t%s" "${packages}" objects`
