@@ -26,6 +26,7 @@ The scripts in this directory do the following:
   - `jsdoc.sh`
   - `jsdoc2md.sh`
   - `prettier.sh`
+  - `git commit -am "style: run prettier"`
 
 - Test and publish.
 
@@ -35,4 +36,4 @@ The scripts in this directory do the following:
   - `mocha.sh`
   - `npm run test`
   - `travis.sh`
-  - `publish.sh`
+  - `publish.sh` - bumps up the version number

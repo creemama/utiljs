@@ -20,9 +20,10 @@ git clean -f
 npm run clean
 npm run build
 npm login --scope=@util.js
-lerna publish --exact
+lerna publish --exact # This command bumps the version number.
 
 # You may need to use --force-publish, an intentionally undocumented option.
 # lerna publish --exact --force-publish=utiljs-objects,utiljs-strings
 
 npm run package-lock
+git commit -am "fix: execute \"npm run package-lock\""
