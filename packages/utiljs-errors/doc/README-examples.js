@@ -22,7 +22,9 @@ function runExample0() {
 
   errors
     .catch(rejectAPromise())
-    .catch(error => console.log("\n\nWith Caller Stack Trace\n" + error.stack));
+    .catch((error) =>
+      console.log("\n\nWith Caller Stack Trace\n" + error.stack)
+    );
   // With Caller Stack Trace
   // AsyncError: Fail!
   //     at promise.catch.error (/root/utiljs/packages/utiljs-errors/lib/Errors.js:28:13)
@@ -51,7 +53,7 @@ function runExample0() {
   //     at Function.Module._load (internal/modules/cjs/loader.js:543:3)
   //     at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
 
-  rejectAPromise().catch(error =>
+  rejectAPromise().catch((error) =>
     console.log("\n\nWithout Caller Stack Trace\n" + error.stack)
   );
   // Without Caller Stack Trace

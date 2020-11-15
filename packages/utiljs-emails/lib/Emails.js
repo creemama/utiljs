@@ -54,7 +54,7 @@ class Emails {
     const EmailHeaders = requireEmailHeaders();
     return new EmailHeaders({
       headerMap,
-      lowercaseHeaderMap
+      lowercaseHeaderMap,
     });
   }
 }

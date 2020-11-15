@@ -2,10 +2,10 @@
 
 module.exports = {
   dependencies: {
-    util: () => require("util")
+    util: () => require("util"),
   },
   function: wrap,
-  name: "setImmediatePromise"
+  name: "setImmediatePromise",
 };
 
 function wrap(thiz) {

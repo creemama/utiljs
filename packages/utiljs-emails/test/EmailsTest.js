@@ -37,7 +37,7 @@ describe("Emails", () => {
       const nameValueArrayOfHeaders = [
         { name: "Delivered-To", value: "c@creemama.com" },
         { name: "Date", value: "Tue, 10 Jul 2018 10:18:52 -0700" },
-        { name: "To", value: "Chris Topher <c@creemama.com>" }
+        { name: "To", value: "Chris Topher <c@creemama.com>" },
       ];
 
       const headers = emails.wrapHeaders(nameValueArrayOfHeaders);

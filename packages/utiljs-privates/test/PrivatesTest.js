@@ -4,7 +4,7 @@ const { expect } = require("chai"),
   Privates = require(".."),
   { RethrownError } = require("@util.js/errors");
 
-const ExampleUsingGet = (function() {
+const ExampleUsingGet = (function () {
   const privates = new Privates();
 
   class ExampleUsingGet {
@@ -32,7 +32,7 @@ const ExampleUsingGet = (function() {
   return ExampleUsingGet;
 })();
 
-const ExampleUsingCall = (function() {
+const ExampleUsingCall = (function () {
   const privates = new Privates();
 
   class ExampleUsingCall {
@@ -64,7 +64,7 @@ describe("Privates", () => {
   it("should hide member variables using Privates#get", () => {
     const example = new ExampleUsingGet({
       property1: "a",
-      property2: 2
+      property2: 2,
     });
     expect(example.property1).to.be.undefined;
     expect(example.property2).to.be.undefined;
@@ -74,7 +74,7 @@ describe("Privates", () => {
   it("should hide member variables using Privates#call", () => {
     const example = new ExampleUsingCall({
       property1: () => "a",
-      property2: () => 2
+      property2: () => 2,
     });
     expect(example.property1).to.be.undefined;
     expect(example.property2).to.be.undefined;
@@ -169,7 +169,7 @@ describe("Privates#lambdaize", () => {
   it("should convert an object's properties to lambda properties", () => {
     const obj = privates.lambdaize({
       a: 0,
-      b: 1
+      b: 1,
     });
     expect(obj.a()).to.eql(0);
     expect(obj.b()).to.eql(1);
@@ -182,7 +182,7 @@ describe("Privates#lambdaize", () => {
       "2",
       "3",
       "4",
-      "5"
+      "5",
     ]);
     expect(privates.lambdaize(Symbol("string"))).to.eql({});
     expect(privates.lambdaize({})).to.eql({});

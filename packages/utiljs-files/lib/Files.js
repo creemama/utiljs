@@ -80,10 +80,10 @@ module.exports = class Files {
     if (!objects().isDefined(pathB))
       return callback(new TypeError("We expected pathB to be defined."));
     var diff = childProcess().spawn("diff", [pathA, pathB]);
-    diff.on("close", code => {
+    diff.on("close", (code) => {
       callback(null, code === 0);
     });
-    diff.on("error", err => {
+    diff.on("error", (err) => {
       callback(err);
     });
   }
@@ -132,7 +132,7 @@ module.exports = class Files {
     if (typeof callback === "function")
       return promises().applyPromise(this, this.filesWithExtension, arguments);
     const thiz = this;
-    return (async function() {
+    return (async function () {
       if (!objects().isDefined(params))
         throw new TypeError(
           `We expected params to be defined, but it was ${params}.`
@@ -151,7 +151,7 @@ module.exports = class Files {
       const files = await thiz.readdir(dir);
       const filesWithExt = [];
       const divider = strings().endsWith(dir, "/") ? "" : "/";
-      files.forEach(file => {
+      files.forEach((file) => {
         if (strings().endsWith(file.toLowerCase(), "." + ext)) {
           filesWithExt.push(dir + divider + file);
         }
@@ -184,7 +184,7 @@ module.exports = class Files {
     const files = this.readdirSync(dir);
     const filesWithExt = [];
     const divider = strings().endsWith(dir, "/") ? "" : "/";
-    files.forEach(file => {
+    files.forEach((file) => {
       if (strings().endsWith(file.toLowerCase(), "." + ext)) {
         filesWithExt.push(dir + divider + file);
       }
@@ -236,7 +236,7 @@ module.exports = class Files {
     if (typeof callback === "function")
       return promises().applyPromise(this, this.isDirectory, arguments);
     const thiz = this;
-    return (async function() {
+    return (async function () {
       const stats = await thiz.lstat(path);
       return stats.isDirectory();
     })();
@@ -250,7 +250,7 @@ module.exports = class Files {
     if (typeof callback === "function")
       return promises().applyPromise(this, this.isFile, arguments);
     const thiz = this;
-    return (async function() {
+    return (async function () {
       const stats = await thiz.lstat(path);
       return stats.isFile();
     })();
@@ -353,7 +353,7 @@ module.exports = class Files {
     if (typeof localCallback === "function")
       return promises().applyPromise(this, this.readFiles, arguments);
     const thiz = this;
-    return (async function() {
+    return (async function () {
       let string = "";
       for (const file of files) {
         string += await thiz.readFile(file, localOptions);
@@ -396,12 +396,8 @@ module.exports = class Files {
   }
 
   get realpath() {
-    const returnValue = promises()
-      .promisify(fs().realpath)
-      .bind(fs());
-    returnValue.native = promises()
-      .promisify(fs().realpath.native)
-      .bind(fs());
+    const returnValue = promises().promisify(fs().realpath).bind(fs());
+    returnValue.native = promises().promisify(fs().realpath.native).bind(fs());
     return returnValue;
   }
 

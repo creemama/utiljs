@@ -19,12 +19,12 @@ class Urls {
     const file = files().createWriteStream(destination);
 
     getProtocolObject(parsedUrl.protocol)
-      .get(url, response => {
+      .get(url, (response) => {
         response.pipe(file);
         file.on("finish", () => file.close(callback));
       })
-      .on("error", error => {
-        files().unlink(destination, unlinkError => {
+      .on("error", (error) => {
+        files().unlink(destination, (unlinkError) => {
           if (unlinkError) callback(unlinkError);
           callback(error);
         });
@@ -56,11 +56,11 @@ class Urls {
           host: parsedUrl.host,
           method: "HEAD",
           path: parsedUrl.path,
-          port: port
+          port: port,
         },
-        res => callback(null, res.headers)
+        (res) => callback(null, res.headers)
       )
-      .on("error", error => {
+      .on("error", (error) => {
         callback(error);
       })
       .end();

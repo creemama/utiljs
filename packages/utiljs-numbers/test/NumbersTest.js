@@ -27,7 +27,7 @@ describe("Numbers", () => {
         33.33,
         numbers.POSITIVE_INFINITY,
         numbers.NaN,
-        numbers.NaN
+        numbers.NaN,
       ];
       const actual = [
         numbers.POSITIVE_INFINITY,
@@ -36,7 +36,7 @@ describe("Numbers", () => {
         numbers.NEGATIVE_INFINITY,
         -33,
         numbers.NaN,
-        33.33
+        33.33,
       ].sort(numbers.ascendingComparator());
       expect(actual).to.deep.equal(expected);
     });
@@ -52,7 +52,7 @@ describe("Numbers", () => {
         33.33,
         0,
         -33,
-        numbers.NEGATIVE_INFINITY
+        numbers.NEGATIVE_INFINITY,
       ];
       const actual = [
         numbers.NaN,
@@ -62,7 +62,7 @@ describe("Numbers", () => {
         numbers.NEGATIVE_INFINITY,
         -33,
         numbers.NaN,
-        33.33
+        33.33,
       ].sort(numbers.descendingComparator());
       expect(actual).to.deep.equal(expected);
     });

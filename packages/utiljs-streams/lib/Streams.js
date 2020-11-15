@@ -137,7 +137,7 @@ class Streams {
         if (buffer !== null) string += buffer;
       })
       .on("end", () => callback(null, string))
-      .on("error", error => callback(error));
+      .on("error", (error) => callback(error));
   }
 
   /**

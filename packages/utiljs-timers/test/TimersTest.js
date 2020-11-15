@@ -4,8 +4,8 @@ const { assert, expect } = require("chai"),
   timers = require("..");
 
 describe("Timers#setImmediate(callback[, ...args])", () => {
-  it("should notify a callback", done => {
-    timers.setImmediate(value => {
+  it("should notify a callback", (done) => {
+    timers.setImmediate((value) => {
       try {
         expect(value).to.eql("foobar");
         done();
@@ -17,17 +17,17 @@ describe("Timers#setImmediate(callback[, ...args])", () => {
 });
 
 describe("Timers#setImmediatePromise([...args])", () => {
-  it("should resolve a Promise", async function() {
+  it("should resolve a Promise", async function () {
     const value = await timers.setImmediatePromise("foobar");
     expect(value).to.eql("foobar");
   });
 });
 
 describe("Timers#setInterval(callback, delay[, ...args]) and Timers#clearInterval(timeout)", () => {
-  it("should notify a callback several times and clear the timeout", done => {
+  it("should notify a callback several times and clear the timeout", (done) => {
     let numCalls = 0;
     const timeout = timers.setInterval(
-      value => {
+      (value) => {
         if (++numCalls == 3) {
           timers.clearInterval(timeout);
           timers.setTimeout(() => {
@@ -53,9 +53,9 @@ describe("Timers#setInterval(callback, delay[, ...args]) and Timers#clearInterva
 });
 
 describe("Timers#setTimeout(callback, delay[, ...args])", () => {
-  it("should notify a callback", done => {
+  it("should notify a callback", (done) => {
     timers.setTimeout(
-      value => {
+      (value) => {
         try {
           expect(value).to.eql("foobar");
           done();
@@ -70,14 +70,14 @@ describe("Timers#setTimeout(callback, delay[, ...args])", () => {
 });
 
 describe("Timers#setTimeoutPromise(delay[, ...args])", () => {
-  it("should notify a callback", async function() {
+  it("should notify a callback", async function () {
     const value = await timers.setTimeoutPromise(25, "foobar");
     expect(value).to.eql("foobar");
   });
 });
 
 describe("Timers#clearImmediate(immediate)", () => {
-  it("should clear an immediate", done => {
+  it("should clear an immediate", (done) => {
     let numCalls = 0;
     const immediate = timers.setImmediate(() => {
       ++numCalls;
@@ -87,7 +87,7 @@ describe("Timers#clearImmediate(immediate)", () => {
         )
       );
     });
-    require("fs").readFile(__filename, "utf8", string => {
+    require("fs").readFile(__filename, "utf8", (string) => {
       try {
         expect(numCalls).to.eql(0);
         if (numCalls == 0) done();
@@ -103,7 +103,7 @@ describe("Timers#clearImmediate(immediate)", () => {
 });
 
 describe("Timers#clearTimeout(timeout)", () => {
-  it("should clear a timeout", done => {
+  it("should clear a timeout", (done) => {
     let numCalls = 0;
     timers.setTimeout(() => {
       try {
@@ -117,7 +117,7 @@ describe("Timers#clearTimeout(timeout)", () => {
       }
     }, 30);
     const timeout = timers.setTimeout(
-      value => {
+      (value) => {
         ++numCalls;
         done(
           new Error(
@@ -133,15 +133,15 @@ describe("Timers#clearTimeout(timeout)", () => {
 });
 
 describe("Timers#schedule", () => {
-  it("should schedule a job at a certain time", function(done) {
+  it("should schedule a job at a certain time", function (done) {
     this.timeout(5000);
     timers.schedule(new Date(Date.now() + 1000), done).start();
   });
-  it("should schedule a regularly recurring job", function(done) {
+  it("should schedule a regularly recurring job", function (done) {
     this.timeout(5000);
     let count = 0;
     timers
-      .schedule("* * * * * *", function() {
+      .schedule("* * * * * *", function () {
         count++;
         if (count > 3) {
           this.stop();
@@ -199,13 +199,13 @@ describe("Times#throttle(func, limit)", () => {
     expect(internalResults).to.eql(expectedInternalResults);
   }
 
-  it("should throttle a function", async function() {
+  it("should throttle a function", async function () {
     this.timeout(7000);
     await testThrottle(0, 10);
     await testThrottle(400, 4);
   });
 
-  it("should correctly handle bad input", async function() {
+  it("should correctly handle bad input", async function () {
     expect(() => timers.throttle(true, 5)).to.throw(TypeError);
     expect(() => timers.throttle(null, 5)).to.throw(TypeError);
     expect(() => timers.throttle(undefined, 5)).to.throw(TypeError);

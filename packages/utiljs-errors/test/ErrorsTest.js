@@ -9,7 +9,7 @@ describe("Errors#catch(promise)", () => {
     function rejectAPromise() {
       return Promise.reject(new TypeError("Fail!"));
     }
-    return errors.catch(rejectAPromise()).catch(error => {
+    return errors.catch(rejectAPromise()).catch((error) => {
       expect(error).to.be.an.instanceof(AsyncError);
       expect(error.message).to.eql("Fail!");
       expect(error.stack).to.include("AsyncError: Fail!");
@@ -21,7 +21,7 @@ describe("Errors#catch(promise)", () => {
     function rejectAPromise() {
       return Promise.reject(new TypeError("Fail!"));
     }
-    return errors.catch(rejectAPromise(), "optional message").catch(error => {
+    return errors.catch(rejectAPromise(), "optional message").catch((error) => {
       expect(error).to.be.an.instanceof(AsyncError);
       expect(error.message).to.eql("optional message");
       expect(error.stack).to.include("AsyncError: optional message");

@@ -75,7 +75,7 @@ module.exports = class Errors {
    */
   catch(promise, message) {
     const callerError = new Error();
-    return promise.catch(error => {
+    return promise.catch((error) => {
       throw new this.AsyncError(callerError, error, message);
     });
   }

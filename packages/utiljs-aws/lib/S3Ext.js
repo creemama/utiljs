@@ -4,7 +4,7 @@ const Privates = require("@util.js/privates");
 
 function resources() {
   return {
-    promises: () => require("@util.js/promises")
+    promises: () => require("@util.js/promises"),
   };
 }
 
@@ -45,7 +45,7 @@ module.exports = class S3Ext {
       {
         Bucket,
         ContinuationToken,
-        Prefix
+        Prefix,
       },
       (error, data) => {
         if (error) {
@@ -66,7 +66,7 @@ module.exports = class S3Ext {
               Bucket,
               ContinuationToken: newContinuationToken,
               Objects: newObjects,
-              Prefix
+              Prefix,
             },
             callback
           );

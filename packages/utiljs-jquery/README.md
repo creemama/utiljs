@@ -42,7 +42,7 @@ Loads jQuery asynchronously and sends a notification when loading has finished
 const jQueryUtils = require("@util.js/jquery");
 jQueryUtils
   .loadjQuery({ window })
-  .then($ => console.log($))
+  .then(($) => console.log($))
   .catch(console.log);
 ```
 
@@ -53,9 +53,9 @@ const jQueryUtils = require("@util.js/jquery");
 jQueryUtils
   .loadjQuery({
     src: "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
-    window
+    window,
   })
-  .then($ => console.log($))
+  .then(($) => console.log($))
   .catch(console.log);
 ```
 

@@ -110,10 +110,11 @@ module.exports = class Privates {
 
   lazyLoadProps(thiz, ...lazilyLoadedProperties) {
     const t = this;
-    lazilyLoadedProperties.forEach(currentProperties => {
-      Object.entries(currentProperties).forEach(
-        ([property, lazyLoadFunction]) =>
-          t.lazyLoad(thiz, property, lazyLoadFunction)
+    lazilyLoadedProperties.forEach((currentProperties) => {
+      Object.entries(
+        currentProperties
+      ).forEach(([property, lazyLoadFunction]) =>
+        t.lazyLoad(thiz, property, lazyLoadFunction)
       );
     });
   }
@@ -132,11 +133,11 @@ module.exports = class Privates {
 
   setProps(thiz, ...properties) {
     const t = this;
-    properties.forEach(currentProperties => {
+    properties.forEach((currentProperties) => {
       Object.entries(currentProperties).forEach(([property, value]) =>
         t.set(thiz, property, value)
       );
-      getAllMethods(currentProperties).forEach(method =>
+      getAllMethods(currentProperties).forEach((method) =>
         t.set(thiz, method, currentProperties[method].bind(currentProperties))
       );
     });
@@ -173,7 +174,7 @@ function getAllMethods(obj) {
 
   do {
     const l = Object.getOwnPropertyNames(obj)
-      .concat(Object.getOwnPropertySymbols(obj).map(s => s.toString()))
+      .concat(Object.getOwnPropertySymbols(obj).map((s) => s.toString()))
       .sort()
       .filter(
         (p, i, arr) =>

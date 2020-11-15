@@ -18,14 +18,11 @@ module.exports = class AsyncError extends Error {
     this.original = asyncError;
     this.newStack = this.stack;
     const callerStack =
-      "    at " +
-      callerError.stack
-        .split("    at ")
-        .splice(2)
-        .join("    at ");
+      "    at " + callerError.stack.split("    at ").splice(2).join("    at ");
     // If asyncError.stack is falsy, then let us just try asyncError;
     // asyncError may be a string.
-    this.stack = `${this.stack}\n${callerStack}\n${asyncError.stack ||
-      asyncError}`;
+    this.stack = `${this.stack}\n${callerStack}\n${
+      asyncError.stack || asyncError
+    }`;
   }
 };

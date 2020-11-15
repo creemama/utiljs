@@ -12,7 +12,7 @@ function resources() {
     numbers: () => require("@util.js/numbers"),
     objects: () => require("@util.js/objects"),
     promises: () => require("@util.js/promises"),
-    process: () => process
+    process: () => process,
   };
 }
 
@@ -24,7 +24,7 @@ module.exports = class LernaUtils {
   audit() {
     const thiz = privates.getCallProxy(this);
     const packagesDir = thiz.process.cwd() + "/packages";
-    internalAudit(thiz, packagesDir).catch(error => {
+    internalAudit(thiz, packagesDir).catch((error) => {
       thiz.console.error(error);
       thiz.process.exit(1);
     });
@@ -45,14 +45,16 @@ async function internalAudit(thiz, packagesDir) {
 
   let errorCode = 0;
 
-  let packageDescriptors = (await thiz.files.readdir(packagesDir, {
-    withFileTypes: true
-  }))
-    .filter(pkg => pkg.isDirectory())
-    .map(pkg => `${packagesDir}/${pkg.name}`)
+  let packageDescriptors = (
+    await thiz.files.readdir(packagesDir, {
+      withFileTypes: true,
+    })
+  )
+    .filter((pkg) => pkg.isDirectory())
+    .map((pkg) => `${packagesDir}/${pkg.name}`)
     .map(
-      async packageDir =>
-        await describePackage(thiz, packageDir).catch(error => {
+      async (packageDir) =>
+        await describePackage(thiz, packageDir).catch((error) => {
           thiz.console.log(`Skipping ${packageDir} ...`);
           errorCode = handleError(thiz, error, packageDir);
           return null;
@@ -60,16 +62,16 @@ async function internalAudit(thiz, packagesDir) {
     );
 
   packageDescriptors = (await thiz.promises.all(packageDescriptors)).filter(
-    packageDesc => packageDesc != null
+    (packageDesc) => packageDesc != null
   );
 
   const packages = packageDescriptors.map(
-    packageDescriptor => packageDescriptor.packageObj.name
+    (packageDescriptor) => packageDescriptor.packageObj.name
   );
 
   for (let i = 0; i < packageDescriptors.length; i++) {
     await processPackage(thiz, packageDescriptors[i], packages).catch(
-      error =>
+      (error) =>
         (errorCode = handleError(thiz, error, packageDescriptors[i].packageDir))
     );
   }
@@ -93,7 +95,7 @@ async function describePackage(thiz, packageDir) {
     packageJson,
     packageLockJson,
     packageLockObj,
-    packageObj
+    packageObj,
   };
 }
 
@@ -117,7 +119,7 @@ async function processPackage(thiz, packageDescriptor, packages) {
     packageJson,
     packageLockJson,
     packageLockObj,
-    packageObj
+    packageObj,
   } = packageDescriptor;
 
   const dependencies = thiz.objects.entries(packageObj.dependencies || {});

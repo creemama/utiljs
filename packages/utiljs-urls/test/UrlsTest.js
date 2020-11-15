@@ -37,36 +37,36 @@ describe("Urls", () => {
       download_url_destination("https://www.google.com"));
     it("handles HTTP errors", () =>
       download_url_destination("http://doesnotexist").then(
-        value => {
+        (value) => {
           throw new Error("Unexpected success");
         },
-        error => {
+        (error) => {
           /* expected */
         }
       ));
     it("handles HTTPS errors", () =>
       download_url_destination("https://doesnotexist").then(
-        value => {
+        (value) => {
           throw new Error("Unexpected success");
         },
-        error => {
+        (error) => {
           /* expected */
         }
       ));
   });
 
   describe("#download(url, destination, callback)", () => {
-    it("handles HTTP requests", callback =>
+    it("handles HTTP requests", (callback) =>
       download_url_destination_callback("http://www.google.com", callback));
-    it("handles HTTPS requests", callback =>
+    it("handles HTTPS requests", (callback) =>
       download_url_destination_callback("https://www.google.com", callback));
-    it("handles HTTP errors", callback =>
-      download_url_destination_callback("http://doesnotexist", error => {
+    it("handles HTTP errors", (callback) =>
+      download_url_destination_callback("http://doesnotexist", (error) => {
         if (error) return callback();
         callback(new Error("Unexpected success"));
       }));
-    it("handles HTTPS errors", callback =>
-      download_url_destination_callback("https://doesnotexist", error => {
+    it("handles HTTPS errors", (callback) =>
+      download_url_destination_callback("https://doesnotexist", (error) => {
         if (error) return callback();
         callback(new Error("Unexpected success"));
       }));
@@ -77,36 +77,36 @@ describe("Urls", () => {
     it("handles HTTPS requests", () => urls.headers("https://www.google.com"));
     it("handles HTTP errors", () =>
       urls.headers("http://doesnotexist").then(
-        value => {
+        (value) => {
           throw new Error("Unexpected success");
         },
-        error => {
+        (error) => {
           /* expected */
         }
       ));
     it("handles HTTPS errors", () =>
       urls.headers("https://doesnotexist").then(
-        value => {
+        (value) => {
           throw new Error("Unexpected success");
         },
-        error => {
+        (error) => {
           /* expected */
         }
       ));
   });
 
   describe("#headers(url, callback)", () => {
-    it("handles HTTP requests", callback =>
+    it("handles HTTP requests", (callback) =>
       urls.headers("http://www.google.com", callback));
-    it("handles HTTPS requests", callback =>
+    it("handles HTTPS requests", (callback) =>
       urls.headers("https://www.google.com", callback));
-    it("handles HTTP errors", callback =>
-      urls.headers("http://doesnotexist", error => {
+    it("handles HTTP errors", (callback) =>
+      urls.headers("http://doesnotexist", (error) => {
         if (error) return callback();
         callback(new Error("Unexpected success"));
       }));
-    it("handles HTTPS errors", callback =>
-      urls.headers("https://doesnotexist", error => {
+    it("handles HTTPS errors", (callback) =>
+      urls.headers("https://doesnotexist", (error) => {
         if (error) return callback();
         callback(new Error("Unexpected success"));
       }));
@@ -128,12 +128,12 @@ async function async_download_url_destination_callback(url, callback) {
     urls.download(
       url,
       targetDir + "/async_download_url_destination_callback.html",
-      error => {
+      (error) => {
         if (error) return reject(error);
         resolve();
       }
     );
   })
-    .then(_ => callback())
-    .catch(error => callback(error));
+    .then((_) => callback())
+    .catch((error) => callback(error));
 }

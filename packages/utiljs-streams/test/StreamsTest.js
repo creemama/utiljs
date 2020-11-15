@@ -6,7 +6,7 @@ const { expect } = require("chai"),
 
 describe("Streams", () => {
   describe("#finished(stream[, callback])", () => {
-    it("should call callback when finished", callback => {
+    it("should call callback when finished", (callback) => {
       if (!stream.finished) return callback();
       const readable = streams.fromString("frog\ncat");
       streams.finished(readable, callback);
@@ -20,7 +20,7 @@ describe("Streams", () => {
   });
 
   describe("#pipeline(...streams[, callback])", () => {
-    it("should call callback when finished", callback => {
+    it("should call callback when finished", (callback) => {
       if (!stream.pipeline) return callback();
       const readable = streams.fromString("frog\ncat");
       let out = "";
@@ -28,9 +28,9 @@ describe("Streams", () => {
         write(chunk, encoding, callback) {
           out += chunk.toString();
           callback();
-        }
+        },
       });
-      streams.pipeline(readable, writable, error => {
+      streams.pipeline(readable, writable, (error) => {
         expect(out).to.eql("frog\ncat");
         callback(error);
       });
@@ -43,7 +43,7 @@ describe("Streams", () => {
         write(chunk, encoding, callback) {
           out += chunk.toString();
           callback();
-        }
+        },
       });
       return streams.pipeline(readable, writable).then(() => {
         expect(out).to.eql("frog\ncat");
@@ -56,29 +56,29 @@ describe("Streams", () => {
       const readable = streams.fromString("frog\ncat");
       return streams
         .stringify(readable)
-        .then(string => expect(string).to.equal("frog\ncat"));
+        .then((string) => expect(string).to.equal("frog\ncat"));
     });
-    it("should throw an error if the readable is null and return a Promise", async function() {
+    it("should throw an error if the readable is null and return a Promise", async function () {
       await streams.stringify().then(
         () => {
           throw new Error("Unexpected success");
         },
-        error => {}
+        (error) => {}
       );
       await streams.stringify(null).then(
         () => {
           throw new Error("Unexpected success");
         },
-        error => {}
+        (error) => {}
       );
       await streams.stringify(null, null).then(
         () => {
           throw new Error("Unexpected success");
         },
-        error => {}
+        (error) => {}
       );
     });
-    it("should successfully stringify a Readable and notify a callback", callback => {
+    it("should successfully stringify a Readable and notify a callback", (callback) => {
       const stream = streams.fromString("frog\ncat");
       streams.stringify(stream, (error, string) => {
         expect(error).to.be.null;
@@ -98,15 +98,15 @@ describe("Streams", () => {
       const readable = streams.fromString("foo bar");
       return streams
         .stringify(readable)
-        .then(string => expect(string).to.eql("foo bar"));
+        .then((string) => expect(string).to.eql("foo bar"));
     });
     it("should create a Readable from an empty string", () => {
       const readable = streams.fromString("");
       return streams
         .stringify(readable)
-        .then(string => expect(string).to.eql(""));
+        .then((string) => expect(string).to.eql(""));
     });
-    it("should properly handle encoding", async function() {
+    it("should properly handle encoding", async function () {
       let readable = streams.fromString("El Niño & La Niña", "ascii");
       const ascii = await streams.stringify(readable);
       expect(ascii).to.eql("El Ni�o & La Ni�a");

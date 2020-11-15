@@ -178,7 +178,7 @@ class Promises {
       throw new TypeError(
         `We expected promiseFunction to be function, but it was ${promiseFunction}.`
       );
-    returnValue = function(...args) {
+    returnValue = function (...args) {
       const callback = arguments[args.length - 1];
       if (typeof callback !== "function")
         throw new TypeError(
@@ -197,7 +197,7 @@ class Promises {
         throw new Error(
           `We expected promiseFunction to return a Promise but instead got ${promise}.`
         );
-      promise.then(result => callback(null, result)).catch(callback);
+      promise.then((result) => callback(null, result)).catch(callback);
       // It is possible for the callback to throw an error.
       // This should be caught by
       // process.on('unhandledRejection', error => { ... });
@@ -307,11 +307,11 @@ class Promises {
       throw new TypeError(
         `We expected functionWithCallback to be a function, but it was ${functionWithCallback}.`
       );
-    returnValue = function(...args) {
+    returnValue = function (...args) {
       const thiz = this;
       return new Promise((resolve, reject) => {
         try {
-          functionWithCallback.call(thiz, ...args, function(error, ...values) {
+          functionWithCallback.call(thiz, ...args, function (error, ...values) {
             if (error) return reject(error);
             if (values.length == 0) return resolve();
             if (values.length == 1) return resolve(values[0]);

@@ -128,7 +128,7 @@ module.exports = class Timers {
         t.setTimeout(recurse, limitInMilliseconds - (Date.now() - lastRan));
     }
 
-    return function() {
+    return function () {
       const thiz = this;
       const args = arguments;
 

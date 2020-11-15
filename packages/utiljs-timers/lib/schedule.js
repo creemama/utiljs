@@ -2,10 +2,10 @@
 
 module.exports = {
   dependencies: {
-    cron: () => require("cron")
+    cron: () => require("cron"),
   },
   function: wrap,
-  name: "schedule"
+  name: "schedule",
 };
 
 function wrap(thiz) {

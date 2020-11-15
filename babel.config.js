@@ -1,5 +1,5 @@
 // "Configure Babel" https://babeljs.io/docs/en/configuration#babelconfigjs
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
 
   const presets = ["@babel/preset-env"];
@@ -7,6 +7,6 @@ module.exports = function(api) {
 
   return {
     presets,
-    plugins
+    plugins,
   };
 };

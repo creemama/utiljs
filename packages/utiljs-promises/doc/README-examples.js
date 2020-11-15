@@ -48,7 +48,7 @@ function runExample0() {
   const promise3 = new Promise((resolve, reject) => {
     setTimeout(resolve, 100, "foo");
   });
-  promises.all(promise1, promise2, promise3).then(values => {
+  promises.all(promise1, promise2, promise3).then((values) => {
     console.log(values);
   });
   // expected output: Array [3, 42, "foo"]
@@ -165,7 +165,7 @@ function runExample9() {
   const promise2 = new Promise((resolve, reject) => {
     setTimeout(resolve, 100, "two");
   });
-  promises.race(promise1, promise2).then(value => {
+  promises.race(promise1, promise2).then((value) => {
     console.log(value);
     // Both resolve, but promise2 is faster
   });

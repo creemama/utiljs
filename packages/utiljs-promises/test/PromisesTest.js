@@ -3,14 +3,14 @@
 const { expect } = require("chai"),
   promises = require("..");
 
-describe("Promises", function() {
+describe("Promises", function () {
   describe("#(apply|call)Callback(object, functionOnObjectWithCallback, args)", () => {
     function notify(message, who, callback) {
       if (message == "Throw error") throw new Error("Hypnotoad died.");
       if (message == "Return undefined") return;
       callback(null, `${message}, ${who}!`);
     }
-    it("should resolve a Promise", async function() {
+    it("should resolve a Promise", async function () {
       expect(
         await promises.applyCallback(null, notify, ["Promise me", "Hypnotoad"])
       ).to.eql("Promise me, Hypnotoad!");
@@ -36,28 +36,28 @@ describe("Promises", function() {
       // This does not cause failures in the unit test, but there is output.
       promises
         .callCallback(null, notify, "Return undefined")
-        .then(message => {
+        .then((message) => {
           throw new Error("Expected expected the function to never return.");
         })
-        .catch(error => {
+        .catch((error) => {
           throw error;
         });
       expect(() => promises.applyCallback(null, notify)).to.throw(TypeError);
       const a = promises
         .callCallback(null, notify)
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+        .catch((error) => expect(error).to.be.an.instanceof(TypeError));
       const b = promises
         .applyCallback(null, notify, ["Hypnotoad"])
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+        .catch((error) => expect(error).to.be.an.instanceof(TypeError));
       const c = promises
         .callCallback(null, notify, "Hypnotoad")
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+        .catch((error) => expect(error).to.be.an.instanceof(TypeError));
       const d = promises
         .applyCallback(null, notify, ["Throw error"])
-        .catch(error => expect(error).to.be.an.instanceof(Error));
+        .catch((error) => expect(error).to.be.an.instanceof(Error));
       const e = promises
         .callCallback(null, notify, "Throw error")
-        .catch(error => expect(error).to.be.an.instanceof(Error));
+        .catch((error) => expect(error).to.be.an.instanceof(Error));
       return promises.all(a, b, c, d, e);
     });
   });
@@ -68,7 +68,7 @@ describe("Promises", function() {
       if (message == "Return undefined") return;
       return promises.resolve(`${message}, ${who}!`);
     }
-    it("should notify a callback", callback => {
+    it("should notify a callback", (callback) => {
       a(callback);
       function a(callbck) {
         promises.applyPromise(null, notify, [
@@ -77,7 +77,7 @@ describe("Promises", function() {
           (error, message) => {
             expect(message).to.eql("Call back, Hypnotoad!");
             b(callbck);
-          }
+          },
         ]);
       }
       function b(callbck) {
@@ -127,7 +127,7 @@ describe("Promises", function() {
         promises.callPromise(null, "a", "Call back", "Hypnotoad")
       ).to.throw(TypeError);
     });
-    it("should handle erroneous input", callback => {
+    it("should handle erroneous input", (callback) => {
       a(callback);
       function a(callbck) {
         try {
@@ -140,7 +140,7 @@ describe("Promises", function() {
       function b(callbck) {
         promises
           .callPromise(null, notify)
-          .then(message => {
+          .then((message) => {
             expect(message).to.eql("undefined, undefined!");
             c(callbck);
           })
@@ -157,7 +157,7 @@ describe("Promises", function() {
             } catch (err) {
               callbck(err);
             }
-          }
+          },
         ]);
       }
       function d(callbck) {
@@ -182,7 +182,7 @@ describe("Promises", function() {
             } catch (err) {
               callbck(err);
             }
-          }
+          },
         ]);
       }
       function f(callbck) {
@@ -227,7 +227,7 @@ describe("Promises", function() {
       const promise3 = new Promise((resolve, reject) => {
         setTimeout(resolve, 100, "foo");
       });
-      return promises.all([promise1, promise2, promise3]).then(values => {
+      return promises.all([promise1, promise2, promise3]).then((values) => {
         expect(values).to.eql([3, 42, "foo"]);
       });
     });
@@ -237,7 +237,7 @@ describe("Promises", function() {
       const promise3 = new Promise((resolve, reject) => {
         setTimeout(resolve, 100, "foo");
       });
-      return promises.all(promise1, promise2, promise3).then(values => {
+      return promises.all(promise1, promise2, promise3).then((values) => {
         expect(values).to.eql([3, 42, "foo"]);
       });
     });
@@ -245,17 +245,17 @@ describe("Promises", function() {
       return promises
         .all()
         .then(() => expect.fail("We expected promises#all to fail."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+        .catch((error) => expect(error).to.be.an.instanceof(TypeError));
     });
     it("should resolve with [] when given [] as an argument", () => {
-      return promises.all([]).then(values => {
+      return promises.all([]).then((values) => {
         expect(values).to.eql([]);
       });
     });
   });
 
   describe("#applyCallback(object, functionOnObjectWithCallback, args)", () => {
-    it("should call the callback if args contains a callback", callback => {
+    it("should call the callback if args contains a callback", (callback) => {
       function functionWithCallback(a, b, cb) {
         expect(a).to.eql("a");
         expect(b).to.eql("b");
@@ -264,7 +264,7 @@ describe("Promises", function() {
       const returnValue = promises.applyCallback(null, functionWithCallback, [
         "a",
         "b",
-        callback
+        callback,
       ]);
       try {
         expect(returnValue).to.be.undefined;
@@ -306,7 +306,7 @@ describe("Promises", function() {
   });
 
   describe("#callbackify(promiseFunction)", () => {
-    it("should callbackify Promise functions with no arguments", callback => {
+    it("should callbackify Promise functions with no arguments", (callback) => {
       function promiseFunction() {
         return Promise.resolve("foobar");
       }
@@ -320,7 +320,7 @@ describe("Promises", function() {
         }
       });
     });
-    it("should callbackify Promise functions with one arguments", callback => {
+    it("should callbackify Promise functions with one arguments", (callback) => {
       function promiseFunction(message) {
         return Promise.resolve(message);
       }
@@ -334,7 +334,7 @@ describe("Promises", function() {
         }
       });
     });
-    it("should callbackify Promise functions with two arguments", callback => {
+    it("should callbackify Promise functions with two arguments", (callback) => {
       function promiseFunction(a, b) {
         return Promise.resolve(a + b);
       }
@@ -418,7 +418,7 @@ describe("Promises", function() {
       }
       return promises
         .callCallback(this, functionWithCallback, 1, 2, 3)
-        .then(result => {
+        .then((result) => {
           expect(result).to.equal(6);
         });
     });
@@ -430,7 +430,7 @@ describe("Promises", function() {
       const a = promises
         .callCallback(null, functionWithCallback, "a")
         .then(() => expect.fail("We expected call to throw an error."))
-        .catch(error => expect(error).to.be.an.instanceof(TypeError));
+        .catch((error) => expect(error).to.be.an.instanceof(TypeError));
       expect(() => promises.callCallback(null, null)).to.throw(TypeError);
       expect(() => promises.callCallback(null, "a")).to.throw(TypeError);
       return a;
@@ -445,7 +445,7 @@ describe("Promises", function() {
       const promise2 = new Promise((resolve, reject) => {
         setTimeout(resolve, 100, "two");
       });
-      return promises.race([promise1, promise2]).then(value => {
+      return promises.race([promise1, promise2]).then((value) => {
         expect(value).to.eql("two");
       });
     });
@@ -456,7 +456,7 @@ describe("Promises", function() {
       const promise2 = new Promise((resolve, reject) => {
         setTimeout(resolve, 100, "two");
       });
-      return promises.race(promise1, promise2).then(value => {
+      return promises.race(promise1, promise2).then((value) => {
         expect(value).to.eql("two");
       });
     });
