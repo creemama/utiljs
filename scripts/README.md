@@ -18,6 +18,8 @@ The scripts in this directory do the following:
   - `prettier.sh` (Use [style] as the commit type.)
   - `eslint.sh`
   - `` prettier --write `git ls-files -m` ``
+  - `npm run shellcheck`
+  - `npm run shfmt`
 
 - Update documentation. Use [docs] as the commit type.
 

@@ -15,13 +15,13 @@ fi
 
 path="."
 prefix=""
-if [ ! -z "${1:-}" ] && [ -d "packages/${1}" ]; then
+if [ -n "${1:-}" ] && [ -d "packages/${1}" ]; then
   path="./packages/${1}"
   prefix="\./packages/${1}/"
 fi
 
 jsdoc \
   --destination target/jsdoc \
-  `find ${path} -type f \
-  | egrep "^${prefix}.*\.js$" \
-  | egrep -v "^.*/(dist|node_modules|target)/.*$"`
+  $(find "${path}" -type f \
+  | grep -E "^${prefix}.*\.js$" \
+  | grep -E -v "^.*/(dist|node_modules|target)/.*$")

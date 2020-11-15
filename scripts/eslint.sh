@@ -11,22 +11,22 @@ cd "${script_dir}/.."
 
 path="."
 prefix=""
-if [ ! -z "${1:-}" ] && [ -d "packages/${1}" ]; then
+if [ -n "${1:-}" ] && [ -d "packages/${1}" ]; then
   path="./packages/${1}"
   prefix="\./packages/${1}/"
 fi
 
 mkdir -p target
 
-find ${path} -type f \
-  | egrep "^${prefix}.*\.js$" \
-  | egrep -v "^.*/(dist|node_modules|target)/.*$" \
+find "${path}" -type f \
+  | grep -E "^${prefix}.*\.js$" \
+  | grep -E -v "^.*/(dist|node_modules|target)/.*$" \
   > target/eslint.txt
 
 sort target/eslint.txt -o target/eslint.txt
 
-while read in; do
-  echo $in
+while read -r in; do
+  echo "$in"
   eslint "$in"
 done < target/eslint.txt
 

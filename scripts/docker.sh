@@ -11,7 +11,7 @@ script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
 docker_image=utiljs-dev:0.39.2
 
 # https://stackoverflow.com/a/30543453
-if [[ "$(docker images -q ${docker_image} 2> /dev/null)" == "" ]]; then
+if [ "$(docker images -q ${docker_image} 2> /dev/null)" = "" ]; then
   cp "${script_dir}/install-dev-globals.sh" "${script_dir}/../docker"
   cp "${script_dir}/install-globals.sh" "${script_dir}/../docker"
   cd "${script_dir}/../docker"

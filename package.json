@@ -29,6 +29,8 @@
     "build": "npm run clean && ./scripts/babel.sh",
     "clean": "git clean -fdx --exclude \"node_modules\"",
     "package-lock": "git clean -fdx && npm install --save-exact && lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
+    "shellcheck": "shellcheck scripts/*.sh",
+    "shfmt": "shfmt -w scripts/*.sh",
     "test": "npm run build && lerna exec --ignore \"@util.js/node-lerna\" --ignore \"@util.js/aws\" -- mocha"
   },
   "scripts-comments": [

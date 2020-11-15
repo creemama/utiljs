@@ -11,16 +11,19 @@ ENV PATH=/home/node/.npm-global/bin:$PATH
 ENV GPG_TTY=/dev/console
 
 # When upgrading versions for Alpine, run:
-# docker run -it --rm -u root creemama/node-no-yarn:version-alpine sh
+# docker run -it --rm -u root creemama/node-no-yarn:lts-alpine sh
 # apk update
 # apk search package | sort
 # I found package versions at:
 # https://pkgs.alpinelinux.org/packages .
 
-RUN apk --no-cache --update add \
+RUN printf '%s' '@edgecommunity http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories \
+ && apk --no-cache --update add \
       git=2.24.3-r0 \
       gnupg=2.2.19-r0 \
-      openssh=8.1_p1-r0
+      openssh=8.1_p1-r0 \
+      shellcheck=0.7.0-r1 \
+      shfmt@edgecommunity=3.2.0-r1
 
 USER node
 WORKDIR /home/node

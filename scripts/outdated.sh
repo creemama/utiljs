@@ -6,22 +6,23 @@ if [ -n "${BASH_VERSION:-}" ]; then
   set -o pipefail
 fi
 
-script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
-cd "${script_dir}/.."
+script_dir="$( cd "$(dirname "$0")" || exit ; pwd -P )"
+cd "${script_dir}/.." || exit
 
 exit_code=0
 npm outdated -g
 npm outdated
-cd packages
+cd packages || exit
 for package in */; do
-	cd ${package}
+	(
+	cd "${package}" || exit
 	echo "Visting ${package}"
 	npm outdated
+	)
 	latest_exit_code=${?}
-	if [[ ${latest_exit_code} -ne 0 ]]; then
+	if [ ${latest_exit_code} -ne 0 ]; then
 		exit_code=${latest_exit_code}
 	fi
-	cd ..
 done
 
 exit ${exit_code}
