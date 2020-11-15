@@ -37,7 +37,7 @@ describe("Errors#catch(promise)", () => {
     }
     return errors.catch(rejectAPromise()).catch((error) => {
       expect(error).to.be.an.instanceof(AsyncError);
-      expect(error.message).to.eql("");
+      expect(error.message).to.eql('"ENTITY_NOT_FOUND"');
       expect(error.original).to.eql("ENTITY_NOT_FOUND");
       expect(error.stack).to.include("AsyncError");
       expect(error.stack).to.include("ENTITY_NOT_FOUND");
@@ -49,11 +49,10 @@ describe("Errors#catch(promise)", () => {
     }
     return errors.catch(rejectAPromise()).catch((error) => {
       expect(error).to.be.an.instanceof(AsyncError);
-      expect(error.message).to.eql("");
+      expect(error.message).to.eql('[{"code":"1234"}]');
       expect(error.original).to.eql([{ code: "1234" }]);
       expect(error.stack).to.include("AsyncError");
-      // TODO BUG: This should not be [object Object]. It should be a string representation of [{"code":"1234"}].
-      expect(error.stack).to.include("[object Object]");
+      expect(error.stack).to.include('[{"code":"1234"}]');
     });
   });
   it("should return a Promise that throws an AsyncError upon rejecting with a circularly referenced object", () => {
@@ -61,7 +60,7 @@ describe("Errors#catch(promise)", () => {
     obj.circular = obj;
     return errors.catch(Promise.reject(obj)).catch((error) => {
       expect(error).to.be.an.instanceof(AsyncError);
-      expect(error.message).to.eql("");
+      expect(error.message).to.eql("[object Object]");
       expect(error.original).to.eql(obj);
       expect(error.stack).to.include("AsyncError");
       expect(error.stack).to.include("[object Object]");
@@ -85,7 +84,7 @@ describe("new Errors#RethrownError(message, error)", () => {
           "RethrownError: Invalid Argument\n"
         );
         expect(new RethrownError(error, "").stack).to.include(
-          "RethrownError: Invalid Argument\n"
+          "RethrownError\n"
         );
         throw new RethrownError(error, "Lorem Ipsum");
       }
@@ -111,15 +110,20 @@ describe("new Errors#RethrownError(message, error)", () => {
       try {
         throwAString();
       } catch (error) {
-        expect(new RethrownError(error).stack).to.include("RethrownError\n");
-        // TODO BUG: This should not be undefined.
-        expect(new RethrownError(error).stack).to.include("undefined");
+        expect(new RethrownError(error).stack).to.include(
+          'RethrownError: "ENTITY_NOT_FOUND"\n'
+        );
+        expect(new RethrownError(error).stack.endsWith('"ENTITY_NOT_FOUND"')).to
+          .be.true;
         expect(new RethrownError(error, "").stack).to.include(
           "RethrownError\n"
         );
-        expect(new RethrownError(error, 0).stack).to.include("RethrownError\n");
-        // TODO BUG: This should not be undefined.
-        expect(new RethrownError(error, "").stack).to.include("undefined");
+        expect(new RethrownError(error, 0).stack).to.include(
+          "RethrownError: 0\n"
+        );
+        expect(new RethrownError(error, "").stack).to.include(
+          "ENTITY_NOT_FOUND"
+        );
         throw new RethrownError(error, "Lorem Ipsum");
       }
     }
@@ -132,8 +136,7 @@ describe("new Errors#RethrownError(message, error)", () => {
       expect(error.original).to.eql("ENTITY_NOT_FOUND");
       expect(error.stack).to.include("RethrownError");
       expect(error.stack).to.include("at rethrowTheString");
-      // TODO BUG: This should not be undefined.
-      expect(error.stack).to.include("undefined");
+      expect(error.stack).to.include("ENTITY_NOT_FOUND");
     }
   });
   it("should create a rethrown error from a thrown array", () => {
@@ -144,14 +147,17 @@ describe("new Errors#RethrownError(message, error)", () => {
       try {
         throwAnArray();
       } catch (error) {
-        expect(new RethrownError(error).stack).to.include("RethrownError\n");
-        // TODO BUG: This should not be undefined.
-        expect(new RethrownError(error).stack).to.include("undefined");
+        expect(new RethrownError(error).stack).to.include(
+          'RethrownError: [{"code":"1234"}]\n'
+        );
+        expect(new RethrownError(error).stack.endsWith('[{"code":"1234"}]')).to
+          .be.true;
         expect(new RethrownError(error, "").stack).to.include(
           "RethrownError\n"
         );
-        // TODO BUG: This should not be undefined.
-        expect(new RethrownError(error, "").stack).to.include("undefined");
+        expect(new RethrownError(error, "").stack).to.include(
+          '[{"code":"1234"}]'
+        );
         throw new RethrownError(error, "Lorem Ipsum");
       }
     }
@@ -164,17 +170,15 @@ describe("new Errors#RethrownError(message, error)", () => {
       expect(error.original).to.eql([{ code: "1234" }]);
       expect(error.stack).to.include("RethrownError");
       expect(error.stack).to.include("at rethrowTheArray");
-      // TODO BUG: This should not be undefined.
-      expect(error.stack).to.include("undefined");
+      expect(error.stack).to.include('[{"code":"1234"}]');
     }
   });
   it("should create a rethrown error from a circularly referenced object", () => {
     const obj = {};
     obj.circular = obj;
     const error = new RethrownError(obj);
-    expect(error.stack).to.include("RethrownError\n");
-    // TODO BUG: This should not be undefined.
-    expect(error.stack).to.include("undefined");
+    expect(error.stack).to.include("RethrownError: [object Object]\n");
+    expect(error.stack).to.include("[object Object]");
   });
   it("should throw an error when given an invalid error", () => {
     expect(() => new RethrownError()).to.throw(TypeError);
