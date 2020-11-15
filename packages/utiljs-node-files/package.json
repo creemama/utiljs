@@ -1,9 +1,9 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@util.js/objects": "0.39.2",
-    "@util.js/promises": "0.39.2",
-    "@util.js/strings": "0.39.2",
+    "@util.js/objects": "0.40.0",
+    "@util.js/promises": "0.40.0",
+    "@util.js/strings": "0.40.0",
     "graceful-fs": "4.2.4",
     "mkdirp": "1.0.4",
     "ncp": "2.0.0",
@@ -38,5 +38,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-files"
   },
-  "version": "0.39.2"
+  "version": "0.40.0"
 }
