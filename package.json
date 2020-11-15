@@ -5,7 +5,6 @@
     "@babel/core": "7.12.3",
     "@babel/plugin-transform-runtime": "7.12.1",
     "@babel/preset-env": "7.12.1",
-    "@util.js/node-lerna": "0.40.0",
     "chai": "4.2.0",
     "eslint-config-prettier": "6.15.0"
   },
@@ -25,7 +24,7 @@
     "url": "https://github.com/creemama/utiljs"
   },
   "scripts": {
-    "audit": "utiljs-lerna-audit",
+    "audit": "npx @util.js/node-lerna",
     "build": "npm run clean && ./scripts/babel.sh",
     "clean": "git clean -fdx --exclude \"node_modules\"",
     "package-lock": "git clean -fdx && npm install --save-exact && lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
