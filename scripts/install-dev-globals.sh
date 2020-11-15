@@ -9,8 +9,8 @@ fi
 # We do not need these global packages to run in Travis CI.
 
 npm install --global \
-  eslint@6.1.0 \
-  jsdoc@3.6.3 \
-  jsdoc-to-markdown@5.0.0 \
-  nyc@14.1.1 \
-  prettier@1.18.2
+  eslint@7.13.0 \
+  jsdoc@3.6.6 \
+  jsdoc-to-markdown@6.0.1 \
+  nyc@15.1.0 \
+  prettier@2.1.2

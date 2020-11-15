@@ -8,7 +8,7 @@ fi
 
 script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
 
-docker_image=utiljs-dev:0.39.0
+docker_image=utiljs-dev:0.39.2
 
 # https://stackoverflow.com/a/30543453
 if [[ "$(docker images -q ${docker_image} 2> /dev/null)" == "" ]]; then

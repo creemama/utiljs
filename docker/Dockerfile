@@ -1,7 +1,7 @@
 # This is a development container. To use this container, run:
 # ../scripts/docker.sh
 
-FROM creemama/node-no-yarn:10.16.0-alpine
+FROM creemama/node-no-yarn:14.15.0-alpine3.11
 
 # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
@@ -18,9 +18,9 @@ ENV GPG_TTY=/dev/console
 # https://pkgs.alpinelinux.org/packages .
 
 RUN apk --no-cache --update add \
-      git=2.20.1-r0 \
-      gnupg=2.2.12-r0 \
-      openssh=7.9_p1-r5
+      git=2.24.3-r0 \
+      gnupg=2.2.19-r0 \
+      openssh=8.1_p1-r0
 
 USER node
 WORKDIR /home/node

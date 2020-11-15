@@ -4,6 +4,7 @@ const expect = require("chai").expect,
   files = require("@util.js/files"),
   targetDir = __dirname + "/../target",
   urls = require("..");
+let fileNum = 0;
 
 describe("Urls", () => {
   describe("#(de|en)codeURI", () => {
@@ -35,8 +36,28 @@ describe("Urls", () => {
       download_url_destination("http://www.google.com"));
     it("handles HTTPS requests", () =>
       download_url_destination("https://www.google.com"));
+    it("should throw an error if the protocol is not HTTP or HTTPS", () =>
+      download_url_destination("ftp://www.google.com").then(
+        (value) => {
+          throw new Error("Unexpected success");
+        },
+        (error) => {
+          expect(error).to.be.an.instanceof(TypeError);
+        }
+      ));
+    it("should throw an error if there is no protocol", () =>
+      download_url_destination("www.google.com").then(
+        (value) => {
+          throw new Error("Unexpected success");
+        },
+        (error) => {
+          expect(error).to.be.an.instanceof(TypeError);
+        }
+      ));
     it("handles HTTP errors", () =>
-      download_url_destination("http://doesnotexist").then(
+      download_url_destination("http://doesnotexist:8080", {
+        timeout: 50,
+      }).then(
         (value) => {
           throw new Error("Unexpected success");
         },
@@ -45,7 +66,9 @@ describe("Urls", () => {
         }
       ));
     it("handles HTTPS errors", () =>
-      download_url_destination("https://doesnotexist").then(
+      download_url_destination("https://doesnotexist:8443", {
+        timeout: 50,
+      }).then(
         (value) => {
           throw new Error("Unexpected success");
         },
@@ -61,22 +84,40 @@ describe("Urls", () => {
     it("handles HTTPS requests", (callback) =>
       download_url_destination_callback("https://www.google.com", callback));
     it("handles HTTP errors", (callback) =>
-      download_url_destination_callback("http://doesnotexist", (error) => {
-        if (error) return callback();
-        callback(new Error("Unexpected success"));
-      }));
+      download_url_destination_callback(
+        "http://doesnotexist:8080",
+        { timeout: 50 },
+        (error) => {
+          if (error) return callback();
+          callback(new Error("Unexpected success"));
+        }
+      ));
     it("handles HTTPS errors", (callback) =>
-      download_url_destination_callback("https://doesnotexist", (error) => {
-        if (error) return callback();
-        callback(new Error("Unexpected success"));
-      }));
+      download_url_destination_callback(
+        "https://doesnotexist:8443",
+        { timeout: 50 },
+        (error) => {
+          if (error) return callback();
+          callback(new Error("Unexpected success"));
+        }
+      ));
   });
 
   describe("#headers(url)", () => {
-    it("handles HTTP requests", () => urls.headers("http://www.google.com"));
-    it("handles HTTPS requests", () => urls.headers("https://www.google.com"));
+    it("handles HTTP requests", () =>
+      urls.headers("http://www.google.com").then((headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+      }));
+    it("handles HTTPS requests", () =>
+      urls.headers("https://www.google.com").then((headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+      }));
+    it("handles HTTPS requests with null options", () =>
+      urls.headers("https://www.google.com", null).then((headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+      }));
     it("handles HTTP errors", () =>
-      urls.headers("http://doesnotexist").then(
+      urls.headers("http://doesnotexist:8080", { timeout: 50 }).then(
         (value) => {
           throw new Error("Unexpected success");
         },
@@ -85,7 +126,7 @@ describe("Urls", () => {
         }
       ));
     it("handles HTTPS errors", () =>
-      urls.headers("https://doesnotexist").then(
+      urls.headers("https://doesnotexist:8443", { timeout: 50 }).then(
         (value) => {
           throw new Error("Unexpected success");
         },
@@ -97,43 +138,90 @@ describe("Urls", () => {
 
   describe("#headers(url, callback)", () => {
     it("handles HTTP requests", (callback) =>
-      urls.headers("http://www.google.com", callback));
+      urls.headers("http://www.google.com", (error, headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+        callback(error);
+      }));
     it("handles HTTPS requests", (callback) =>
-      urls.headers("https://www.google.com", callback));
+      urls.headers("https://www.google.com", (error, headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+        callback(error);
+      }));
     it("handles HTTP errors", (callback) =>
-      urls.headers("http://doesnotexist", (error) => {
+      urls.headers("http://doesnotexist:8080", { timeout: 50 }, (error) => {
         if (error) return callback();
         callback(new Error("Unexpected success"));
       }));
     it("handles HTTPS errors", (callback) =>
-      urls.headers("https://doesnotexist", (error) => {
+      urls.headers("https://doesnotexist:8443", { timeout: 50 }, (error) => {
         if (error) return callback();
         callback(new Error("Unexpected success"));
       }));
   });
 });
 
-async function download_url_destination(url) {
+async function download_url_destination(url, options) {
   await files.mkdirp(targetDir);
-  return await urls.download(url, targetDir + "/download_url_destination.html");
-}
-
-function download_url_destination_callback(url, callback) {
-  async_download_url_destination_callback(url, callback);
-}
-
-async function async_download_url_destination_callback(url, callback) {
-  await files.mkdirp(targetDir);
-  await new Promise((resolve, reject) => {
-    urls.download(
-      url,
-      targetDir + "/async_download_url_destination_callback.html",
-      (error) => {
-        if (error) return reject(error);
-        resolve();
-      }
+  const destination =
+    targetDir +
+    "/" +
+    files.sanitizeFilename(
+      fileNum++ + ".download_url_destination." + url + ".html",
+      { replacement: "_" }
     );
+
+  const readFile = (_) => files.readFile(destination, "utf8");
+  const verifyFile = (text) =>
+    expect(text.startsWith("<!doctype html>")).to.be.true;
+
+  if (options)
+    return await urls
+      .download(url, destination, options)
+      .then(readFile)
+      .then(verifyFile);
+  await urls.download(url, destination).then(readFile).then(verifyFile);
+  return await urls
+    .download(url, destination, null)
+    .then(readFile)
+    .then(verifyFile);
+}
+
+function download_url_destination_callback() {
+  async_download_url_destination_callback(...arguments);
+}
+
+async function async_download_url_destination_callback(
+  url,
+  callbackOrOptions,
+  callback
+) {
+  await files.mkdirp(targetDir);
+  const cb = arguments[arguments.length - 1];
+  const destination =
+    targetDir +
+    "/" +
+    files.sanitizeFilename(
+      fileNum++ + ".async_download_url_destination_callback." + url + ".html",
+      { replacement: "_" }
+    );
+  const options = callbackOrOptions
+    ? typeof callbackOrOptions === "function"
+      ? null
+      : callbackOrOptions
+    : null;
+  await new Promise((resolve, reject) => {
+    const downloadCallback = (error) => {
+      if (error) return reject(error);
+      resolve();
+    };
+    if (options != null)
+      urls.download(url, destination, options, downloadCallback);
+    else urls.download(url, destination, downloadCallback);
   })
-    .then((_) => callback())
-    .catch((error) => callback(error));
+    .then((_) => files.readFile(destination, "utf8"))
+    .then((text) => {
+      expect(text.startsWith("<!doctype html>")).to.be.true;
+      cb();
+    })
+    .catch((error) => cb(error));
 }

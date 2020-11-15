@@ -285,7 +285,7 @@ module.exports = class Files {
   }
 
   mkdirp() {
-    return promises().applyCallback(null, mkdirp(), arguments);
+    return promises().applyPromise(null, mkdirp(), arguments);
   }
 
   mkdirpSync() {
