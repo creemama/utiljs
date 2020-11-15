@@ -1,10 +1,10 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@babel/runtime-corejs2": "7.12.5"
+    "@babel/runtime-corejs3": "7.12.5"
   },
   "dependencies-comments": [
-    "@babel/runtime-corejs2 is required by files in the dist directory to ",
+    "@babel/runtime-corejs3 is required by files in the dist directory to ",
     "work in https://npm.runkit.com."
   ],
   "description": "JavaScript utility methods for promises",

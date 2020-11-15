@@ -5,7 +5,7 @@
     "@babel/core": "7.12.3",
     "@babel/plugin-transform-runtime": "7.12.1",
     "@babel/preset-env": "7.12.1",
-    "@util.js/lerna": "0.39.2",
+    "@util.js/node-lerna": "0.40.0",
     "chai": "4.2.0",
     "eslint-config-prettier": "6.15.0"
   },
