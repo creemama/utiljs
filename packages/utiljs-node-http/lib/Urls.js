@@ -115,7 +115,7 @@ function get(dependency) {
 }
 
 function files() {
-  return get("@util.js/files");
+  return get("@util.js/node-files");
 }
 function http() {
   return get("http");

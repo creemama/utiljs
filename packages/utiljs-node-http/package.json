@@ -1,24 +1,21 @@
 {
   "author": "Chris Topher <c@creemama.com>",
-  "bin": {
-    "utiljs-lerna-audit": "./cli.js"
-  },
   "dependencies": {
-    "@util.js/files": "0.39.2",
-    "@util.js/numbers": "0.39.2",
-    "@util.js/objects": "0.39.2",
-    "@util.js/privates": "0.39.2",
+    "@util.js/node-files": "0.39.2",
     "@util.js/promises": "0.39.2"
   },
-  "description": "JavaScript utility methods for Lerna",
+  "description": "JavaScript utility methods for URLs",
   "keywords": [
-    "lerna",
+    "uri",
+    "uris",
+    "url",
+    "urls",
     "utilities",
     "utility",
     "utiljs"
   ],
   "license": "MIT",
-  "name": "@util.js/lerna",
+  "name": "@util.js/node-http",
   "publishConfig": {
     "access": "public"
   },
@@ -28,7 +25,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-lerna"
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-urls"
   },
   "version": "0.39.2"
 }

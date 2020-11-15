@@ -1,13 +1,13 @@
-# @util.js/timers
+# @util.js/node-timers
 
 > An object to hold JavaScript timers: https://nodejs.org/api/timers.html
 
 <p>
-  <a href="https://www.npmjs.com/package/@util.js/timers"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/timers.svg?style=flat"></a>
+  <a href="https://www.npmjs.com/package/@util.js/node-timers"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/node-timers.svg?style=flat"></a>
   <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
 </p>
 
-@util.js/timers is part of [Util.js](https://github.com/creemama/utiljs).
+@util.js/node-timers is part of [Util.js](https://github.com/creemama/utiljs).
 
 <a name="module_Timers"></a>
 
@@ -35,7 +35,7 @@ functionToThrottle calling it once every limitInMilliseconds.
 **Example**
 
 ```js
-const timers = require("@util.js/timers");
+const timers = require("@util.js/node-timers");
 let lastTime = Date.now();
 function call(str) {
   console.log(str + ": " + (Date.now() - lastTime));

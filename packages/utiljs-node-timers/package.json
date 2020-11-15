@@ -14,7 +14,7 @@
     "utiljs"
   ],
   "license": "MIT",
-  "name": "@util.js/timers",
+  "name": "@util.js/node-timers",
   "publishConfig": {
     "access": "public"
   },

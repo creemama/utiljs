@@ -5,7 +5,7 @@
     "@babel/core": "7.12.3",
     "@babel/plugin-transform-runtime": "7.12.1",
     "@babel/preset-env": "7.12.1",
-    "@util.js/lerna": "file:packages/utiljs-lerna",
+    "@util.js/lerna": "0.39.2",
     "chai": "4.2.0",
     "eslint-config-prettier": "6.15.0"
   },
@@ -29,7 +29,7 @@
     "build": "npm run clean && ./scripts/babel.sh",
     "clean": "git clean -fdx --exclude \"node_modules\"",
     "package-lock": "git clean -fdx && npm install --save-exact && lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
-    "test": "npm run build && lerna exec --ignore \"@util.js/lerna\" --ignore \"@util.js/aws\" -- mocha"
+    "test": "npm run build && lerna exec --ignore \"@util.js/node-lerna\" --ignore \"@util.js/aws\" -- mocha"
   },
   "scripts-comments": [
     "The package-lock script comes from ",

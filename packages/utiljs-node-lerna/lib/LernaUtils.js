@@ -7,7 +7,7 @@ function resources() {
   return {
     child_process: () => require("child_process"),
     console: () => console,
-    files: () => require("@util.js/files"),
+    files: () => require("@util.js/node-files"),
     json: () => JSON,
     numbers: () => require("@util.js/numbers"),
     objects: () => require("@util.js/objects"),

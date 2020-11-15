@@ -1,21 +1,21 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@util.js/files": "0.39.2",
-    "@util.js/promises": "0.39.2"
+    "@util.js/promises": "0.39.2",
+    "@util.js/strings": "0.39.2"
   },
-  "description": "JavaScript utility methods for URLs",
+  "description": "JavaScript utility methods for streams",
   "keywords": [
-    "uri",
-    "uris",
-    "url",
-    "urls",
+    "fromString",
+    "stream",
+    "streams",
+    "stringify",
     "utilities",
     "utility",
     "utiljs"
   ],
   "license": "MIT",
-  "name": "@util.js/urls",
+  "name": "@util.js/node-streams",
   "publishConfig": {
     "access": "public"
   },
@@ -25,7 +25,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-urls"
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-streams"
   },
   "version": "0.39.2"
 }

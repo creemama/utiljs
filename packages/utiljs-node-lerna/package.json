@@ -1,21 +1,24 @@
 {
   "author": "Chris Topher <c@creemama.com>",
-  "dependencies": {
-    "@util.js/promises": "0.39.2",
-    "@util.js/strings": "0.39.2"
+  "bin": {
+    "utiljs-lerna-audit": "./cli.js"
   },
-  "description": "JavaScript utility methods for streams",
+  "dependencies": {
+    "@util.js/node-files": "0.39.2",
+    "@util.js/numbers": "0.39.2",
+    "@util.js/objects": "0.39.2",
+    "@util.js/privates": "0.39.2",
+    "@util.js/promises": "0.39.2"
+  },
+  "description": "JavaScript utility methods for Lerna",
   "keywords": [
-    "fromString",
-    "stream",
-    "streams",
-    "stringify",
+    "lerna",
     "utilities",
     "utility",
     "utiljs"
   ],
   "license": "MIT",
-  "name": "@util.js/streams",
+  "name": "@util.js/node-lerna",
   "publishConfig": {
     "access": "public"
   },
@@ -25,7 +28,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-streams"
+    "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-lerna"
   },
   "version": "0.39.2"
 }
