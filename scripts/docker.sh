@@ -3,23 +3,26 @@
 set -o errexit -o nounset
 IFS="$(printf '\n\t' '')"
 if [ -n "${BASH_VERSION:-}" ]; then
-  set -o pipefail
+	set -o pipefail
 fi
 
-script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
+script_dir="$(
+	cd "$(dirname "$0")"
+	pwd -P
+)"
 
 docker_image=utiljs-dev:0.39.2
 
 # https://stackoverflow.com/a/30543453
-if [ "$(docker images -q ${docker_image} 2> /dev/null)" = "" ]; then
-  cp "${script_dir}/install-dev-globals.sh" "${script_dir}/../docker"
-  cp "${script_dir}/install-globals.sh" "${script_dir}/../docker"
-  cd "${script_dir}/../docker"
-  if ! docker build --tag ${docker_image} .; then
-    exit "${?}"
-  fi
-  rm "${script_dir}/../docker/install-dev-globals.sh" \
-    "${script_dir}/../docker/install-globals.sh"
+if [ "$(docker images -q ${docker_image} 2>/dev/null)" = "" ]; then
+	cp "${script_dir}/install-dev-globals.sh" "${script_dir}/../docker"
+	cp "${script_dir}/install-globals.sh" "${script_dir}/../docker"
+	cd "${script_dir}/../docker"
+	if ! docker build --tag ${docker_image} .; then
+		exit "${?}"
+	fi
+	rm "${script_dir}/../docker/install-dev-globals.sh" \
+		"${script_dir}/../docker/install-globals.sh"
 fi
 
 # We mount /tmp because of the following error:
@@ -38,21 +41,21 @@ fi
 # fatal: failed to write commit object
 
 docker run \
-  --cap-drop=ALL \
-  --cpu-shares=1024 \
-  --interactive \
-  --memory 1.5G \
-  --name utiljs-dev \
-  --pids-limit 100 \
-  --read-only \
-  --restart=no \
-  --rm \
-  --security-opt=no-new-privileges:true \
-  --tty \
-  --volume /home/node \
-  --volume ~/.gnupg:/home/node/.gnupg \
-  --volume ~/.ssh:/home/node/.ssh:ro \
-  --volume "${script_dir}/..:/home/node/utiljs" \
-  --volume /tmp \
-  --workdir /home/node/utiljs \
-  "${docker_image}"
+	--cap-drop=ALL \
+	--cpu-shares=1024 \
+	--interactive \
+	--memory 1.5G \
+	--name utiljs-dev \
+	--pids-limit 100 \
+	--read-only \
+	--restart=no \
+	--rm \
+	--security-opt=no-new-privileges:true \
+	--tty \
+	--volume /home/node \
+	--volume ~/.gnupg:/home/node/.gnupg \
+	--volume ~/.ssh:/home/node/.ssh:ro \
+	--volume "${script_dir}/..:/home/node/utiljs" \
+	--volume /tmp \
+	--workdir /home/node/utiljs \
+	"${docker_image}"

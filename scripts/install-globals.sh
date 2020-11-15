@@ -3,7 +3,7 @@
 set -o errexit -o nounset
 IFS="$(printf '\n\t' '')"
 if [ -n "${BASH_VERSION:-}" ]; then
-  set -o pipefail
+	set -o pipefail
 fi
 
 # We use these global packages to run in Travis CI.
@@ -14,7 +14,7 @@ fi
 
 npm install --global npm@6.14.8
 npm install --global \
-  @babel/cli@7.12.1 \
-  @babel/core@7.12.3 \
-  lerna@3.22.1 \
-  mocha@8.2.1
+	@babel/cli@7.12.1 \
+	@babel/core@7.12.3 \
+	lerna@3.22.1 \
+	mocha@8.2.1

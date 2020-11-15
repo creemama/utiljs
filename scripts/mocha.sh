@@ -3,16 +3,19 @@
 set -o errexit -o nounset
 IFS="$(printf '\n\t' '')"
 if [ -n "${BASH_VERSION:-}" ]; then
-  set -o pipefail
+	set -o pipefail
 fi
 
-script_dir="$( cd "$(dirname "$0")" ; pwd -P )"
+script_dir="$(
+	cd "$(dirname "$0")"
+	pwd -P
+)"
 cd "${script_dir}/.."
 
 if [ -n "${1:-}" ] && [ -d "packages/${1}" ]; then
 	cd "packages/${1}"
 	nyc \
-	  --reporter html \
+		--reporter html \
 		--reporter text \
 		--report-dir target/coverage \
 		mocha
