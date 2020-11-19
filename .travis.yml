@@ -10,6 +10,6 @@ node_js:
  - '10'
 
 before_install:
-  - ./scripts/install-globals.sh
+  - ./dev.sh install-globals
 
-install: ./scripts/install.sh
+install: ./dev.sh install

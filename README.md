@@ -32,3 +32,46 @@ The anatomy for each package is loosely based on ["Directory structure for JavaS
 Use [conventional commits](https://github.com/pvdlg/conventional-changelog-metahub) for commit messages.
 
 See scripts/README.md for information on the scripts used to maintain this project.
+
+## Maintenance
+
+The scripts in this directory do the following:
+
+- Run a Docker container for development.
+
+  - `./dev.sh docker`
+
+- Install and update dependencies. Use [fix] as the commit type.
+
+  - `./dev.sh install-globals`
+  - `./dev.sh install-dev-globals`
+  - `./dev.sh outdated`
+  - `./dev.sh install`
+  - `npm run package-lock` - BE CAREFUL! This runs `git clean -fdx`.
+  - `npm run audit`
+  - `./dev.sh audit`
+
+- Format and run a linter.
+
+  - `./dev.sh prettier` (Use [style] as the commit type.)
+  - `./dev.sh eslint`
+  - `` prettier --write `git ls-files -m` ``
+  - `./dev.sh shellcheck`
+  - `./dev.sh shfmt`
+
+- Update documentation. Use [docs] as the commit type.
+
+  - `./dev.sh jsdoc`
+  - `./dev.sh jsdoc2md`
+  - `./dev.sh prettier`
+  - `git commit -am "style: run prettier"`
+
+- Test and publish.
+
+  - `./dev.sh clean`
+  - `./dev.sh babel`
+  - `./dev.sh build`
+  - `./dev.sh mocha`
+  - `npm run test`
+  - `./dev.sh travis`
+  - `./dev.sh publish` - bumps up the version number

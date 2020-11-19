@@ -24,19 +24,9 @@
     "url": "https://github.com/creemama/utiljs"
   },
   "scripts": {
-    "audit": "npx @util.js/node-lerna",
-    "build": "npm run clean && ./scripts/babel.sh",
-    "clean": "git clean -fdx --exclude \"node_modules\"",
-    "package-lock": "git clean -fdx && npm install --save-exact && lerna exec \"npm install --package-lock-only --save-exact\" && ./scripts/install.sh",
-    "shellcheck": "shellcheck scripts/*.sh",
-    "shfmt": "shfmt -w scripts/*.sh",
-    "test": "npm run build && lerna exec --ignore \"@util.js/node-lerna\" --ignore \"@util.js/aws\" -- mocha"
+    "test": "./dev.sh test"
   },
   "scripts-comments": [
-    "The package-lock script comes from ",
-    "https://github.com/lerna/lerna/issues/1415#issuecomment-455790478 .",
-    "Lerna may or may not update package-lock.json files. package-lock.json ",
-    "is not included in bundles posted to npm. Run the script after as the ",
-    "first commit after publishing."
+    "npm run test is the default build script for Travis CI."
   ]
 }

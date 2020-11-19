@@ -28,12 +28,11 @@ RUN printf '%s' '@edgecommunity http://nl.alpinelinux.org/alpine/edge/community'
 USER node
 WORKDIR /home/node
 
-COPY install-globals.sh .
-COPY install-dev-globals.sh .
+COPY dev.sh .
 
-RUN ./install-globals.sh \
- && ./install-dev-globals.sh \
- && rm install-globals.sh install-dev-globals.sh
+RUN ./dev.sh install-globals \
+ && ./dev.sh install-dev-globals \
+ && rm dev.sh
 
 HEALTHCHECK CMD node --version || exit 1
 CMD [ "sh" ]
