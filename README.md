@@ -56,7 +56,6 @@ The scripts in this directory do the following:
   - `./dev.sh prettier` (Use [style] as the commit type.)
   - `./dev.sh eslint`
   - `` prettier --write `git ls-files -m` ``
-  - `./dev.sh shellcheck`
   - `./dev.sh shfmt`
 
 - Update documentation. Use [docs] as the commit type.

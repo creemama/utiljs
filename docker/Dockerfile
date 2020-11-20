@@ -10,28 +10,22 @@ ENV PATH=/home/node/.npm-global/bin:$PATH
 # I got /dev/console from https://hub.docker.com/r/vladgh/gpg/ .
 ENV GPG_TTY=/dev/console
 
-# When upgrading versions for Alpine, run:
-# docker run -it --rm -u root creemama/node-no-yarn:lts-alpine sh
-# apk update
-# apk search package | sort
-# I found package versions at:
-# https://pkgs.alpinelinux.org/packages .
-
-RUN printf '%s' '@edgecommunity http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories \
- && apk --no-cache --update add \
-      git=2.24.3-r0 \
-      gnupg=2.2.19-r0 \
-      openssh=8.1_p1-r0 \
-      shellcheck=0.7.0-r1 \
-      shfmt@edgecommunity=3.2.0-r1
+COPY dev.sh .
+COPY shellutil.sh ./shellutil/shellutil.sh
+COPY update.sh ./shellutil/update.sh
+RUN ./dev.sh apk-add \
+ && rm -rf shellutil \
+ && rm dev.sh
 
 USER node
 WORKDIR /home/node
 
-COPY dev.sh .
-
+COPY --chown=node dev.sh .
+COPY --chown=node shellutil.sh ./shellutil/shellutil.sh
+COPY --chown=node update.sh ./shellutil/update.sh
 RUN ./dev.sh install-globals \
  && ./dev.sh install-dev-globals \
+ && rm -rf shellutil \
  && rm dev.sh
 
 HEALTHCHECK CMD node --version || exit 1

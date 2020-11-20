@@ -2,9 +2,9 @@
   "author": "Chris Topher <c@creemama.com>",
   "description": "Util.js - JavaScript utility methods",
   "devDependencies": {
-    "@babel/core": "7.12.3",
+    "@babel/core": "7.12.7",
     "@babel/plugin-transform-runtime": "7.12.1",
-    "@babel/preset-env": "7.12.1",
+    "@babel/preset-env": "7.12.7",
     "chai": "4.2.0",
     "eslint-config-prettier": "6.15.0"
   },

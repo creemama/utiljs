@@ -1,0 +1,3 @@
+[submodule "shellutil"]
+	path = shellutil
+	url = https://github.com/creemama/shellutil

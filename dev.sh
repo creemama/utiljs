@@ -1,14 +1,45 @@
 #!/bin/sh
 
-IFS=$(printf '\n\t')
-set -o errexit -o nounset
-if [ -n "${BASH_VERSION:-}" ]; then
-	# shellcheck disable=SC2039
-	set -o pipefail
+script_dir="$(
+	cd "$(dirname "${0}")"
+	pwd -P
+)"
+cd "${script_dir}"
+if [ ! -f shellutil/shellutil.sh ]; then
+	git submodule update --init
 fi
+# shellcheck source=shellutil/shellutil.sh
+. shellutil/shellutil.sh
+# shellcheck source=shellutil/update.sh
+. shellutil/update.sh
 # set -o xtrace
 
+apk_packages='git~=2.24
+gnupg~=2.2
+openssh~=8.1
+shellcheck~=0.7
+shfmt@edgecommunity~=3.2
+'
 docker_image=utiljs-dev:0.39.2
+npm_dev_globals='eslint@7.14.0
+jsdoc@3.6.6
+jsdoc-to-markdown@6.0.1
+npm-check-updates@10.2.2
+prettier@2.2.0
+'
+npm_global=npm@6.14.9
+npm_globals='@babel/cli@7.12.7
+@babel/core@7.12.7
+lerna@3.22.1
+mocha@8.2.1
+nyc@15.1.0
+'
+
+apk_add() {
+	apk_guarantee_edgecommunity
+	# shellcheck disable=SC2086
+	apk --no-cache --update add ${apk_packages}
+}
 
 audit() {
 	npx @util.js/node-lerna
@@ -55,17 +86,15 @@ execute_babel() {
 execute_docker() {
 	# https://stackoverflow.com/a/30543453
 	if [ "$(docker images -q ${docker_image} 2>/dev/null)" = "" ]; then
-		cp "dev.sh" "docker"
-		cd "docker"
+		cp dev.sh docker
+		cp shellutil/shellutil.sh docker
+		cp shellutil/update.sh docker
+		cd docker
 		if ! docker build --tag ${docker_image} .; then
 			exit "${?}"
 		fi
-		rm "dev.sh"
+		rm dev.sh shellutil.sh update.sh
 	fi
-
-	# shellcheck disable=SC2039
-	local script_dir
-	script_dir="${1}"
 
 	# We mount /tmp because of the following error:
 	# ~/utiljs $ ./scripts/jsdoc2md.sh
@@ -82,6 +111,7 @@ execute_docker() {
 	# error: gpg failed to sign the data
 	# fatal: failed to write commit object
 
+	# shellcheck disable=SC2068
 	docker run \
 		--cap-drop=ALL \
 		--cpu-shares=1024 \
@@ -100,7 +130,7 @@ execute_docker() {
 		--volume "${script_dir}:/home/node/utiljs" \
 		--volume /tmp \
 		--workdir /home/node/utiljs \
-		"${docker_image}"
+		"${docker_image}" ${@}
 }
 
 execute_eslint() {
@@ -267,18 +297,6 @@ execute_prettier() {
 	rm -rf target/prettier.txt
 }
 
-execute_shellcheck() {
-	shift
-	# shellcheck disable=SC2068
-	shellcheck dev.sh ${@:-}
-}
-
-execute_shfmt() {
-	shift
-	# shellcheck disable=SC2068
-	shfmt -w dev.sh ${@:-}
-}
-
 execute_travis() {
 	clean
 	install
@@ -295,27 +313,21 @@ install() {
 
 install_dev_globals() {
 	# We do not need these global packages to run in Travis CI.
-	npm install --global \
-		eslint@7.13.0 \
-		jsdoc@3.6.6 \
-		jsdoc-to-markdown@6.0.1 \
-		prettier@2.1.2
+	# shellcheck disable=SC2086
+	npm install --global ${npm_dev_globals}
 }
 
 install_globals() {
 	# We use these global packages to run in Travis CI.
 
 	# Including @babel/core prevents the following warning:
-	# npm WARN @babel/cli@7.2.3 requires a peer of @babel/core@^7.0.0-0 but
+	# npm WARN @babel/cli@ 7.2.3 requires a peer of @babel/core@^7.0.0-0 but
 	# none is installed. You must install peer dependencies yourself.
 
-	npm install --global npm@6.14.8
-	npm install --global \
-		@babel/cli@7.12.1 \
-		@babel/core@7.12.3 \
-		lerna@3.22.1 \
-		mocha@8.2.1 \
-		nyc@15.1.0
+	# shellcheck disable=SC2086
+	npm install --global ${npm_global}
+	# shellcheck disable=SC2086
+	npm install --global ${npm_globals}
 }
 
 main() {
@@ -326,50 +338,58 @@ main() {
 		pwd -P
 	)"
 	cd "${script_dir}"
-	if [ "${1:-}" = "audit" ]; then
+	if [ "${1:-}" = apk-add ]; then
+		apk_add
+	elif [ "${1:-}" = audit ]; then
 		audit
-	elif [ "${1:-}" = "babel" ]; then
+	elif [ "${1:-}" = babel ]; then
 		execute_babel "${@}"
-	elif [ "${1:-}" = "build" ]; then
+	elif [ "${1:-}" = build ]; then
 		build
-	elif [ "${1:-}" = "clean" ]; then
+	elif [ "${1:-}" = clean ]; then
 		clean
-	elif [ "${1:-}" = "docker" ]; then
-		execute_docker "${script_dir}"
-	elif [ "${1:-}" = "eslint" ]; then
+	elif [ "${1:-}" = docker ]; then
+		shift
+		execute_docker "${@:-}"
+	elif [ "${1:-}" = docker-update ]; then
+		run_docker_update
+	elif [ "${1:-}" = eslint ]; then
 		execute_eslint "${@}"
-	elif [ "${1:-}" = "install" ]; then
+	elif [ "${1:-}" = install ]; then
 		install
-	elif [ "${1:-}" = "install-dev-globals" ]; then
+	elif [ "${1:-}" = install-dev-globals ]; then
 		install_dev_globals
-	elif [ "${1:-}" = "install-globals" ]; then
+	elif [ "${1:-}" = install-globals ]; then
 		install_globals
-	elif [ "${1:-}" = "jsdoc" ]; then
+	elif [ "${1:-}" = jsdoc ]; then
 		execute_jsdoc "${@}"
-	elif [ "${1:-}" = "jsdoc2md" ]; then
+	elif [ "${1:-}" = jsdoc2md ]; then
 		execute_jsdoc2md "${@}"
-	elif [ "${1:-}" = "mocha" ]; then
+	elif [ "${1:-}" = mocha ]; then
 		execute_mocha "${@}"
-	elif [ "${1:-}" = "outdated" ]; then
+	elif [ "${1:-}" = outdated ]; then
 		execute_outdated
-	elif [ "${1:-}" = "package-lock" ]; then
+	elif [ "${1:-}" = package-lock ]; then
 		package_lock
-	elif [ "${1:-}" = "prettier" ]; then
+	elif [ "${1:-}" = prettier ]; then
 		execute_prettier "${@}"
-	elif [ "${1:-}" = "publish" ]; then
+	elif [ "${1:-}" = publish ]; then
 		publish
-	elif [ "${1:-}" = "shellcheck" ]; then
-		execute_shellcheck "${@}"
-	elif [ "${1:-}" = "shfmt" ]; then
-		execute_shfmt "${@}"
-	elif [ "${1:-}" = "test" ]; then
+	elif [ "${1:-}" = shfmt ]; then
+		./shellutil/format.sh shfmt
+		./shellutil/format.sh shellcheck
+	elif [ "${1:-}" = test ]; then
 		run_test
-	elif [ "${1:-}" = "travis" ]; then
+	elif [ "${1:-}" = travis ]; then
 		execute_travis
+	elif [ "${1:-}" = update ]; then
+		update
 	elif [ -n "${1:-}" ]; then
-		printf 'The command "%s" is not recognized.\n' "${1}"
+		printf '%s%s is not a recognized command.\n%s' "$(tred)" "${1}" "$(treset)"
+		exit 1
 	else
-		printf 'Enter a command.\n'
+		printf '%sEnter a command.\n%s' "$(tred)" "$(treset)"
+		exit 1
 	fi
 }
 
@@ -393,9 +413,13 @@ publish() {
 
 	# You may need to use --force-publish, an intentionally undocumented option.
 	# lerna publish --exact --force-publish=utiljs-objects,utiljs-strings
-
 	package_lock
 	git commit -am "fix: execute \"./dev.sh package-lock\""
+}
+
+run_docker_update() {
+	docker pull creemama/node-no-yarn:lts-alpine
+	execute_docker sh -c './dev.sh update'
 }
 
 run_test() {
@@ -403,4 +427,27 @@ run_test() {
 	execute_mocha
 }
 
-main "${@}"
+update() {
+	apk_update_node_image_version docker/Dockerfile 's#(FROM creemama/node-no-yarn:).*#\\1%s-alpine%s#'
+	for package in ${apk_packages}; do
+		apk_update_package_version "$(printf %s "${package}" | sed -E 's/([^@]+)(@edgecommunity)?~=.*/\1/')"
+	done
+	for package in ${npm_dev_globals} ${npm_global} ${npm_globals}; do
+		npm_update_package_version "$(printf %s "${package}" | sed -E 's/(.+)@.*/\1/')"
+	done
+	update_npm_deps
+}
+
+update_npm_deps() {
+	npx ncu -u
+	cd packages
+	for package in */; do
+		(
+			cd "${package}"
+			echo "Visting ${package}"
+			npx ncu -u
+		)
+	done
+}
+
+main "${@:-}"
