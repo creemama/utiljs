@@ -1,10 +1,10 @@
 #!/bin/sh
 
 script_dir="$(
-	cd "$(dirname "${0}")"
+	cd "$(dirname "$0")"
 	pwd -P
 )"
-cd "${script_dir}"
+cd "$script_dir"
 if [ ! -f shellutil/shellutil.sh ]; then
 	git submodule update --init
 fi
@@ -45,7 +45,7 @@ nyc@15.1.0
 apk_add() {
 	apk_guarantee_edgecommunity
 	# shellcheck disable=SC2086
-	apk --no-cache --update add ${apk_packages}
+	apk --no-cache --update add $apk_packages
 }
 
 audit() {
@@ -62,11 +62,11 @@ clean() {
 }
 
 execute_babel() {
-	if [ -n "${2:-}" ] && [ -d "packages/${2}" ]; then
-		printf "\033[1m%s\033[0m ... " "${2}"
+	if [ -n "${2:-}" ] && [ -d "packages/$2" ]; then
+		printf "\033[1m%s\033[0m ... " "$2"
 		babel \
-			"packages/${2}/lib" \
-			--out-dir "packages/${2}/dist"
+			"packages/$2/lib" \
+			--out-dir "packages/$2/dist"
 		return $?
 	fi
 
@@ -83,22 +83,22 @@ promises
 strings
 '
 
-	for package in ${packages}; do
-		printf "\033[1m%s\033[0m ... " "utiljs-${package}"
+	for package in $packages; do
+		printf "\033[1m%s\033[0m ... " "utiljs-$package"
 		babel \
-			"packages/utiljs-${package}/lib" \
-			--out-dir "packages/utiljs-${package}/dist"
+			"packages/utiljs-$package/lib" \
+			--out-dir "packages/utiljs-$package/dist"
 	done
 }
 
 execute_docker() {
 	# https://stackoverflow.com/a/30543453
-	if [ "$(docker images -q ${docker_image} 2>/dev/null)" = "" ]; then
+	if [ "$(docker images -q $docker_image 2>/dev/null)" = "" ]; then
 		cp dev.sh docker
 		cp -r shellutil docker/shellutil
 		cd docker
-		if ! docker build --tag ${docker_image} .; then
-			exit "${?}"
+		if ! docker build --tag $docker_image .; then
+			exit $?
 		fi
 		rm -rf shellutil
 		rm -rf dev.sh
@@ -142,10 +142,10 @@ execute_docker() {
 		--volume /tmp/.X11-unix:/tmp/.X11-unix \
 		--volume ~/.gnupg:/home/node/.gnupg \
 		--volume ~/.ssh:/home/node/.ssh:ro \
-		--volume "${script_dir}:/home/node/utiljs" \
+		--volume "$script_dir":/home/node/utiljs \
 		--volume /tmp \
 		--workdir /home/node/utiljs \
-		"${docker_image}" ${@}
+		"$docker_image" "$@"
 }
 
 execute_eslint() {
@@ -155,23 +155,23 @@ execute_eslint() {
 	# shellcheck disable=SC2039
 	local prefix
 	prefix=""
-	if [ -n "${2:-}" ] && [ -d "packages/${2}" ]; then
-		path="./packages/${2}"
-		prefix="\./packages/${2}/"
+	if [ -n "${2:-}" ] && [ -d "packages/$2" ]; then
+		path="./packages/$2"
+		prefix="\./packages/$2/"
 	fi
 
 	mkdir -p target
 
-	find "${path}" -type f |
-		grep -E "^${prefix}.*\.js$" |
+	find "$path" -type f |
+		grep -E "^$prefix.*\.js$" |
 		grep -E -v "^.*/(dist|node_modules|target)/.*$" \
 			>target/eslint.txt
 
 	sort target/eslint.txt -o target/eslint.txt
 
 	while read -r in; do
-		echo "${in}"
-		eslint "${in}"
+		printf '%s\n' "$in"
+		eslint "$in"
 	done <target/eslint.txt
 
 	rm -rf target/eslint.txt
@@ -188,16 +188,16 @@ execute_jsdoc() {
 	# shellcheck disable=SC2039
 	local prefix
 	prefix=""
-	if [ -n "${2:-}" ] && [ -d "packages/${2}" ]; then
-		path="./packages/${2}"
-		prefix="\./packages/${2}/"
+	if [ -n "${2:-}" ] && [ -d "packages/$2" ]; then
+		path="./packages/$2"
+		prefix="\./packages/$2/"
 	fi
 
 	# shellcheck disable=SC2046
 	jsdoc \
 		--destination target/jsdoc \
-		$(find "${path}" -type f |
-			grep -E "^${prefix}.*\.js$" |
+		$(find "$path" -type f |
+			grep -E "^$prefix.*\.js$" |
 			grep -E -v "^.*/(dist|node_modules|target)/.*$")
 }
 
@@ -217,23 +217,23 @@ execute_jsdoc2md() {
 	# shellcheck disable=SC2039
 	local filename
 	filename="jsdoc2md.md"
-	if [ -n "${2:-}" ] && [ -d "packages/${2}" ]; then
-		path="./packages/${2}"
-		prefix="\./packages/${2}/"
-		filename="${2}.md"
+	if [ -n "${2:-}" ] && [ -d "packages/$2" ]; then
+		path="./packages/$2"
+		prefix="\./packages/$2/"
+		filename="$2.md"
 	fi
 
 	# shellcheck disable=SC2046
 	jsdoc2md \
-		$(find "${path}" -type f |
-			grep -E "^${prefix}.*\.js$" |
+		$(find "$path" -type f |
+			grep -E "^$prefix.*\.js$" |
 			grep -E -v "^.*/(dist|node_modules|target)/.*$") \
-		>"target/jsdoc2md/${filename}"
+		>"target/jsdoc2md/$filename"
 }
 
 execute_mocha() {
-	if [ -n "${2:-}" ] && [ -d "packages/${2}" ]; then
-		cd "packages/${2}"
+	if [ -n "${2:-}" ] && [ -d "packages/$2" ]; then
+		cd "packages/$2"
 		nyc \
 			--reporter html \
 			--reporter text \
@@ -245,16 +245,16 @@ execute_mocha() {
 		fi
 		cd packages
 		for package in */; do
-			cd "${package}"
+			cd "$package"
 			if [ -d "test" ]; then
-				echo "Visting ${package}"
+				printf '%s\n' "Visting $package"
 				nyc \
 					--reporter html \
 					--reporter text \
 					--report-dir target/coverage \
-					mocha "${@}"
+					mocha "$@"
 			else
-				echo "Skipping ${package}"
+				printf '%s\n' "Skipping $package"
 				echo
 			fi
 			cd ..
@@ -272,16 +272,16 @@ execute_outdated() {
 	cd packages || exit
 	for package in */; do
 		(
-			cd "${package}" || exit
-			echo "Visting ${package}"
+			cd "$package" || exit
+			printf '%s\n' "Visting $package"
 			npm outdated
 		)
-		latest_exit_code=${?}
-		if [ ${latest_exit_code} -ne 0 ]; then
-			exit_code=${latest_exit_code}
+		latest_exit_code=$?
+		if [ $latest_exit_code -ne 0 ]; then
+			exit_code=$latest_exit_code
 		fi
 	done
-	return ${exit_code}
+	return $exit_code
 }
 
 execute_prettier() {
@@ -291,15 +291,15 @@ execute_prettier() {
 	# shellcheck disable=SC2039
 	local prefix
 	prefix=""
-	if [ -n "${2:-}" ] && [ -d "packages/${2}" ]; then
-		path="./packages/${2}"
-		prefix="\./packages/${2}/"
+	if [ -n "${2:-}" ] && [ -d "packages/$2" ]; then
+		path="./packages/$2"
+		prefix="\./packages/$2/"
 	fi
 
 	mkdir -p target
 
-	find "${path}" -type f |
-		grep -E "^(\./\.babelrc|${prefix}.*\.(css|js|json|jsx|md|scss))$" |
+	find "$path" -type f |
+		grep -E "^(\./\.babelrc|$prefix.*\.(css|js|json|jsx|md|scss))$" |
 		grep -E -v "^.*/(.nyc_output|dist|node_modules|target)/.*$" |
 		grep -E -v "^.*/package-lock\.json$" |
 		grep -E -v "^\./lerna\.json$" \
@@ -329,7 +329,7 @@ install() {
 install_dev_globals() {
 	# We do not need these global packages to run in Travis CI.
 	# shellcheck disable=SC2086
-	npm install --global ${npm_dev_globals}
+	npm install --global $npm_dev_globals
 }
 
 install_globals() {
@@ -340,9 +340,9 @@ install_globals() {
 	# none is installed. You must install peer dependencies yourself.
 
 	# shellcheck disable=SC2086
-	npm install --global ${npm_global}
+	npm install --global $npm_global
 	# shellcheck disable=SC2086
-	npm install --global ${npm_globals}
+	npm install --global $npm_globals
 }
 
 main() {
@@ -383,18 +383,18 @@ update - Check and update project dependencies.'
 	elif [ "$1" = "$(arg 1 $commands)" ]; then
 		audit
 	elif [ "$1" = "$(arg 2 $commands)" ]; then
-		execute_babel "${@}"
+		execute_babel "$@"
 	elif [ "$1" = "$(arg 3 $commands)" ]; then
 		build
 	elif [ "$1" = "$(arg 4 $commands)" ]; then
 		clean
 	elif [ "$1" = "$(arg 5 $commands)" ]; then
 		shift
-		execute_docker "${@:-}"
+		execute_docker "$@"
 	elif [ "$1" = "$(arg 6 $commands)" ]; then
 		run_docker_update
 	elif [ "$1" = "$(arg 7 $commands)" ]; then
-		execute_eslint "${@}"
+		execute_eslint "$@"
 	elif [ "$1" = "$(arg 8 $commands)" ]; then
 		shift
 		./shellutil/git.sh git "$@"
@@ -408,17 +408,17 @@ update - Check and update project dependencies.'
 	elif [ "$1" = "$(arg 12 $commands)" ]; then
 		install_globals
 	elif [ "$1" = "$(arg 13 $commands)" ]; then
-		execute_jsdoc "${@}"
+		execute_jsdoc "$@"
 	elif [ "$1" = "$(arg 14 $commands)" ]; then
-		execute_jsdoc2md "${@}"
+		execute_jsdoc2md "$@"
 	elif [ "$1" = "$(arg 15 $commands)" ]; then
-		execute_mocha "${@}"
+		execute_mocha "$@"
 	elif [ "$1" = "$(arg 16 $commands)" ]; then
 		execute_outdated
 	elif [ "$1" = "$(arg 17 $commands)" ]; then
 		package_lock
 	elif [ "$1" = "$(arg 18 $commands)" ]; then
-		execute_prettier "${@}"
+		execute_prettier "$@"
 	elif [ "$1" = "$(arg 19 $commands)" ]; then
 		publish
 	elif [ "$1" = "$(arg 20 $commands)" ]; then
@@ -470,11 +470,11 @@ run_test() {
 
 update() {
 	apk_update_node_image_version docker/Dockerfile 's#(FROM creemama/node-no-yarn:).*#\\1%s-alpine%s#'
-	for package in ${apk_packages}; do
-		apk_update_package_version "$(printf %s "${package}" | sed -E 's/([^@]+)(@edgecommunity)?~=.*/\1/')"
+	for package in $apk_packages; do
+		apk_update_package_version "$(printf %s "$package" | sed -E 's/([^@]+)(@edgecommunity)?~=.*/\1/')"
 	done
-	for package in ${npm_dev_globals} ${npm_global} ${npm_globals}; do
-		npm_update_package_version "$(printf %s "${package}" | sed -E 's/(.+)@.*/\1/')"
+	for package in $npm_dev_globals $npm_global $npm_globals; do
+		npm_update_package_version "$(printf %s "$package" | sed -E 's/(.+)@.*/\1/')"
 	done
 	update_npm_deps
 	printf '\n%sUpdate docker_image= if dev.sh dependencies change.\n\n%s' "$(tbold)" "$(treset)"
@@ -485,11 +485,11 @@ update_npm_deps() {
 	cd packages
 	for package in */; do
 		(
-			cd "${package}"
-			echo "Visting ${package}"
+			cd "$package"
+			printf '%s\n' "Visting $package"
 			npx ncu -u
 		)
 	done
 }
 
-main "${@:-}"
+main "$@"
