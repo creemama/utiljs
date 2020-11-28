@@ -16,22 +16,27 @@ fi
 . shellutil/updateutil.sh
 # set -o xtrace
 
+# gnupg, openssh, and terminus-font are for git and gitk.
+# ncurses is for tput.
 apk_packages='git~=2.24
+git-gitk~=2.24
 gnupg~=2.2
+ncurses~=6.1
 openssh~=8.1
 shellcheck~=0.7
 shfmt@edgecommunity~=3.2
+terminus-font~=4.48
 '
-docker_image=utiljs-dev:0.39.2
+docker_image=utiljs-dev:0.40.1
 npm_dev_globals='eslint@7.14.0
 jsdoc@3.6.6
 jsdoc-to-markdown@6.0.1
 npm-check-updates@10.2.2
-prettier@2.2.0
+prettier@2.2.1
 '
 npm_global=npm@6.14.9
-npm_globals='@babel/cli@7.12.7
-@babel/core@7.12.7
+npm_globals='@babel/cli@7.12.8
+@babel/core@7.12.9
 lerna@3.22.1
 mocha@8.2.1
 nyc@15.1.0
@@ -472,6 +477,7 @@ update() {
 		npm_update_package_version "$(printf %s "${package}" | sed -E 's/(.+)@.*/\1/')"
 	done
 	update_npm_deps
+	printf '\n%sUpdate docker_image= if dev.sh dependencies change.\n\n%s' "$(tbold)" "$(treset)"
 }
 
 update_npm_deps() {
