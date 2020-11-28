@@ -8,10 +8,12 @@ cd "${script_dir}"
 if [ ! -f shellutil/shellutil.sh ]; then
 	git submodule update --init
 fi
+# shellcheck source=shellutil/mainutil.sh
+. shellutil/mainutil.sh
 # shellcheck source=shellutil/shellutil.sh
 . shellutil/shellutil.sh
-# shellcheck source=shellutil/update.sh
-. shellutil/update.sh
+# shellcheck source=shellutil/updateutil.sh
+. shellutil/updateutil.sh
 # set -o xtrace
 
 apk_packages='git~=2.24
@@ -88,13 +90,13 @@ execute_docker() {
 	# https://stackoverflow.com/a/30543453
 	if [ "$(docker images -q ${docker_image} 2>/dev/null)" = "" ]; then
 		cp dev.sh docker
-		cp shellutil/shellutil.sh docker
-		cp shellutil/update.sh docker
+		cp -r shellutil docker/shellutil
 		cd docker
 		if ! docker build --tag ${docker_image} .; then
 			exit "${?}"
 		fi
-		rm dev.sh shellutil.sh update.sh
+		rm -rf shellutil
+		rm -rf dev.sh
 	fi
 
 	# We mount /tmp because of the following error:
@@ -112,10 +114,16 @@ execute_docker() {
 	# error: gpg failed to sign the data
 	# fatal: failed to write commit object
 
+	# IP, DISPLAY, and /tmp/.X11-unix are for gitk. See shellutil/git.sh.
+	export IP
+	IP="$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')"
+	xhost + "$IP"
+
 	# shellcheck disable=SC2068
 	docker run \
 		--cap-drop=ALL \
 		--cpu-shares=1024 \
+		--env DISPLAY="$IP":0 \
 		--interactive \
 		--memory 1.5G \
 		--name utiljs-dev \
@@ -126,6 +134,7 @@ execute_docker() {
 		--security-opt=no-new-privileges:true \
 		--tty \
 		--volume /home/node \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix \
 		--volume ~/.gnupg:/home/node/.gnupg \
 		--volume ~/.ssh:/home/node/.ssh:ro \
 		--volume "${script_dir}:/home/node/utiljs" \
@@ -333,64 +342,90 @@ install_globals() {
 
 main() {
 	# shellcheck disable=SC2039
-	local script_dir
-	script_dir="$(
-		cd "$(dirname "${0}")"
-		pwd -P
-	)"
-	cd "${script_dir}"
-	if [ "${1:-}" = apk-add ]; then
+	local command_help
+	command_help='apk-add - Add Alpine packages needed by docker/Dockerfile.
+audit - Run audit in all packages.
+babel - Run babel on certain (mostly non-node) packages.
+build - Run clean and babel.
+clean - git clean -fdx --exclude "node_modules"
+docker - Develop inside a Docker container.
+docker-update - Run update using the latest creemama/node-no-yarn:lts-alpine Docker image.
+eslint - Run eslint in all packages.
+git - Run git setting GPG_TTY if not already set for signing commits.
+gitk - Run gitk.
+install - Run install in all packages.
+install-dev-globals - Install Node.js globals not needed by Travis CI.
+install-globals - Install Node.js globals needed by Travis CI.
+jsdoc - Run jsdoc in all packages.
+jsdoc2md - Run jsdoc2md in all packages.
+mocha - Run mocha/nyc in all packages.
+outdated - Run npm outdated in all packages.
+package-lock - Update package-lock.json files in all packages.
+prettier - Run prettier in all packages.
+publish - Bump the version number and publish all packages to npm.
+shell-format - Format shell scripts and run shellcheck.
+test - Run build and mocha for Travis CI.
+travis - Prepare the workspace before pushing an update branch for Travis CI to run.
+update - Check and update project dependencies.'
+	# shellcheck disable=SC2039
+	local commands
+	commands="$(main_extract_commands "$command_help")"
+	# shellcheck disable=SC2086
+	if [ -z "${1:-}" ]; then
+		main_exit_with_no_command_error "$command_help"
+	elif [ "$1" = "$(arg 0 $commands)" ]; then
 		apk_add
-	elif [ "${1:-}" = audit ]; then
+	elif [ "$1" = "$(arg 1 $commands)" ]; then
 		audit
-	elif [ "${1:-}" = babel ]; then
+	elif [ "$1" = "$(arg 2 $commands)" ]; then
 		execute_babel "${@}"
-	elif [ "${1:-}" = build ]; then
+	elif [ "$1" = "$(arg 3 $commands)" ]; then
 		build
-	elif [ "${1:-}" = clean ]; then
+	elif [ "$1" = "$(arg 4 $commands)" ]; then
 		clean
-	elif [ "${1:-}" = docker ]; then
+	elif [ "$1" = "$(arg 5 $commands)" ]; then
 		shift
 		execute_docker "${@:-}"
-	elif [ "${1:-}" = docker-update ]; then
+	elif [ "$1" = "$(arg 6 $commands)" ]; then
 		run_docker_update
-	elif [ "${1:-}" = eslint ]; then
+	elif [ "$1" = "$(arg 7 $commands)" ]; then
 		execute_eslint "${@}"
-	elif [ "${1:-}" = install ]; then
+	elif [ "$1" = "$(arg 8 $commands)" ]; then
+		shift
+		./shellutil/git.sh git "$@"
+	elif [ "$1" = "$(arg 9 $commands)" ]; then
+		shift
+		./shellutil/git.sh gitk "$@"
+	elif [ "$1" = "$(arg 10 $commands)" ]; then
 		install
-	elif [ "${1:-}" = install-dev-globals ]; then
+	elif [ "$1" = "$(arg 11 $commands)" ]; then
 		install_dev_globals
-	elif [ "${1:-}" = install-globals ]; then
+	elif [ "$1" = "$(arg 12 $commands)" ]; then
 		install_globals
-	elif [ "${1:-}" = jsdoc ]; then
+	elif [ "$1" = "$(arg 13 $commands)" ]; then
 		execute_jsdoc "${@}"
-	elif [ "${1:-}" = jsdoc2md ]; then
+	elif [ "$1" = "$(arg 14 $commands)" ]; then
 		execute_jsdoc2md "${@}"
-	elif [ "${1:-}" = mocha ]; then
+	elif [ "$1" = "$(arg 15 $commands)" ]; then
 		execute_mocha "${@}"
-	elif [ "${1:-}" = outdated ]; then
+	elif [ "$1" = "$(arg 16 $commands)" ]; then
 		execute_outdated
-	elif [ "${1:-}" = package-lock ]; then
+	elif [ "$1" = "$(arg 17 $commands)" ]; then
 		package_lock
-	elif [ "${1:-}" = prettier ]; then
+	elif [ "$1" = "$(arg 18 $commands)" ]; then
 		execute_prettier "${@}"
-	elif [ "${1:-}" = publish ]; then
+	elif [ "$1" = "$(arg 19 $commands)" ]; then
 		publish
-	elif [ "${1:-}" = shfmt ]; then
-		./shellutil/format.sh shfmt
-		./shellutil/format.sh shellcheck
-	elif [ "${1:-}" = test ]; then
+	elif [ "$1" = "$(arg 20 $commands)" ]; then
+		./shellutil/format.sh shell-format
+	elif [ "$1" = "$(arg 21 $commands)" ]; then
 		run_test
-	elif [ "${1:-}" = travis ]; then
+	elif [ "$1" = "$(arg 22 $commands)" ]; then
 		execute_travis
-	elif [ "${1:-}" = update ]; then
+	elif [ "$1" = "$(arg 23 $commands)" ]; then
 		update
-	elif [ -n "${1:-}" ]; then
-		printf '%s%s is not a recognized command.\n%s' "$(tred)" "${1}" "$(treset)"
-		exit 1
 	else
-		printf '%sEnter a command.\n%s' "$(tred)" "$(treset)"
-		exit 1
+		main_exit_with_invalid_command_error "$1" "$command_help"
 	fi
 }
 

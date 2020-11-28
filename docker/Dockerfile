@@ -11,8 +11,7 @@ ENV PATH=/home/node/.npm-global/bin:$PATH
 ENV GPG_TTY=/dev/console
 
 COPY dev.sh .
-COPY shellutil.sh ./shellutil/shellutil.sh
-COPY update.sh ./shellutil/update.sh
+COPY shellutil ./shellutil
 RUN ./dev.sh apk-add \
  && rm -rf shellutil \
  && rm dev.sh
@@ -21,8 +20,7 @@ USER node
 WORKDIR /home/node
 
 COPY --chown=node dev.sh .
-COPY --chown=node shellutil.sh ./shellutil/shellutil.sh
-COPY --chown=node update.sh ./shellutil/update.sh
+COPY --chown=node shellutil ./shellutil
 RUN ./dev.sh install-globals \
  && ./dev.sh install-dev-globals \
  && rm -rf shellutil \
