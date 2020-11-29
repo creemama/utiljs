@@ -45,10 +45,7 @@ The scripts in this directory do the following:
 
   - `./dev.sh install-globals`
   - `./dev.sh install-dev-globals`
-  - `./dev.sh outdated`
   - `./dev.sh install`
-  - `npm run package-lock` - BE CAREFUL! This runs `git clean -fdx`.
-  - `npm run audit`
   - `./dev.sh audit`
 
 - Format and run a linter.

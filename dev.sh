@@ -49,7 +49,12 @@ apk_add() {
 }
 
 audit() {
+	npm audit
+	# We cannot run audit in subpackages without a package-lock.json.
+	npx lerna exec "npm install --package-lock-only --save-exact"
 	npx @util.js/node-lerna
+	# shellcheck disable=SC2046
+	rm $(find packages -name package-lock.json)
 }
 
 build() {
@@ -262,28 +267,6 @@ execute_mocha() {
 	fi
 }
 
-execute_outdated() {
-	set +o errexit
-	# shellcheck disable=SC2039
-	local exit_code
-	exit_code=0
-	npm outdated -g
-	npm outdated
-	cd packages || exit
-	for package in */; do
-		(
-			cd "$package" || exit
-			printf '%s\n' "Visting $package"
-			npm outdated
-		)
-		latest_exit_code=$?
-		if [ $latest_exit_code -ne 0 ]; then
-			exit_code=$latest_exit_code
-		fi
-	done
-	return $exit_code
-}
-
 execute_prettier() {
 	# shellcheck disable=SC2039
 	local path
@@ -321,9 +304,7 @@ execute_travis() {
 }
 
 install() {
-	npm install --save-exact
-	lerna bootstrap -- --save-exact
-	printf "\n\033[1m%s\033[0m\n\n" "** Consider running \"./dev.sh package-lock\" as well. **"
+	lerna bootstrap --force-local --hoist -- --save-exact
 }
 
 install_dev_globals() {
@@ -364,8 +345,6 @@ install-globals - Install Node.js globals needed by Travis CI.
 jsdoc - Run jsdoc in all packages.
 jsdoc2md - Run jsdoc2md in all packages.
 mocha - Run mocha/nyc in all packages.
-outdated - Run npm outdated in all packages.
-package-lock - Update package-lock.json files in all packages.
 prettier - Run prettier in all packages.
 publish - Bump the version number and publish all packages to npm.
 shell-format - Format shell scripts and run shellcheck.
@@ -414,31 +393,20 @@ update - Check and update project dependencies.'
 	elif [ "$1" = "$(arg 15 $commands)" ]; then
 		execute_mocha "$@"
 	elif [ "$1" = "$(arg 16 $commands)" ]; then
-		execute_outdated
-	elif [ "$1" = "$(arg 17 $commands)" ]; then
-		package_lock
-	elif [ "$1" = "$(arg 18 $commands)" ]; then
 		execute_prettier "$@"
-	elif [ "$1" = "$(arg 19 $commands)" ]; then
+	elif [ "$1" = "$(arg 17 $commands)" ]; then
 		publish
-	elif [ "$1" = "$(arg 20 $commands)" ]; then
+	elif [ "$1" = "$(arg 18 $commands)" ]; then
 		./shellutil/format.sh shell-format
-	elif [ "$1" = "$(arg 21 $commands)" ]; then
+	elif [ "$1" = "$(arg 19 $commands)" ]; then
 		run_test
-	elif [ "$1" = "$(arg 22 $commands)" ]; then
+	elif [ "$1" = "$(arg 20 $commands)" ]; then
 		execute_travis
-	elif [ "$1" = "$(arg 23 $commands)" ]; then
+	elif [ "$1" = "$(arg 21 $commands)" ]; then
 		update
 	else
 		main_exit_with_invalid_command_error "$1" "$command_help"
 	fi
-}
-
-package_lock() {
-	git clean -fdx
-	npm install --save-exact
-	lerna exec "npm install --package-lock-only --save-exact"
-	install
 }
 
 publish() {
@@ -451,11 +419,6 @@ publish() {
 	build
 	npm login --scope=@util.js
 	lerna publish --exact # This command bumps the version number.
-
-	# You may need to use --force-publish, an intentionally undocumented option.
-	# lerna publish --exact --force-publish=utiljs-objects,utiljs-strings
-	package_lock
-	git commit -am "fix: execute \"./dev.sh package-lock\""
 }
 
 run_docker_update() {
