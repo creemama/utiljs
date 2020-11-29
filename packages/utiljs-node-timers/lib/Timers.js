@@ -70,7 +70,7 @@ module.exports = class Timers {
    * functionToThrottle calling it once every limitInMilliseconds.
    *
    * @example
-   * const timers = require("@util.js/timers");
+   * const timers = require("@util.js/node-timers");
    * let lastTime = Date.now();
    * function call(str) {
    *   console.log(str + ": " + (Date.now() - lastTime));

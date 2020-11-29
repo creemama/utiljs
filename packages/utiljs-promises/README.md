@@ -114,7 +114,7 @@ When trying to remember the difference between #apply and #call, think, "#apply 
 // Wrap a function that only accepts a callback.
 const promises = require("@util.js/promises");
 const stream = require("stream");
-const streams = require("@util.js/streams");
+const streams = require("@util.js/node-streams");
 // stream#finished only takes a callback.
 // Wrap stream#finished so that it handles both callbacks and Promises.
 function finished() {
@@ -347,7 +347,7 @@ Use [callCallback](#Promises+callCallback) if you would like to promisify a meth
 ```js
 const promises = require("@util.js/promises");
 const stream = require("stream");
-const streams = require("@util.js/streams");
+const streams = require("@util.js/node-streams");
 // stream#finished only takes a callback.
 // Let us wrap stream#finished so that it returns a Promise.
 const readable = streams.fromString("Promise me, Hypnotoad!");
