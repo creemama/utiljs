@@ -376,10 +376,10 @@ update - Check and update project dependencies.'
 		execute_eslint "$@"
 	elif [ "$1" = "$(arg 8 $commands)" ]; then
 		shift
-		./shellutil/git.sh git "$@"
+		shellutil/git.sh git "$@"
 	elif [ "$1" = "$(arg 9 $commands)" ]; then
 		shift
-		./shellutil/git.sh gitk "$@"
+		shellutil/git.sh gitk "$@"
 	elif [ "$1" = "$(arg 10 $commands)" ]; then
 		install
 	elif [ "$1" = "$(arg 11 $commands)" ]; then
@@ -397,7 +397,7 @@ update - Check and update project dependencies.'
 	elif [ "$1" = "$(arg 17 $commands)" ]; then
 		publish
 	elif [ "$1" = "$(arg 18 $commands)" ]; then
-		./shellutil/format.sh shell-format
+		shellutil/format.sh shell-format
 	elif [ "$1" = "$(arg 19 $commands)" ]; then
 		run_test
 	elif [ "$1" = "$(arg 20 $commands)" ]; then
