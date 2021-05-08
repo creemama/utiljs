@@ -67,6 +67,24 @@ class Arrays {
   shuffle(array) {
     return knuthshuffle().knuthShuffle(this.from(array));
   }
+
+  /**
+   * Sorts the elements of an array and (unlike returns a **new array** with the sorted elements. The default sort order is ascending, built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
+   *
+   * See [knuth-shuffle]{@link https://www.npmjs.com/package/knuth-shuffle}.
+   *
+   * @param {Array} array The array to shuffle
+   * @return {Array} A new Array instance
+   * @public
+   * @instance
+   * @function
+   */
+  sort(array, compareFunction) {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    // https://stackoverflow.com/questions/9592740/how-can-you-sort-an-array-without-mutating-the-original-array
+    // https://stackoverflow.com/a/9592755
+    return Array.prototype.slice.call(arr).sort(compareFunction);
+  }
 }
 
 module.exports = Arrays;
