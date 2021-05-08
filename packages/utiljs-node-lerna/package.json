@@ -4,11 +4,11 @@
     "utiljs-lerna-audit": "./cli.js"
   },
   "dependencies": {
-    "@util.js/node-files": "0.40.1",
-    "@util.js/numbers": "0.40.1",
-    "@util.js/objects": "0.40.1",
-    "@util.js/privates": "0.40.1",
-    "@util.js/promises": "0.40.1"
+    "@util.js/node-files": "0.41.0",
+    "@util.js/numbers": "0.41.0",
+    "@util.js/objects": "0.41.0",
+    "@util.js/privates": "0.41.0",
+    "@util.js/promises": "0.41.0"
   },
   "description": "JavaScript utility methods for Lerna",
   "keywords": [
@@ -30,5 +30,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-node-lerna"
   },
-  "version": "0.40.1"
+  "version": "0.41.0"
 }
