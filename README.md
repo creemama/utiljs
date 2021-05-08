@@ -43,6 +43,7 @@ The scripts in this directory do the following:
 
 - Install and update dependencies. Use [fix] as the commit type.
 
+  - `./dev.sh docker-update`
   - `./dev.sh install-globals`
   - `./dev.sh install-dev-globals`
   - `./dev.sh install`
