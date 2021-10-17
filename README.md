@@ -48,6 +48,7 @@ The scripts in this directory do the following:
   - `./dev.sh install-dev-globals`
   - `./dev.sh install`
   - `./dev.sh audit`
+  - `npm audit fix && ./dev.sh install` - run if an audit finds something
 
 - Format and run a linter.
 
@@ -67,8 +68,8 @@ The scripts in this directory do the following:
 
   - `./dev.sh clean`
   - `./dev.sh babel`
-  - `./dev.sh build`
+  - `./dev.sh build` - executes clean and babel
   - `./dev.sh mocha`
-  - `npm run test`
+  - `npm run test` - executes build and mocha
   - `./dev.sh travis`
   - `./dev.sh publish` - bumps up the version number
