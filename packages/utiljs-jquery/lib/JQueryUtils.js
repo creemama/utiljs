@@ -60,9 +60,8 @@ class JQueryUtils {
     };
     scriptElement.src = src;
 
-    const existingScriptElement = wnd.document.getElementsByTagName(
-      "script"
-    )[0];
+    const existingScriptElement =
+      wnd.document.getElementsByTagName("script")[0];
     existingScriptElement.parentNode.insertBefore(
       scriptElement,
       existingScriptElement

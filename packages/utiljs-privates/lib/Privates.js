@@ -111,10 +111,9 @@ module.exports = class Privates {
   lazyLoadProps(thiz, ...lazilyLoadedProperties) {
     const t = this;
     lazilyLoadedProperties.forEach((currentProperties) => {
-      Object.entries(
-        currentProperties
-      ).forEach(([property, lazyLoadFunction]) =>
-        t.lazyLoad(thiz, property, lazyLoadFunction)
+      Object.entries(currentProperties).forEach(
+        ([property, lazyLoadFunction]) =>
+          t.lazyLoad(thiz, property, lazyLoadFunction)
       );
     });
   }

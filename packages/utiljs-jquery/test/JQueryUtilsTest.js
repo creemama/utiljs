@@ -31,8 +31,7 @@ describe("JQueryUtils", () => {
       global.document = window.document;
       return jQueryUtils
         .loadjQuery({
-          src:
-            "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js",
+          src: "https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js",
           window,
         })
         .then(($) => {
@@ -109,8 +108,7 @@ describe("JQueryUtils", () => {
       global.document = window.document;
       return jQueryUtils
         .loadjQuery({
-          src:
-            "https://ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.min.js",
+          src: "https://ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.min.js",
           window,
         })
         .then(($) =>
