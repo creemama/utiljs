@@ -1,7 +1,7 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@babel/runtime-corejs3": "7.14.0",
+    "@babel/runtime-corejs3": "7.15.4",
     "@util.js/promises": "0.41.0"
   },
   "dependencies-comments": [
@@ -10,7 +10,7 @@
   ],
   "description": "JavaScript utility methods for jQuery",
   "devDependencies": {
-    "jsdom": "16.5.3"
+    "jsdom": "18.0.0"
   },
   "keywords": [
     "jQuery",
