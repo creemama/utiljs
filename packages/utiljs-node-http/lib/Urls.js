@@ -28,7 +28,7 @@ class Urls {
       })
       .on("error", (error) => {
         files().unlink(destination, (unlinkError) => {
-          cb(unlinkError ? unlinkError : error);
+          cb(unlinkError || error);
         });
       });
     const timeout = determineTimeout(callbackOrOptions);
