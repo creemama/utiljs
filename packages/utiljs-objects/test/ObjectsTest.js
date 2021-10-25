@@ -1,7 +1,7 @@
 "use strict";
 
-const { expect } = require("chai"),
-  objects = require("..");
+const { expect } = require("chai");
+const objects = require("..");
 
 describe("Objects", () => {
   describe("#assign(target, ...sources)", () => {

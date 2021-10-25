@@ -1,7 +1,7 @@
 "use strict";
 
-const { expect } = require("chai"),
-  promises = require("..");
+const { expect } = require("chai");
+const promises = require("..");
 
 describe("Promises", function () {
   describe("#(apply|call)Callback(object, functionOnObjectWithCallback, args)", () => {

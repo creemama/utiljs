@@ -1,8 +1,8 @@
 "use strict";
 
-const { expect } = require("chai"),
-  Privates = require(".."),
-  { RethrownError } = require("@util.js/errors");
+const { expect } = require("chai");
+const Privates = require("..");
+const { RethrownError } = require("@util.js/errors");
 
 const ExampleUsingGet = (function () {
   const privates = new Privates();

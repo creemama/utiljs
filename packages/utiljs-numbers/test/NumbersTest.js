@@ -1,7 +1,7 @@
 "use strict";
 
-const { expect } = require("chai"),
-  numbers = require("..");
+const { expect } = require("chai");
+const numbers = require("..");
 
 describe("Numbers#abs(x)", () => {
   it("should calculate correctly", () => {

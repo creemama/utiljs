@@ -1,7 +1,7 @@
 "use strict";
 
-const { assert, expect } = require("chai"),
-  timers = require("..");
+const { assert, expect } = require("chai");
+const timers = require("..");
 
 describe("Timers#setImmediate(callback[, ...args])", () => {
   it("should notify a callback", (done) => {

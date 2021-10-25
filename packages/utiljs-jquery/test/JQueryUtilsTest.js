@@ -1,9 +1,9 @@
 "use strict";
 
-const { expect } = require("chai"),
-  jQueryUtils = require(".."),
-  { JSDOM } = require("jsdom"),
-  promises = require("@util.js/promises");
+const { expect } = require("chai");
+const jQueryUtils = require("..");
+const { JSDOM } = require("jsdom");
+const promises = require("@util.js/promises");
 
 describe("JQueryUtils", () => {
   describe("#loadjQuery(params[, callback])", () => {

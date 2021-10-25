@@ -1,8 +1,8 @@
 "use strict";
 
-const { AssertionError, expect } = require("chai"),
-  errors = require(".."),
-  { AsyncError, RethrownError } = errors;
+const { expect } = require("chai");
+const errors = require("..");
+const { AsyncError, RethrownError } = errors;
 
 describe("Errors#catch(promise)", () => {
   it("should return a Promise that throws an AsyncError upon rejection", () => {

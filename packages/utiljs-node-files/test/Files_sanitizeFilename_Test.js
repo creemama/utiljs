@@ -1,7 +1,7 @@
 "use strict";
 
-const { expect } = require("chai"),
-  files = require("..");
+const { expect } = require("chai");
+const files = require("..");
 
 describe("Files#sanitizeFilename", () => {
   it("should sanitize filenames", () => {

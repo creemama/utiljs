@@ -1,9 +1,9 @@
 "use strict";
 
-const expect = require("chai").expect,
-  files = require("@util.js/node-files"),
-  targetDir = __dirname + "/../target",
-  urls = require("..");
+const expect = require("chai").expect;
+const files = require("@util.js/node-files");
+const targetDir = __dirname + "/../target";
+const urls = require("..");
 let fileNum = 0;
 
 describe("Urls", () => {

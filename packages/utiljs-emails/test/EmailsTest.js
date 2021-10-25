@@ -1,7 +1,7 @@
 "use strict";
 
-const emails = require(".."),
-  { expect } = require("chai");
+const emails = require("..");
+const { expect } = require("chai");
 
 describe("Emails", () => {
   describe("#isValidEmail(string)", () => {

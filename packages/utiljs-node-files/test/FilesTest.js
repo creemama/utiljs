@@ -1,7 +1,7 @@
 "use strict";
 
-const { assert, expect } = require("chai"),
-  files = require("..");
+const { assert, expect } = require("chai");
+const files = require("..");
 
 describe("Files", function () {
   const waterfall = require("async-waterfall");
@@ -757,7 +757,7 @@ describe("Files", function () {
 
   describe("#mkdirp and #rmrf", function () {
     it("should create and destroy a new directory hierarchy", function (done) {
-      var testDir = targetDir + "/this/is/a/nested/dir";
+      const testDir = targetDir + "/this/is/a/nested/dir";
       waterfall(
         [
           function (cb) {
@@ -799,7 +799,7 @@ describe("Files", function () {
 
   describe("#rmrf", function () {
     it("should delete files", function (done) {
-      var testFile = targetDir + "/frog.txt";
+      const testFile = targetDir + "/frog.txt";
       files.mkdirpSync(targetDir);
       files.closeSync(files.openSync(testFile, "w"));
       waterfall(
@@ -830,7 +830,7 @@ describe("Files", function () {
 
   describe("#mkdirpSync and #rmrfSync", function () {
     it("should create and destroy a new directory hierarchy", function () {
-      var testDir = targetDir + "/this/is/a/nested/dir";
+      const testDir = targetDir + "/this/is/a/nested/dir";
       files.rmrfSync(targetDir);
       expect(function () {
         files.isDirectorySync(targetDir);
@@ -1044,7 +1044,7 @@ describe("Files", function () {
     });
 
     it("should create an empty file", function (done) {
-      var touchFile = targetDir + "/foo.bar";
+      const touchFile = targetDir + "/foo.bar";
       expect(function () {
         files.isFileSync(touchFile);
       }).to.throw(/ENOENT.*/);

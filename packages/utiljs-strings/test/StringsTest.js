@@ -1,7 +1,7 @@
 "use strict";
 
-const { expect } = require("chai"),
-  strings = require("..");
+const { expect } = require("chai");
+const strings = require("..");
 
 describe("Strings", () => {
   describe("#base64Url...", () => {
@@ -21,7 +21,7 @@ describe("Strings", () => {
       expect(
         strings.base64UrlToBase64("qL8R4QIcQ_ZsRqOAbeRfcZhilN_MksRtDaErMA")
       ).to.equal("qL8R4QIcQ/ZsRqOAbeRfcZhilN/MksRtDaErMA==");
-      var buf = Buffer.alloc(13);
+      const buf = Buffer.alloc(13);
       buf.writeUInt8(0x73, 0);
       buf.writeUInt8(0x70, 1);
       buf.writeUInt8(0x69, 2);
@@ -43,14 +43,14 @@ describe("Strings", () => {
 
   describe("#endsWith()", () => {
     it("should operate normally", () => {
-      var str = "To be, or not to be, that is the question.";
+      const str = "To be, or not to be, that is the question.";
       expect(strings.endsWith(str, "question.")).to.be.true;
       expect(strings.endsWith(str, "to be")).to.be.false;
       expect(strings.endsWith(str, "to be", 19)).to.be.true;
       expect(strings.endsWith(str, "question.", -19)).to.be.false;
     });
     it("should return false if position is negative", () => {
-      var str = "To be, or not to be, that is the question.";
+      const str = "To be, or not to be, that is the question.";
       expect(strings.endsWith(str, "question.", -19)).to.be.false;
     });
     it("should thow an error when the first or second argument is missing", () => {

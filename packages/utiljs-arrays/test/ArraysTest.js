@@ -1,7 +1,7 @@
 "use strict";
 
-const arrays = require(".."),
-  { expect } = require("chai");
+const arrays = require("..");
+const { expect } = require("chai");
 
 describe("Arrays", () => {
   describe("#from", () => {

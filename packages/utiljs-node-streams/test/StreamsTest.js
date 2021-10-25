@@ -1,8 +1,8 @@
 "use strict";
 
-const { expect } = require("chai"),
-  stream = require("stream"),
-  streams = require("..");
+const { expect } = require("chai");
+const stream = require("stream");
+const streams = require("..");
 
 describe("Streams", () => {
   describe("#finished(stream[, callback])", () => {
