@@ -22,12 +22,10 @@ describe("Arrays", () => {
 
   describe("#sort", () => {
     it("should sort an array", () => {
-      // TODO BUG #short should not throw an error.
       const a = [2, 1, 3];
-      expect(() => arrays.sort(a)).to.throw(Error);
-      // const b = arrays.sort(a);
-      // expect(b).to.not.eql(a);
-      // expect(b).to.eql([1, 2, 3]);
+      const b = arrays.sort(a);
+      expect(b).to.not.eql(a);
+      expect(b).to.eql([1, 2, 3]);
     });
   });
 

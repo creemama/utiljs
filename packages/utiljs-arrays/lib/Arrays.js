@@ -83,7 +83,7 @@ class Arrays {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
     // https://stackoverflow.com/questions/9592740/how-can-you-sort-an-array-without-mutating-the-original-array
     // https://stackoverflow.com/a/9592755
-    return Array.prototype.slice.call(arr).sort(compareFunction);
+    return Array.prototype.slice.call(array).sort(compareFunction);
   }
 }
 
