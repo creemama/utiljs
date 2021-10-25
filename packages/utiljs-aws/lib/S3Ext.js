@@ -52,10 +52,10 @@ module.exports = class S3Ext {
           callback(error);
           return;
         }
-        let newObjects = Objects
+        const newObjects = Objects
           ? Objects.concat(data.Contents)
           : data.Contents;
-        let newContinuationToken =
+        const newContinuationToken =
           data.NextContinuationToken || data.ContinuationToken;
         if (
           newContinuationToken &&

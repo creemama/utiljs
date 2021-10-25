@@ -1,4 +1,4 @@
 "use strict";
 
-var Urls = require("./lib/Urls");
+const Urls = require("./lib/Urls");
 module.exports = new Urls();

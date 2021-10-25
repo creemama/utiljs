@@ -1,4 +1,4 @@
 "use strict";
 
-var Files = require("./lib/Files");
+const Files = require("./lib/Files");
 module.exports = new Files();

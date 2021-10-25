@@ -28,11 +28,11 @@ class Strings {
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
   endsWith(str, searchString, position) {
-    var subjectString = str.toString();
+    const subjectString = str.toString();
     if (position === undefined || position > subjectString.length)
       position = subjectString.length;
     position -= searchString.length;
-    var lastIndex = subjectString.indexOf(searchString, position);
+    const lastIndex = subjectString.indexOf(searchString, position);
     return lastIndex !== -1 && lastIndex === position;
   }
 

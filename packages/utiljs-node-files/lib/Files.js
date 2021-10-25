@@ -79,7 +79,7 @@ module.exports = class Files {
       return callback(new TypeError("We expected pathA to be defined."));
     if (!objects().isDefined(pathB))
       return callback(new TypeError("We expected pathB to be defined."));
-    var diff = childProcess().spawn("diff", [pathA, pathB]);
+    const diff = childProcess().spawn("diff", [pathA, pathB]);
     diff.on("close", (code) => {
       callback(null, code === 0);
     });
