@@ -395,14 +395,13 @@ const dependencies = {};
 
 function callbackifyCache() {
   return (
-    dependencies["callbackifyCache"] ||
-    (dependencies["callbackifyCache"] = new WeakMap())
+    dependencies.callbackifyCache ||
+    (dependencies.callbackifyCache = new WeakMap())
   );
 }
 function promisifyCache() {
   return (
-    dependencies["promisifyCache"] ||
-    (dependencies["promisifyCache"] = new WeakMap())
+    dependencies.promisifyCache || (dependencies.promisifyCache = new WeakMap())
   );
 }
 

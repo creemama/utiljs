@@ -19,7 +19,7 @@ function wrap(thiz) {
     runOnInit,
     unrefTimeout
   ) {
-    return new thiz["cron"].CronJob(
+    return new thiz.cron.CronJob(
       cronTime,
       onTick,
       onComplete,

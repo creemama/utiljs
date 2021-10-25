@@ -65,7 +65,7 @@ const dependencies = {};
 
 function requireEmailHeaders() {
   return (
-    dependencies["EmailHeaders"] ||
-    (dependencies["EmailHeaders"] = require("./EmailHeaders"))
+    dependencies.EmailHeaders ||
+    (dependencies.EmailHeaders = require("./EmailHeaders"))
   );
 }
