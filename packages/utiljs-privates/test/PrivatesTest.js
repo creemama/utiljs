@@ -11,9 +11,11 @@ const ExampleUsingGet = (function () {
     constructor(options) {
       privates.setProps(this, options);
     }
+
     getProperty1() {
       return property1(this);
     }
+
     getProperty2() {
       return property2(this);
     }
@@ -39,9 +41,11 @@ const ExampleUsingCall = (function () {
     constructor(options) {
       privates.setProps(this, options);
     }
+
     getProperty1() {
       return property1(this);
     }
+
     getProperty2() {
       return property2(this);
     }
@@ -104,6 +108,7 @@ describe("Privates#call", () => {
       delegate() {
         return "classObj";
       }
+
       call() {
         return this.delegate();
       }
@@ -150,6 +155,7 @@ describe("Privates#call", () => {
       delegate() {
         return "classObj";
       }
+
       call() {
         return this.delegate();
       }
