@@ -109,11 +109,9 @@ class Numbers {
 
   // http://stackoverflow.com/questions/14636536/how-to-check-if-a-variable-is-an-integer-in-javascript
   isInt(value) {
-    return (
-      !this.isNaN(value) &&
-      this.parseInt(Number(value)) == value &&
-      !this.isNaN(this.parseInt(value, 10))
-    );
+    if (this.isNaN(value)) return false;
+    const x = this.parseFloat(value);
+    return (x | 0) === x;
   }
 
   isInteger() {

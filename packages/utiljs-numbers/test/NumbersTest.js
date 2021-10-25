@@ -81,6 +81,7 @@ describe("Numbers", () => {
     });
     it("should return true for objects whose #toString evaluates to an integer", () => {
       expect(numbers.isInt([5])).to.be.true;
+      expect(numbers.isInt([5, 6])).to.be.true;
       expect(numbers.isInt({ toString: () => "5" })).to.be.true;
     });
     it("should return false for numbers with a nonzero fractional part", () => {
@@ -97,7 +98,6 @@ describe("Numbers", () => {
     it("should return false for objects whose #toString does not evaluate to an integer", () => {
       expect(numbers.isInt([])).to.be.false;
       expect(numbers.isInt({})).to.be.false;
-      expect(numbers.isInt([5, 5])).to.be.false;
       expect(numbers.isInt([5.5, 5])).to.be.false;
       expect(numbers.isInt({ toString: () => "5.5" })).to.be.false;
     });
