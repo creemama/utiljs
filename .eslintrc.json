@@ -1,6 +1,27 @@
 {
-  "extends": ["prettier"],
+  // prettier must be last.
+  // https://web.archive.org/web/20210804112206/https://github.com/prettier/eslint-config-prettier
+  // "Compare the Top 3 Style Guides and Set Them Up With ESLint"
+  // https://web.archive.org/web/20211025033512/https://betterprogramming.pub/comparing-the-top-three-style-guides-and-setting-them-up-with-eslint-98ea0d2fc5b7?gi=14db7a92ff8
+  // https://web.archive.org/web/20210910043829/https://stackoverflow.com/questions/30018271/javascript-standard-style-does-not-recognize-mocha
+  // https://web.archive.org/web/20210816130619/https://eslint.org/docs/2.13.1/user-guide/configuring
+  // https://web.archive.org/web/20211009141701/https://eslint.org/docs/rules/no-var
+  "env": {
+    "commonjs": true,
+    "node": true,
+    "mocha": true
+  },
+  "extends": ["eslint:recommended", "standard", "prettier"],
+  // https://web.archive.org/web/20211025055508/https://stackoverflow.com/questions/37558795/nice-way-to-get-rid-of-no-unused-expressions-linter-error-with-chai/43525402
+  "overrides": [
+    {
+      "files": ["*Test.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ],
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 12
   }
 }

@@ -176,7 +176,7 @@ execute_eslint() {
 
 	while read -r in; do
 		printf '%s\n' "$in"
-		eslint "$in"
+		eslint --fix "$in" || true
 	done <target/eslint.txt
 
 	rm -rf target/eslint.txt
