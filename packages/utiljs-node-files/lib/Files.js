@@ -567,9 +567,6 @@ function get(dependency) {
   );
 }
 
-function asyncwaterfall() {
-  return get("async-waterfall");
-}
 function childProcess() {
   return get("child_process");
 }
