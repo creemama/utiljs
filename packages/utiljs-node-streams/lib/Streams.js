@@ -67,6 +67,7 @@ class Streams {
    * @function
    */
   newReadable() {
+    // eslint-disable-next-line new-cap
     return new stream().Readable(...arguments);
   }
 
@@ -90,6 +91,7 @@ class Streams {
    * @function
    */
   newWritable() {
+    // eslint-disable-next-line new-cap
     return new stream().Writable(...arguments);
   }
 

@@ -33,6 +33,7 @@ describe("Errors#catch(promise)", () => {
   });
   it("should return a Promise that throws an AsyncError upon rejecting with a string", () => {
     function rejectAPromise() {
+      // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject("ENTITY_NOT_FOUND");
     }
     return errors.catch(rejectAPromise()).catch((error) => {
@@ -45,6 +46,7 @@ describe("Errors#catch(promise)", () => {
   });
   it("should return a Promise that throws an AsyncError upon rejecting with an array", () => {
     function rejectAPromise() {
+      // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject([{ code: "1234" }]);
     }
     return errors.catch(rejectAPromise()).catch((error) => {
@@ -104,6 +106,7 @@ describe("new Errors#RethrownError(message, error)", () => {
   });
   it("should create a rethrown error from a thrown string", () => {
     function throwAString() {
+      // eslint-disable-next-line no-throw-literal
       throw "ENTITY_NOT_FOUND";
     }
     function rethrowTheString() {
@@ -141,6 +144,7 @@ describe("new Errors#RethrownError(message, error)", () => {
   });
   it("should create a rethrown error from a thrown array", () => {
     function throwAnArray() {
+      // eslint-disable-next-line no-throw-literal
       throw [{ code: "1234" }];
     }
     function rethrowTheArray() {

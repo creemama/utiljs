@@ -146,6 +146,7 @@ describe("Privates#call", () => {
     const thiz = {};
 
     expect(() => privates.call()).to.throw(RethrownError);
+    // eslint-disable-next-line no-useless-call
     expect(() => privates.call(null, "nonexistent")).to.throw(RethrownError);
     expect(() => privates.call(thiz)).to.throw(RethrownError);
     expect(() => privates.call(thiz, "nonexistent")).to.throw(RethrownError);

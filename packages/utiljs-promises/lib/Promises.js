@@ -368,6 +368,7 @@ class Promises {
    * @function
    */
   reject() {
+    // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject(...arguments);
   }
 
