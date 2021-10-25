@@ -6,8 +6,8 @@ const promises = require("..");
 describe("Promises", function () {
   describe("#(apply|call)Callback(object, functionOnObjectWithCallback, args)", () => {
     function notify(message, who, callback) {
-      if (message == "Throw error") throw new Error("Hypnotoad died.");
-      if (message == "Return undefined") return;
+      if (message === "Throw error") throw new Error("Hypnotoad died.");
+      if (message === "Return undefined") return;
       callback(null, `${message}, ${who}!`);
     }
     it("should resolve a Promise", async function () {
@@ -64,8 +64,8 @@ describe("Promises", function () {
 
   describe("#(apply|call)Promise(object, promiseFunctionOnObject, args)", () => {
     function notify(message, who) {
-      if (message == "Throw error") throw new Error("Hypnotoad died.");
-      if (message == "Return undefined") return;
+      if (message === "Throw error") throw new Error("Hypnotoad died.");
+      if (message === "Return undefined") return;
       return promises.resolve(`${message}, ${who}!`);
     }
     it("should notify a callback", (callback) => {
@@ -354,7 +354,7 @@ describe("Promises", function () {
       }
       const a = promises.callbackify(promiseFunction);
       const b = promises.callbackify(promiseFunction);
-      expect(a == b).to.be.ok;
+      expect(a === b).to.be.ok;
     });
     it("should throw an error if promiseFunction is not a function", () => {
       expect(() => promises.callbackify()).to.throw(TypeError);
@@ -393,7 +393,7 @@ describe("Promises", function () {
       }
       const a = promises.promisify(functionWithCallback);
       const b = promises.promisify(functionWithCallback);
-      expect(a == b).to.be.ok;
+      expect(a === b).to.be.ok;
     });
     it("should reject if functionWithCallback is not a function", () => {
       expect(() => promises.promisify()).to.throw(TypeError);

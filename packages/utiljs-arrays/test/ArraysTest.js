@@ -8,7 +8,7 @@ describe("Arrays", () => {
     it("should create a shallow copy", () => {
       const a = [1, 2, 3];
       const b = arrays.from(a);
-      expect(b == a).to.be.false;
+      expect(b === a).to.be.false;
       expect(b[0]).to.eql(1);
       expect(b[1]).to.eql(2);
       expect(b[2]).to.eql(3);
@@ -33,7 +33,7 @@ describe("Arrays", () => {
     it("should shuffle array contents", () => {
       const a = [1, 2, 3];
       const b = arrays.shuffle(a);
-      expect(b == a).to.be.false;
+      expect(b === a).to.be.false;
       expect(b.length).to.eql(3);
       // console.log(b)
     });

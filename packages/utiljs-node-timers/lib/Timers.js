@@ -120,7 +120,7 @@ module.exports = class Timers {
     }
 
     function recurse() {
-      if (functions.length == 0) return;
+      if (functions.length === 0) return;
       if (!executing && Date.now() - lastRan > limitInMilliseconds) {
         lastRan = execute.apply(null, functions.shift());
         if (functions.length >= 1) recurse();

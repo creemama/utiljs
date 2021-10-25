@@ -59,7 +59,7 @@ module.exports = class S3Ext {
           data.NextContinuationToken || data.ContinuationToken;
         if (
           newContinuationToken &&
-          !(ContinuationToken == newContinuationToken)
+          !(ContinuationToken === newContinuationToken)
         ) {
           this.listAllObjectsV2(
             {

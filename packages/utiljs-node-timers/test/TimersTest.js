@@ -28,7 +28,7 @@ describe("Timers#setInterval(callback, delay[, ...args]) and Timers#clearInterva
     let numCalls = 0;
     const timeout = timers.setInterval(
       (value) => {
-        if (++numCalls == 3) {
+        if (++numCalls === 3) {
           timers.clearInterval(timeout);
           timers.setTimeout(() => {
             try {
@@ -90,9 +90,9 @@ describe("Timers#clearImmediate(immediate)", () => {
     require("fs").readFile(__filename, "utf8", (string) => {
       try {
         expect(numCalls).to.eql(0);
-        if (numCalls == 0) done();
+        if (numCalls === 0) done();
       } catch (e) {
-        if (numCalls == 0)
+        if (numCalls === 0)
           // We should never get here.
           // done should have already been called.
           done(e);
@@ -108,9 +108,9 @@ describe("Timers#clearTimeout(timeout)", () => {
     timers.setTimeout(() => {
       try {
         expect(numCalls).to.eql(0);
-        if (numCalls == 0) done();
+        if (numCalls === 0) done();
       } catch (e) {
-        if (numCalls == 0)
+        if (numCalls === 0)
           // We should never get here.
           // done should have already been called.
           done(e);
@@ -165,7 +165,7 @@ describe("Times#throttle(func, limit)", () => {
           expectedInternalResults.push("result " + derivedNum);
         }
       }
-      if (number == 2) throw new Error("error " + 2);
+      if (number === 2) throw new Error("error " + 2);
       return "result " + number;
     }
 
@@ -175,7 +175,7 @@ describe("Times#throttle(func, limit)", () => {
     const expectedResult = [];
     let errorPromise;
     for (let i = 1; i <= n; i++) {
-      if (i != 2) {
+      if (i !== 2) {
         initialPromises.push(throttledFunction(i));
         expectedResult.push("result " + i);
       } else {

@@ -311,8 +311,8 @@ class Promises {
         try {
           functionWithCallback.call(thiz, ...args, function (error, ...values) {
             if (error) return reject(error);
-            if (values.length == 0) return resolve();
-            if (values.length == 1) return resolve(values[0]);
+            if (values.length === 0) return resolve();
+            if (values.length === 1) return resolve(values[0]);
             resolve(values);
           });
         } catch (err) {

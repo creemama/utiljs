@@ -101,7 +101,7 @@ async function describePackage(thiz, packageDir) {
 
 function handleError(thiz, error, packageDir) {
   let errorCode;
-  if (thiz.numbers.isInteger(error.code) && error.code != 0) {
+  if (thiz.numbers.isInteger(error.code) && error.code !== 0) {
     errorCode = error.code;
     if (error.stdout) thiz.console.log(error.stdout);
     if (error.stderr) thiz.console.log(error.stderr);
