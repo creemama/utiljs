@@ -99,11 +99,13 @@ class Objects {
   }
 
   merge(a, b) {
-    let c = this.guarantee(a);
-    let d = this.guarantee(b);
-    let merged = {};
-    for (let p in c) if (c.hasOwnProperty(p)) merged[p] = c[p];
-    for (let p in d) if (d.hasOwnProperty(p)) merged[p] = d[p];
+    const c = this.guarantee(a);
+    const d = this.guarantee(b);
+    const merged = {};
+    for (const p in c)
+      if (Object.prototype.hasOwnProperty.call(c, p)) merged[p] = c[p];
+    for (const p in d)
+      if (Object.prototype.hasOwnProperty.call(d, p)) merged[p] = d[p];
     return merged;
   }
 
