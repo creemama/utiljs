@@ -440,7 +440,7 @@ update() {
 		npm_update_package_version "$(printf %s "$package" | sed -E 's/(.+)@.*/\1/')"
 	done
 	update_npm_deps
-	printf '\n%sUpdate docker_image= if dev.sh dependencies change.\n\n%s' "$(tbold)" "$(treset)"
+	printf '\n%sDelete the utiljs-dev Docker image or update docker_image= if dev.sh dependencies change.\n\n%s' "$(tbold)" "$(treset)"
 }
 
 update_npm_deps() {
