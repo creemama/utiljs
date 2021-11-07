@@ -5,7 +5,7 @@ const files = require("..");
 
 describe("Files", function () {
   const waterfall = require("async-waterfall");
-  const targetDir = __dirname + "/../target";
+  const targetDir = files.join(__dirname, "..", "target");
   const emptyDir = targetDir + "/emptyDir";
   const jsonDir = targetDir + "/filesWithExtension";
   files.mkdirpSync(targetDir);
@@ -349,8 +349,8 @@ describe("Files", function () {
       expect(await files.diff(__filename, __filename)).to.be.ok;
     });
     it("should return false if both paths are different files", (callback) => {
-      const pathA = __dirname + "/FilesTest.js";
-      const pathB = __dirname + "/../index.js";
+      const pathA = files.join(__dirname, "FilesTest.js");
+      const pathB = files.join(__dirname, "..", "index.js");
       expect(files.isFile(pathA)).to.be.ok;
       expect(files.isFile(pathB)).to.be.ok;
       files.diff(pathA, pathB, (error, result) => {
@@ -360,7 +360,7 @@ describe("Files", function () {
       });
     });
     it("should return false if both paths are different directories", (callback) => {
-      files.diff(__dirname, __dirname + "/..", (error, result) => {
+      files.diff(__dirname, files.join(__dirname, ".."), (error, result) => {
         expect(error).to.be.null;
         expect(result).to.be.false;
         callback();
@@ -476,6 +476,10 @@ describe("Files", function () {
       files.filesWithExtension(
         { dir: emptyDir, ext: "json" },
         (error, result) => {
+          if (error) {
+            done(error);
+            return;
+          }
           try {
             expect(result).to.have.members([]);
             done();
@@ -502,6 +506,10 @@ describe("Files", function () {
         files.filesWithExtension(
           { dir: jsonDir + "/", ext: "json" },
           (error, result) => {
+            if (error) {
+              done(error);
+              return;
+            }
             try {
               expect(result).to.have.members([
                 jsonDir + "/package.json",
@@ -527,6 +535,10 @@ describe("Files", function () {
     it("should return [] if ext is empty", (done) => {
       prepareDirWithJsonFiles().then(() => {
         files.filesWithExtension({ dir: jsonDir, ext: "" }, (error, result) => {
+          if (error) {
+            done(error);
+            return;
+          }
           try {
             expect(result).to.have.members([]);
             done();
@@ -632,7 +644,7 @@ describe("Files", function () {
       expect(truth).to.be.ok;
     });
     it("should be false for FilesTest.js", (done) => {
-      files.isDirectory(__dirname + "/FilesTest.js", function (error, truth) {
+      files.isDirectory(files.join(__dirname, "FilesTest.js"), function (error, truth) {
         try {
           expect(error).to.be.null;
           expect(truth).to.be.false;
@@ -644,8 +656,8 @@ describe("Files", function () {
     });
     it("should error for UnlikelyToExist.js", async function () {
       try {
-        await files.isDirectory(__dirname + "/UnlikelyToExist.js");
-        exect.fail("We expected #isDirectory to throw an exception.");
+        await files.isDirectory(files.join(__dirname, "UnlikelyToExist.js"));
+        expect.fail("We expected #isDirectory to throw an exception.");
       } catch (error) {
         expect(error).to.be.an.instanceof(Error);
       }
@@ -671,11 +683,11 @@ describe("Files", function () {
       expect(files.isDirectorySync(__dirname)).to.be.ok;
     });
     it("should return false for FilesTest.js", () => {
-      expect(files.isDirectorySync(__dirname + "/FilesTest.js")).to.be.false;
+      expect(files.isDirectorySync(files.join(__dirname, "FilesTest.js"))).to.be.false;
     });
     it("should throw an exception for UnlikelyToExist.js", () => {
       expect(() => {
-        files.isDirectorySync(__dirname + "/UnlikelyToExist.js");
+        files.isDirectorySync(files.join(__dirname, "UnlikelyToExist.js"));
       }).to.throw(/ENOENT.*/);
     });
     it("should throw an exception for /unlikely/to/exist/dir/", () => {
@@ -702,7 +714,7 @@ describe("Files", function () {
       expect(truth).to.be.false;
     });
     it("should be true for FilesTest.js", (done) => {
-      files.isFile(__dirname + "/FilesTest.js", (error, truth) => {
+      files.isFile(files.join(__dirname, "FilesTest.js"), (error, truth) => {
         try {
           expect(error).to.be.null;
           expect(truth).to.be.ok;
@@ -714,8 +726,8 @@ describe("Files", function () {
     });
     it("should error for UnlikelyToExist.js", async function () {
       try {
-        await files.isFile(__dirname + "/UnlikelyToExist.js");
-        exect.fail("We expected #isFile to throw an exception.");
+        await files.isFile(files.join(__dirname, "UnlikelyToExist.js"));
+        expect.fail("We expected #isFile to throw an exception.");
       } catch (error) {
         expect(error).to.be.an.instanceof(Error);
       }
@@ -741,11 +753,11 @@ describe("Files", function () {
       expect(files.isFileSync(__dirname)).to.be.false;
     });
     it("should return false for FilesTest.js", () => {
-      expect(files.isFileSync(__dirname + "/FilesTest.js")).to.be.ok;
+      expect(files.isFileSync(files.join(__dirname, "FilesTest.js"))).to.be.ok;
     });
     it("should throw an exception for UnlikelyToExist.js", () => {
       expect(function () {
-        files.isFileSync(__dirname + "/UnlikelyToExist.js");
+        files.isFileSync(files.join(__dirname, "UnlikelyToExist.js"));
       }).to.throw(/ENOENT.*/);
     });
     it("should throw an exception for /unlikely/to/exist/dir/", () => {
@@ -1091,7 +1103,7 @@ describe("Files", function () {
     it("should write a file and notify a callback", (callback) => {
       const testFile = targetDir + "/writeFileTestCallback.txt";
       files.rmrf(testFile, (error) => {
-        if (error) return calback(error);
+        if (error) return callback(error);
         files.mkdirp(targetDir, (erro) => {
           if (erro) return callback(erro);
           files.writeFile(testFile, "writeFileTest", "utf8", (err) => {
