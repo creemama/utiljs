@@ -7,7 +7,7 @@ describe("FalsyError#check", () => {
   it('should throw a FalsyError given a falsy argument value: (NaN, "argument", "Lawyer#argue").', () => {
     try {
       FalsyError.check(NaN, "argument", "Lawyer#argue");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(
@@ -20,7 +20,7 @@ describe("FalsyError#check", () => {
   it('should throw a FalsyError given a falsy argument value: (false, "argument").', () => {
     try {
       FalsyError.check(false, "argument");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(
@@ -33,7 +33,7 @@ describe("FalsyError#check", () => {
   it('should throw a FalsyError given a falsy argument value: (undefined, null, "Lawyer#argue").', () => {
     try {
       FalsyError.check(undefined, null, "Lawyer#argue");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(
@@ -46,7 +46,7 @@ describe("FalsyError#check", () => {
   it("should throw a FalsyError given a falsy argument value: (null).", () => {
     try {
       FalsyError.check(null);
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(

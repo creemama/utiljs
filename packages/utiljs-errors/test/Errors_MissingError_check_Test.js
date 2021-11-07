@@ -7,7 +7,7 @@ describe("MissingError#check", () => {
   it('should throw a MissingError given a \'null\' argument value: (null, "argument", "Lawyer#argue").', () => {
     try {
       MissingError.check(null, "argument", "Lawyer#argue");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.equal("argument");
@@ -17,7 +17,7 @@ describe("MissingError#check", () => {
   it("should throw a MissingError given a 'null' argument value: (null, \"argument\").", () => {
     try {
       MissingError.check(null, "argument");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.equal("argument");
@@ -27,7 +27,7 @@ describe("MissingError#check", () => {
   it("should throw a MissingError given a 'null' argument value: (null, null, \"Lawyer#argue\").", () => {
     try {
       MissingError.check(null, null, "Lawyer#argue");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.be.null;
@@ -37,7 +37,7 @@ describe("MissingError#check", () => {
   it("should throw a MissingError given a 'null' argument value: (null).", () => {
     try {
       MissingError.check(null);
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.be.undefined;
@@ -47,7 +47,7 @@ describe("MissingError#check", () => {
   it('should throw a MissingError given an \'undefined\' argument value: (undefined, "argument", "Lawyer#argue").', () => {
     try {
       MissingError.check(undefined, "argument", "Lawyer#argue");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.equal("argument");
@@ -57,7 +57,7 @@ describe("MissingError#check", () => {
   it("should throw a MissingError given an 'undefined' argument value: (undefined, \"argument\").", () => {
     try {
       MissingError.check(undefined, "argument");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.equal("argument");
@@ -67,7 +67,7 @@ describe("MissingError#check", () => {
   it("should throw a MissingError given an 'undefined' argument value: (undefined, null, \"Lawyer#argue\").", () => {
     try {
       MissingError.check(undefined, null, "Lawyer#argue");
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.be.null;
@@ -77,7 +77,7 @@ describe("MissingError#check", () => {
   it("should throw a MissingError given an 'undefined' argument value: no arguments.", () => {
     try {
       MissingError.check(undefined);
-      throw "The method did not throw an error.";
+      throw new Error("The method did not throw an error.");
     } catch (e) {
       expect(e).to.be.an.instanceof(MissingError);
       expect(e.argumentName).to.be.undefined;
