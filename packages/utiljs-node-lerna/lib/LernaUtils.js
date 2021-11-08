@@ -116,8 +116,8 @@ function handleError(thiz, error, packageDir) {
 async function processPackage(thiz, packageDescriptor, packages) {
   const {
     packageDir,
-    packageJson,
-    packageLockJson,
+    // packageJson,
+    // packageLockJson,
     packageLockObj,
     packageObj,
   } = packageDescriptor;

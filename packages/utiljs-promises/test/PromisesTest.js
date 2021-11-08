@@ -75,6 +75,10 @@ describe("Promises", function () {
           "Call back",
           "Hypnotoad",
           (error, message) => {
+            if (error) {
+              callbck(error);
+              return;
+            }
             expect(message).to.eql("Call back, Hypnotoad!");
             b(callbck);
           },
@@ -87,6 +91,10 @@ describe("Promises", function () {
           "Call back",
           "Hypnotoad",
           (error, message) => {
+            if (error) {
+              callbck(error);
+              return;
+            }
             expect(message).to.eql("Call back, Hypnotoad!");
             c(callbck);
           }
@@ -103,6 +111,10 @@ describe("Promises", function () {
           "Call back",
           "Hypnotoad",
           (error, value) => {
+            if (error) {
+              callbck(error);
+              return;
+            }
             try {
               expect(value).to.eql("Call back, Hypnotoad!");
               callbck();
@@ -206,7 +218,8 @@ describe("Promises", function () {
               (error, value) => {
                 callback(
                   new Error(
-                    "We expected #callPromise to not call this callback."
+                    "We expected #callPromise to not call this callback.",
+                    { cause: error }
                   )
                 );
               }

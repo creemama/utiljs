@@ -77,7 +77,13 @@ function runExample2() {
     if (!callback) return promises.applyCallback(null, notify, arguments);
     callback(null, `${message}, ${who}!`);
   }
-  notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+  notify("Call back", "Hypnotoad", (error, message) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log(message)
+  });
   notify("Promise me", "Hypnotoad").then(console.log);
 }
 
@@ -92,7 +98,13 @@ function runExample3() {
   function notify(message, who, callback) {
     return promises.applyPromise(null, notifyPromise, arguments);
   }
-  notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+  notify("Call back", "Hypnotoad", (error, message) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log(message)
+  });
   notify("Promise me", "Hypnotoad").then(console.log);
 }
 
@@ -103,7 +115,13 @@ function runExample4() {
     if (callback) return promises.applyPromise(null, notify, arguments);
     return promises.resolve(`${message}, ${who}!`);
   }
-  notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+  notify("Call back", "Hypnotoad", (error, message) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log(message)
+  });
   notify("Promise me", "Hypnotoad").then(console.log);
 }
 
@@ -115,7 +133,13 @@ function runExample5() {
   // #notifyPromise only returns a Promise.
   // Wrap #notifyPromise so that it accepts a callback.
   const notify = promises.callbackify(notifyPromise);
-  notify("Call back", "Hypnotoad", (error, message) => console.log(message));
+  notify("Call back", "Hypnotoad", (error, message) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log(message)
+  });
 }
 
 function runExample6() {
@@ -142,7 +166,13 @@ function runExample7() {
     notifyPromise,
     "Call back",
     "Hypnotoad",
-    (error, message) => console.log(message)
+    (error, message) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      console.log(message)
+    }
   );
 }
 

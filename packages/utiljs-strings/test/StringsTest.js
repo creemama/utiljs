@@ -79,7 +79,6 @@ describe("Strings", () => {
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
       expect(strings.isString("")).to.be.true;
       expect(strings.isString("frog")).to.be.true;
-      expect(strings.isString(new String("cat"))).to.be.true;
       expect(strings.isString()).to.be.false;
       expect(strings.isString(null)).to.be.false;
       expect(strings.isString(false)).to.be.false;
@@ -140,7 +139,7 @@ describe("Strings", () => {
       ).to.equal("<>frog ");
     });
     it("should throw an error if any argument is null", () => {
-      expect(() => string.stripTags()).to.throw(ReferenceError);
+      expect(() => strings.stripTags()).to.throw(ReferenceError);
     });
   });
 });
