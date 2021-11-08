@@ -43,9 +43,10 @@ The scripts in this directory do the following:
 
 - Install and update dependencies. Use [fix] as the commit type.
 
+  - `./dev.sh docker-update-dockerfile`
   - `./dev.sh docker-update`
-  - `./dev.sh install-globals`
-  - `./dev.sh install-dev-globals`
+  - `./dev.sh install-globals` - used in docker/Dockerfile
+  - `./dev.sh install-dev-globals` - used in docker/Dockerfile
   - `./dev.sh install`
   - `./dev.sh audit`
   - `npm audit fix && ./dev.sh install` - run if an audit finds something

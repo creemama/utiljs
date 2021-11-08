@@ -18,14 +18,14 @@ fi
 
 # gnupg, openssh, and terminus-font are for git and gitk.
 # ncurses is for tput.
-apk_packages='git~=2.24
-git-gitk~=2.24
+apk_packages='git~=2.32
+git-gitk~=2.32
 gnupg~=2.2
-ncurses~=6.1
-openssh~=8.1
+ncurses~=6.2
+openssh~=8.6
 shellcheck~=0.7
-shfmt@edgecommunity~=3.4
-terminus-font~=4.48
+shfmt@edgecommunity~=3.3
+terminus-font~=4.49
 '
 docker_image=utiljs-dev:0.41.0
 npm_dev_globals='eslint@8.2.0
@@ -336,6 +336,7 @@ build - Run clean and babel.
 clean - git clean -fdx --exclude "node_modules"
 docker - Develop inside a Docker container.
 docker-update - Run update using the latest creemama/node-no-yarn:lts-alpine Docker image.
+docker-update-dockerfile - Run Docker to update the node-no-yarn image used in docker/Dockerfile.
 eslint - Run eslint in all packages.
 git - Run git setting GPG_TTY if not already set for signing commits.
 gitk - Run gitk.
@@ -350,7 +351,8 @@ publish - Bump the version number and publish all packages to npm.
 shell-format - Format shell scripts and run shellcheck.
 test - Run build and mocha for Travis CI.
 travis - Prepare the workspace before pushing an update branch for Travis CI to run.
-update - Check and update project dependencies.'
+update - Check and update project dependencies.
+update-dockerfile - Update the node-no-yarn image used in docker/Dockerfile.'
 	# shellcheck disable=SC2039
 	local commands
 	commands="$(main_extract_commands "$command_help")"
@@ -373,37 +375,41 @@ update - Check and update project dependencies.'
 	elif [ "$1" = "$(arg 6 $commands)" ]; then
 		run_docker_update
 	elif [ "$1" = "$(arg 7 $commands)" ]; then
-		execute_eslint "$@"
+		run_docker_update_dockerfile
 	elif [ "$1" = "$(arg 8 $commands)" ]; then
-		shift
-		shellutil/git.sh git "$@"
+		execute_eslint "$@"
 	elif [ "$1" = "$(arg 9 $commands)" ]; then
 		shift
-		shellutil/git.sh gitk "$@"
+		shellutil/git.sh git "$@"
 	elif [ "$1" = "$(arg 10 $commands)" ]; then
-		install
+		shift
+		shellutil/git.sh gitk "$@"
 	elif [ "$1" = "$(arg 11 $commands)" ]; then
-		install_dev_globals
+		install
 	elif [ "$1" = "$(arg 12 $commands)" ]; then
-		install_globals
+		install_dev_globals
 	elif [ "$1" = "$(arg 13 $commands)" ]; then
-		execute_jsdoc "$@"
+		install_globals
 	elif [ "$1" = "$(arg 14 $commands)" ]; then
-		execute_jsdoc2md "$@"
+		execute_jsdoc "$@"
 	elif [ "$1" = "$(arg 15 $commands)" ]; then
-		execute_mocha "$@"
+		execute_jsdoc2md "$@"
 	elif [ "$1" = "$(arg 16 $commands)" ]; then
-		execute_prettier "$@"
+		execute_mocha "$@"
 	elif [ "$1" = "$(arg 17 $commands)" ]; then
-		publish
+		execute_prettier "$@"
 	elif [ "$1" = "$(arg 18 $commands)" ]; then
-		shellutil/format.sh shell-format
+		publish
 	elif [ "$1" = "$(arg 19 $commands)" ]; then
-		run_test
+		shellutil/format.sh shell-format
 	elif [ "$1" = "$(arg 20 $commands)" ]; then
-		execute_travis
+		run_test
 	elif [ "$1" = "$(arg 21 $commands)" ]; then
+		execute_travis
+	elif [ "$1" = "$(arg 22 $commands)" ]; then
 		update
+	elif [ "$1" = "$(arg 23 $commands)" ]; then
+		update_dockerfile
 	else
 		main_exit_with_invalid_command_error "$1" "$command_help"
 	fi
@@ -422,8 +428,12 @@ publish() {
 }
 
 run_docker_update() {
-	docker pull creemama/node-no-yarn:lts-alpine
 	execute_docker sh -c './dev.sh update'
+}
+
+run_docker_update_dockerfile() {
+	docker pull --quiet node:lts-alpine >/dev/null 2>&1
+	docker run -it --rm --volume "$(pwd)":/tmp node:lts-alpine /tmp/dev.sh update-dockerfile
 }
 
 run_test() {
@@ -432,15 +442,19 @@ run_test() {
 }
 
 update() {
-	apk_update_node_image_version docker/Dockerfile 's#(FROM creemama/node-no-yarn:).*#\\1%s-alpine%s#'
-	for package in $apk_packages; do
-		apk_update_package_version "$(printf %s "$package" | sed -E 's/([^@]+)(@edgecommunity)?~=.*/\1/')"
-	done
 	for package in $npm_dev_globals $npm_global $npm_globals; do
 		npm_update_package_version "$(printf %s "$package" | sed -E 's/(.+)@.*/\1/')"
 	done
 	update_npm_deps
 	printf '\n%sDelete the utiljs-dev Docker image or update docker_image= if dev.sh dependencies change.\n\n%s' "$(tbold)" "$(treset)"
+}
+
+update_dockerfile() {
+	apk_update_node_image_version docker/Dockerfile 's#(FROM creemama/node-no-yarn:).*#\\1%s-alpine%s#'
+	for package in $apk_packages; do
+		apk_update_package_version "$(printf %s "$package" | sed -E 's/([^@]+)(@edgecommunity)?~=.*/\1/')"
+	done
+	printf '\n%sDelete the utiljs-dev Docker image or update docker_image= if docker/Dockerfile changes.\n\n%s' "$(tbold)" "$(treset)"
 }
 
 update_npm_deps() {
