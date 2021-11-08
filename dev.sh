@@ -308,7 +308,7 @@ install() {
 }
 
 install_dev_globals() {
-	# We do not need these global packages to run in Travis CI.
+	# We do not need these global packages to run in GitHub Actions.
 	# shellcheck disable=SC2086
 	npm install --global $npm_dev_globals
 }
@@ -341,16 +341,16 @@ eslint - Run eslint in all packages.
 git - Run git setting GPG_TTY if not already set for signing commits.
 gitk - Run gitk.
 install - Run install in all packages.
-install-dev-globals - Install Node.js globals not needed by Travis CI.
-install-globals - Install Node.js globals needed by Travis CI.
+install-dev-globals - Install Node.js globals not needed by CI.
+install-globals - Install Node.js globals needed by CI.
 jsdoc - Run jsdoc in all packages.
 jsdoc2md - Run jsdoc2md in all packages.
 mocha - Run mocha/nyc in all packages.
 prettier - Run prettier in all packages.
 publish - Bump the version number and publish all packages to npm.
 shell-format - Format shell scripts and run shellcheck.
-test - Run build and mocha for Travis CI.
-travis - Prepare the workspace before pushing an update branch for Travis CI to run.
+test - Run build and mocha for CI.
+travis - Prepare the workspace before pushing an update branch for CI to run.
 update - Check and update project dependencies.
 update-dockerfile - Update the node-no-yarn image used in docker/Dockerfile.'
 	# shellcheck disable=SC2039
