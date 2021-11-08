@@ -644,15 +644,18 @@ describe("Files", function () {
       expect(truth).to.be.ok;
     });
     it("should be false for FilesTest.js", (done) => {
-      files.isDirectory(files.join(__dirname, "FilesTest.js"), function (error, truth) {
-        try {
-          expect(error).to.be.null;
-          expect(truth).to.be.false;
-          done();
-        } catch (err) {
-          done(err);
+      files.isDirectory(
+        files.join(__dirname, "FilesTest.js"),
+        function (error, truth) {
+          try {
+            expect(error).to.be.null;
+            expect(truth).to.be.false;
+            done();
+          } catch (err) {
+            done(err);
+          }
         }
-      });
+      );
     });
     it("should error for UnlikelyToExist.js", async function () {
       try {
@@ -683,7 +686,8 @@ describe("Files", function () {
       expect(files.isDirectorySync(__dirname)).to.be.ok;
     });
     it("should return false for FilesTest.js", () => {
-      expect(files.isDirectorySync(files.join(__dirname, "FilesTest.js"))).to.be.false;
+      expect(files.isDirectorySync(files.join(__dirname, "FilesTest.js"))).to.be
+        .false;
     });
     it("should throw an exception for UnlikelyToExist.js", () => {
       expect(() => {

@@ -64,7 +64,7 @@ describe("Streams", () => {
           throw new Error("Unexpected success");
         },
         (error) => {
-          if (!error) throw new Error("Unexpected")
+          if (!error) throw new Error("Unexpected");
         }
       );
       await streams.stringify(null).then(
@@ -72,7 +72,7 @@ describe("Streams", () => {
           throw new Error("Unexpected success");
         },
         (error) => {
-          if (!error) throw new Error("Unexpected")
+          if (!error) throw new Error("Unexpected");
         }
       );
       await streams.stringify(null, null).then(
@@ -80,7 +80,7 @@ describe("Streams", () => {
           throw new Error("Unexpected success");
         },
         (error) => {
-          if (!error) throw new Error("Unexpected")
+          if (!error) throw new Error("Unexpected");
         }
       );
     });

@@ -62,7 +62,7 @@ describe("Urls", () => {
           throw new Error("Unexpected success");
         },
         (error) => {
-          if (!error) throw new Error("Unexpected")
+          if (!error) throw new Error("Unexpected");
           /* expected */
         }
       ));
@@ -74,7 +74,7 @@ describe("Urls", () => {
           throw new Error("Unexpected success");
         },
         (error) => {
-          if (!error) throw new Error("Unexpected")
+          if (!error) throw new Error("Unexpected");
           /* expected */
         }
       ));
@@ -124,7 +124,7 @@ describe("Urls", () => {
           throw new Error("Unexpected success");
         },
         (error) => {
-          if (!error) throw new Error("Unexpected")
+          if (!error) throw new Error("Unexpected");
           /* expected */
         }
       ));
@@ -134,7 +134,7 @@ describe("Urls", () => {
           throw new Error("Unexpected success");
         },
         (error) => {
-          if (!error) throw new Error("Unexpected")
+          if (!error) throw new Error("Unexpected");
           /* expected */
         }
       ));

@@ -82,7 +82,7 @@ function runExample2() {
       console.error(error);
       return;
     }
-    console.log(message)
+    console.log(message);
   });
   notify("Promise me", "Hypnotoad").then(console.log);
 }
@@ -103,7 +103,7 @@ function runExample3() {
       console.error(error);
       return;
     }
-    console.log(message)
+    console.log(message);
   });
   notify("Promise me", "Hypnotoad").then(console.log);
 }
@@ -120,7 +120,7 @@ function runExample4() {
       console.error(error);
       return;
     }
-    console.log(message)
+    console.log(message);
   });
   notify("Promise me", "Hypnotoad").then(console.log);
 }
@@ -138,7 +138,7 @@ function runExample5() {
       console.error(error);
       return;
     }
-    console.log(message)
+    console.log(message);
   });
 }
 
@@ -171,7 +171,7 @@ function runExample7() {
         console.error(error);
         return;
       }
-      console.log(message)
+      console.log(message);
     }
   );
 }
