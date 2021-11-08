@@ -139,7 +139,7 @@ describe("Strings", () => {
       ).to.equal("<>frog ");
     });
     it("should throw an error if any argument is null", () => {
-      expect(() => strings.stripTags()).to.throw(ReferenceError);
+      expect(() => strings.stripTags()).to.throw(TypeError);
     });
   });
 });
