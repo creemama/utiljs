@@ -27,7 +27,7 @@ shellcheck~=0.7
 shfmt@edgecommunity~=3.3
 terminus-font~=4.49
 '
-docker_image=utiljs-dev:0.41.0
+docker_image=utiljs-dev:0.41.1
 npm_dev_globals='eslint@8.2.0
 jsdoc@3.6.7
 jsdoc-to-markdown@7.1.0
