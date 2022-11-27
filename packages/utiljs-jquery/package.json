@@ -2,7 +2,7 @@
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
     "@babel/runtime-corejs3": "7.20.1",
-    "@util.js/promises": "0.41.1"
+    "@util.js/promises": "0.41.2"
   },
   "dependencies-comments": [
     "@babel/runtime-corejs3 is required by files in the dist directory to ",
@@ -32,5 +32,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-jquery"
   },
-  "version": "0.41.1"
+  "version": "0.41.2"
 }

@@ -1,8 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@util.js/privates": "0.41.1",
-    "@util.js/promises": "0.41.1"
+    "@util.js/privates": "0.41.2",
+    "@util.js/promises": "0.41.2"
   },
   "description": "JavaScript utility class for the AWS SDK",
   "keywords": [
@@ -24,5 +24,5 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-aws"
   },
-  "version": "0.41.1"
+  "version": "0.41.2"
 }
