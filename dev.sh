@@ -28,17 +28,17 @@ shfmt@edgecommunity~=3.3
 terminus-font~=4.49
 '
 docker_image=utiljs-dev:0.41.1
-npm_dev_globals='eslint@8.2.0
-jsdoc@3.6.7
-jsdoc-to-markdown@7.1.0
-npm-check-updates@12.0.0
-prettier@2.4.1
+npm_dev_globals='eslint@8.28.0
+jsdoc@4.0.0
+jsdoc-to-markdown@7.1.1
+npm-check-updates@16.4.3
+prettier@2.8.0
 '
 npm_global=npm@8.1.3
-npm_globals='@babel/cli@7.16.0
-@babel/core@7.16.0
+npm_globals='@babel/cli@7.19.3
+@babel/core@7.20.2
 lerna@4.0.0
-mocha@9.1.3
+mocha@10.1.0
 nyc@15.1.0
 '
 

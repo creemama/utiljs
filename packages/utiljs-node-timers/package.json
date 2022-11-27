@@ -2,7 +2,7 @@
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
     "@util.js/privates": "0.41.1",
-    "cron": "1.8.2"
+    "cron": "2.1.0"
   },
   "description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
   "keywords": [

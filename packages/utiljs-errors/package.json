@@ -1,7 +1,7 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@babel/runtime-corejs3": "7.16.0"
+    "@babel/runtime-corejs3": "7.20.1"
   },
   "description": "JavaScript utility methods for errors",
   "keywords": [
