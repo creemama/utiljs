@@ -25,6 +25,7 @@
     "url": "https://github.com/creemama/utiljs"
   },
   "scripts": {
+    "build": "./dev.sh build",
     "test": "./dev.sh test"
   },
   "scripts-comments": [

@@ -437,7 +437,6 @@ run_docker_update_dockerfile() {
 }
 
 run_test() {
-	build
 	execute_mocha
 }
 
