@@ -16,18 +16,7 @@ fi
 . shellutil/updateutil.sh
 # set -o xtrace
 
-# gnupg, openssh, and terminus-font are for git and gitk.
-# ncurses is for tput.
-apk_packages='git~=2.32
-git-gitk~=2.32
-gnupg~=2.2
-ncurses~=6.2
-openssh~=8.6
-shellcheck~=0.7
-shfmt@edgecommunity~=3.3
-terminus-font~=4.49
-'
-docker_image=utiljs-dev:0.41.1
+docker_image=utiljs-dev:0.41.2
 npm_dev_globals='eslint@8.28.0
 jsdoc@4.0.0
 jsdoc-to-markdown@7.1.1
@@ -41,12 +30,6 @@ lerna@4.0.0
 mocha@10.1.0
 nyc@15.1.0
 '
-
-apk_add() {
-	apk_guarantee_edgecommunity
-	# shellcheck disable=SC2086
-	apk --no-cache --update add $apk_packages
-}
 
 audit() {
 	npm audit
@@ -329,14 +312,13 @@ install_globals() {
 main() {
 	# shellcheck disable=SC2039
 	local command_help
-	command_help='apk-add - Add Alpine packages needed by docker/Dockerfile.
-audit - Run audit in all packages.
+	command_help='audit - Run audit in all packages.
 babel - Run babel on certain (mostly non-node) packages.
 build - Run clean and babel.
 clean - git clean -fdx --exclude "node_modules"
 docker - Develop inside a Docker container.
-docker-update - Run update using the latest creemama/node-no-yarn:lts-alpine Docker image.
-docker-update-dockerfile - Run Docker to update the node-no-yarn image used in docker/Dockerfile.
+docker-update - Run update using the latest creemama/shellutil-dev:lts-alpine Docker image.
+docker-update-dockerfile - Run Docker to update the shellutil-dev image used in docker/Dockerfile.
 eslint - Run eslint in all packages.
 git - Run git setting GPG_TTY if not already set for signing commits.
 gitk - Run gitk.
@@ -352,7 +334,7 @@ shell-format - Format shell scripts and run shellcheck.
 test - Run build and mocha for CI.
 travis - Prepare the workspace before pushing an update branch for CI to run.
 update - Check and update project dependencies.
-update-dockerfile - Update the node-no-yarn image used in docker/Dockerfile.'
+update-dockerfile - Update the shellutil-dev image used in docker/Dockerfile.'
 	# shellcheck disable=SC2039
 	local commands
 	commands="$(main_extract_commands "$command_help")"
@@ -360,55 +342,53 @@ update-dockerfile - Update the node-no-yarn image used in docker/Dockerfile.'
 	if [ -z "${1:-}" ]; then
 		main_exit_with_no_command_error "$command_help"
 	elif [ "$1" = "$(arg 0 $commands)" ]; then
-		apk_add
-	elif [ "$1" = "$(arg 1 $commands)" ]; then
 		audit
-	elif [ "$1" = "$(arg 2 $commands)" ]; then
+	elif [ "$1" = "$(arg 1 $commands)" ]; then
 		execute_babel "$@"
-	elif [ "$1" = "$(arg 3 $commands)" ]; then
+	elif [ "$1" = "$(arg 2 $commands)" ]; then
 		build
-	elif [ "$1" = "$(arg 4 $commands)" ]; then
+	elif [ "$1" = "$(arg 3 $commands)" ]; then
 		clean
-	elif [ "$1" = "$(arg 5 $commands)" ]; then
+	elif [ "$1" = "$(arg 4 $commands)" ]; then
 		shift
 		execute_docker "$@"
-	elif [ "$1" = "$(arg 6 $commands)" ]; then
+	elif [ "$1" = "$(arg 5 $commands)" ]; then
 		run_docker_update
-	elif [ "$1" = "$(arg 7 $commands)" ]; then
+	elif [ "$1" = "$(arg 6 $commands)" ]; then
 		run_docker_update_dockerfile
-	elif [ "$1" = "$(arg 8 $commands)" ]; then
+	elif [ "$1" = "$(arg 7 $commands)" ]; then
 		execute_eslint "$@"
-	elif [ "$1" = "$(arg 9 $commands)" ]; then
+	elif [ "$1" = "$(arg 8 $commands)" ]; then
 		shift
 		shellutil/git.sh git "$@"
-	elif [ "$1" = "$(arg 10 $commands)" ]; then
+	elif [ "$1" = "$(arg 9 $commands)" ]; then
 		shift
 		shellutil/git.sh gitk "$@"
-	elif [ "$1" = "$(arg 11 $commands)" ]; then
+	elif [ "$1" = "$(arg 10 $commands)" ]; then
 		install
-	elif [ "$1" = "$(arg 12 $commands)" ]; then
+	elif [ "$1" = "$(arg 11 $commands)" ]; then
 		install_dev_globals
-	elif [ "$1" = "$(arg 13 $commands)" ]; then
+	elif [ "$1" = "$(arg 12 $commands)" ]; then
 		install_globals
-	elif [ "$1" = "$(arg 14 $commands)" ]; then
+	elif [ "$1" = "$(arg 13 $commands)" ]; then
 		execute_jsdoc "$@"
-	elif [ "$1" = "$(arg 15 $commands)" ]; then
+	elif [ "$1" = "$(arg 14 $commands)" ]; then
 		execute_jsdoc2md "$@"
-	elif [ "$1" = "$(arg 16 $commands)" ]; then
+	elif [ "$1" = "$(arg 15 $commands)" ]; then
 		execute_mocha "$@"
-	elif [ "$1" = "$(arg 17 $commands)" ]; then
+	elif [ "$1" = "$(arg 16 $commands)" ]; then
 		execute_prettier "$@"
-	elif [ "$1" = "$(arg 18 $commands)" ]; then
+	elif [ "$1" = "$(arg 17 $commands)" ]; then
 		publish
-	elif [ "$1" = "$(arg 19 $commands)" ]; then
+	elif [ "$1" = "$(arg 18 $commands)" ]; then
 		shellutil/format.sh shell-format
-	elif [ "$1" = "$(arg 20 $commands)" ]; then
+	elif [ "$1" = "$(arg 19 $commands)" ]; then
 		run_test
-	elif [ "$1" = "$(arg 21 $commands)" ]; then
+	elif [ "$1" = "$(arg 20 $commands)" ]; then
 		execute_travis
-	elif [ "$1" = "$(arg 22 $commands)" ]; then
+	elif [ "$1" = "$(arg 21 $commands)" ]; then
 		update
-	elif [ "$1" = "$(arg 23 $commands)" ]; then
+	elif [ "$1" = "$(arg 22 $commands)" ]; then
 		update_dockerfile
 	else
 		main_exit_with_invalid_command_error "$1" "$command_help"
@@ -449,10 +429,7 @@ update() {
 }
 
 update_dockerfile() {
-	apk_update_node_image_version docker/Dockerfile 's#(FROM creemama/node-no-yarn:).*#\\1%s-alpine%s#'
-	for package in $apk_packages; do
-		apk_update_package_version "$(printf %s "$package" | sed -E 's/([^@]+)(@edgecommunity)?~=.*/\1/')"
-	done
+	apk_update_node_image_version docker/Dockerfile 's#(FROM creemama/shellutil-dev:).*#\\1%s-alpine%s#'
 	printf '\n%sDelete the utiljs-dev Docker image or update docker_image= if docker/Dockerfile changes.\n\n%s' "$(tbold)" "$(treset)"
 }
 
