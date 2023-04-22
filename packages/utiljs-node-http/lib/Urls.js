@@ -76,7 +76,7 @@ class Urls {
       host: parsedUrl.host,
       method: "HEAD",
       path: parsedUrl.path,
-      port: port,
+      port,
     });
     const request = getProtocolObject(parsedUrl.protocol)
       .request(options, (res) => cb(null, res.headers))

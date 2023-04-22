@@ -432,7 +432,19 @@ module.exports = class Files {
   }
 
   rmrf() {
-    return promises().applyCallback(null, rimraf(), arguments);
+    if (
+      arguments.length > 0 &&
+      typeof arguments[arguments.length - 1] !== "function"
+    )
+      return rimraf().apply(null, arguments);
+    const callback = arguments[arguments.length - 1];
+    const args = Array.from(arguments).slice(0, arguments.length - 1);
+    // As of 4.3, return/resolve value is boolean instead of undefined.
+    // We want to return undefined still.
+    rimraf()
+      .apply(null, args)
+      .then((_) => callback(null))
+      .catch(callback);
   }
 
   rmrfSync() {
@@ -580,7 +592,7 @@ function fs() {
   return get("graceful-fs");
 }
 function mkdirp() {
-  return get("mkdirp");
+  return get("mkdirp").mkdirp;
 }
 function ncp() {
   return get("ncp");
@@ -598,7 +610,7 @@ function readLastLines() {
   return get("read-last-lines");
 }
 function rimraf() {
-  return get("rimraf");
+  return get("rimraf").rimraf;
 }
 function sanitizeFilename() {
   return get("sanitize-filename");
