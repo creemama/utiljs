@@ -10,6 +10,12 @@ ENV PATH=/home/node/.npm-global/bin:$PATH
 # I got /dev/console from https://hub.docker.com/r/vladgh/gpg/ .
 ENV GPG_TTY=/dev/console
 
+# These dependencies are only necessary for linux/arm64/v8.
+RUN apk add --no-cache --virtual .gyp \
+ g++~=12.2 \
+ make~=4.3 \
+ python3~=3.10
+
 USER node
 WORKDIR /home/node
 
@@ -19,6 +25,11 @@ RUN ./dev.sh install-globals \
  && ./dev.sh install-dev-globals \
  && rm -rf shellutil \
  && rm dev.sh
+
+USER root
+RUN apk del .gyp
+
+USER node
 
 HEALTHCHECK CMD node --version || exit 1
 CMD [ "sh" ]

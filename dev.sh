@@ -85,7 +85,10 @@ execute_docker() {
 		cp dev.sh docker
 		cp -r shellutil docker/shellutil
 		cd docker
-		if ! docker build --tag $docker_image .; then
+		if ! docker build --platform linux/arm64/v8 --tag $docker_image .; then
+			exit $?
+		fi
+		if ! docker build --platform linux/amd64 --tag $docker_image-amd64 .; then
 			exit $?
 		fi
 		rm -rf shellutil
