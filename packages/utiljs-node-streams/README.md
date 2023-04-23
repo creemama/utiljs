@@ -4,7 +4,6 @@
 
 <p>
   <a href="https://www.npmjs.com/package/@util.js/node-streams"><img alt="NPM Status" src="https://img.shields.io/npm/v/@util.js/node-streams.svg?style=flat"></a>
-  <a href="https://travis-ci.org/creemama/utiljs"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/creemama/utiljs/master.svg?style=flat-square&label=Travis+CI"></a>
 </p>
 
 @util.js/node-streams is part of [Util.js](https://github.com/creemama/utiljs).
