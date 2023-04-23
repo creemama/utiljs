@@ -71,5 +71,4 @@ The scripts in this directory do the following:
   - `./dev.sh build` - executes clean and babel
   - `./dev.sh mocha`
   - `npm run test` - executes mocha
-  - `./dev.sh travis`
   - `./dev.sh publish` - bumps up the version number

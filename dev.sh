@@ -281,14 +281,6 @@ execute_prettier() {
 	rm -rf target/prettier.txt
 }
 
-execute_travis() {
-	clean
-	install
-	git status
-	run_test
-	git push origin master:update --force
-}
-
 install() {
 	lerna bootstrap --force-local --hoist -- --save-exact
 }
@@ -300,8 +292,6 @@ install_dev_globals() {
 }
 
 install_globals() {
-	# We use these global packages to run in Travis CI.
-
 	# Including @babel/core prevents the following warning:
 	# npm WARN @babel/cli@ 7.2.3 requires a peer of @babel/core@^7.0.0-0 but
 	# none is installed. You must install peer dependencies yourself.
@@ -335,7 +325,6 @@ prettier - Run prettier in all packages.
 publish - Bump the version number and publish all packages to npm.
 shell-format - Format shell scripts and run shellcheck.
 test - Run build and mocha for CI.
-travis - Prepare the workspace before pushing an update branch for CI to run.
 update - Check and update project dependencies.
 update-dockerfile - Update the shellutil-dev image used in docker/Dockerfile.'
 	# shellcheck disable=SC2039
@@ -388,10 +377,8 @@ update-dockerfile - Update the shellutil-dev image used in docker/Dockerfile.'
 	elif [ "$1" = "$(arg 19 $commands)" ]; then
 		run_test
 	elif [ "$1" = "$(arg 20 $commands)" ]; then
-		execute_travis
-	elif [ "$1" = "$(arg 21 $commands)" ]; then
 		update
-	elif [ "$1" = "$(arg 22 $commands)" ]; then
+	elif [ "$1" = "$(arg 21 $commands)" ]; then
 		update_dockerfile
 	else
 		main_exit_with_invalid_command_error "$1" "$command_help"
