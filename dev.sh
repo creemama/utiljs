@@ -63,7 +63,6 @@ execute_babel() {
 	packages='arrays
 emails
 errors
-jquery
 numbers
 objects
 privates
