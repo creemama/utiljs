@@ -78,22 +78,32 @@ class Urls {
       path: parsedUrl.path,
       port,
     });
+    let cbCalled = false;
     const request = getProtocolObject(parsedUrl.protocol)
-      .request(options, (res) => cb(null, res.headers))
-      .on("error", (error) => {
-        cb(error);
+      .request(options, (res) => {
+        res.destroy();
+        if (!cbCalled) {
+          cbCalled = true;
+          cb(null, res.headers);
+        }
       })
-      .end();
+      .on("error", (error) => {
+        if (!cbCalled) {
+          cbCalled = true;
+          cb(error);
+        }
+      });
     const timeout = determineTimeout(callbackOrOptions);
     if (timeout !== -1) {
       // https://stackoverflow.com/a/12783062
       request.on("socket", (socket) => {
         socket.setTimeout(timeout);
         socket.on("timeout", () => {
-          request.abort();
+          request.destroy(new Error("The request timed out."));
         });
       });
     }
+    request.end();
   }
 }
 

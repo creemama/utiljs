@@ -118,6 +118,14 @@ describe("Urls", () => {
       urls.headers("https://www.google.com", null).then((headers) => {
         expect(headers["content-type"].startsWith("text/html")).to.be.true;
       }));
+    it("handles HTTP requests with explicit port", () =>
+      urls.headers("http://www.google.com:80").then((headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+      }));
+    it("handles HTTP requests with empty options object", () =>
+      urls.headers("http://www.google.com", {}).then((headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+      }));
     it("handles HTTP errors", () =>
       urls.headers("http://doesnotexist:8080", { timeout: 50 }).then(
         (value) => {
@@ -138,6 +146,15 @@ describe("Urls", () => {
           /* expected */
         },
       ));
+    it("handles request timeouts", () =>
+      urls.headers("http://10.255.255.1", { timeout: 10 }).then(
+        (value) => {
+          throw new Error("Unexpected success");
+        },
+        (error) => {
+          expect(error).to.be.an.instanceof(Error);
+        },
+      ));
   });
 
   describe("#headers(url, callback)", () => {
@@ -151,6 +168,11 @@ describe("Urls", () => {
         expect(headers["content-type"].startsWith("text/html")).to.be.true;
         callback(error);
       }));
+    it("handles HTTP requests with empty options object", (callback) =>
+      urls.headers("http://www.google.com", {}, (error, headers) => {
+        expect(headers["content-type"].startsWith("text/html")).to.be.true;
+        callback(error);
+      }));
     it("handles HTTP errors", (callback) =>
       urls.headers("http://doesnotexist:8080", { timeout: 50 }, (error) => {
         if (error) return callback();
@@ -158,6 +180,11 @@ describe("Urls", () => {
       }));
     it("handles HTTPS errors", (callback) =>
       urls.headers("https://doesnotexist:8443", { timeout: 50 }, (error) => {
+        if (error) return callback();
+        callback(new Error("Unexpected success"));
+      }));
+    it("handles request timeouts", (callback) =>
+      urls.headers("http://10.255.255.1", { timeout: 10 }, (error) => {
         if (error) return callback();
         callback(new Error("Unexpected success"));
       }));
