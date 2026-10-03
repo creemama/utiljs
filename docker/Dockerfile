@@ -1,7 +1,7 @@
 # This is a development container. To use this container, run:
 # ../scripts/docker.sh
 
-FROM creemama/shellutil-dev:18.16.0-alpine3.17
+FROM creemama/shellutil-dev:24.21.0-alpine3.24
 
 # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
@@ -12,9 +12,9 @@ ENV GPG_TTY=/dev/console
 
 # These dependencies are only necessary for linux/arm64/v8.
 RUN apk add --no-cache --virtual .gyp \
- g++~=12.2 \
- make~=4.3 \
- python3~=3.10
+ g++~=15.2 \
+ make~=4.4 \
+ python3~=3.14
 
 USER node
 WORKDIR /home/node

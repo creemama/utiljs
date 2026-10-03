@@ -16,19 +16,19 @@ fi
 . shellutil/updateutil.sh
 # set -o xtrace
 
-docker_image=utiljs-dev:0.41.3
-npm_dev_globals='eslint@8.39.0
-jsdoc@4.0.2
-jsdoc-to-markdown@8.0.0
-npm-check-updates@16.10.9
-prettier@2.8.7
+docker_image=utiljs-dev:0.41.4
+npm_dev_globals='eslint@10.12.0
+jsdoc@4.0.5
+jsdoc-to-markdown@9.1.3
+npm-check-updates@23.1.0
+prettier@3.9.9
 '
-npm_global=npm@9.6.5
-npm_globals='@babel/cli@7.21.0
-@babel/core@7.21.4
-lerna@6.6.1
-mocha@10.2.0
-nyc@15.1.0
+npm_global=npm@12.2.0
+npm_globals='@babel/cli@7.29.7
+@babel/core@7.29.7
+lerna@10.0.1
+mocha@12.0.3
+nyc@18.0.0
 '
 
 audit() {
@@ -84,10 +84,7 @@ execute_docker() {
 		cp dev.sh docker
 		cp -r shellutil docker/shellutil
 		cd docker
-		if ! docker build --platform linux/arm64/v8 --tag $docker_image .; then
-			exit $?
-		fi
-		if ! docker build --platform linux/amd64 --tag $docker_image-amd64 .; then
+		if ! docker buildx build --platform linux/amd64,linux/arm64 --tag $docker_image .; then
 			exit $?
 		fi
 		rm -rf shellutil
@@ -281,7 +278,15 @@ execute_prettier() {
 }
 
 install() {
-	lerna bootstrap --force-local --hoist -- --save-exact
+	npm install
+	cd packages
+	for package in */; do
+		(
+			cd "$package"
+			printf '%s\n' "Visting $package"
+			npm install
+		)
+	done
 }
 
 install_dev_globals() {
@@ -419,6 +424,10 @@ update() {
 
 update_dockerfile() {
 	apk_update_node_image_version docker/Dockerfile 's#(FROM creemama/shellutil-dev:).*#\\1%s-alpine%s#'
+	# shellcheck disable=SC2013
+	for package in $(grep -E '[\+0-9a-z-]+~=[0-9].*' <docker/Dockerfile | sed -E 's/.*?\s+([\+0-9a-z-]+)~=.*/\1/'); do
+		apk_update_package_version "$package" docker/Dockerfile
+	done
 	printf '\n%sDelete the utiljs-dev Docker image or update docker_image= if docker/Dockerfile changes.\n\n%s' "$(tbold)" "$(treset)"
 }
 
