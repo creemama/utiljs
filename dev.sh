@@ -16,7 +16,7 @@ fi
 . shellutil/updateutil.sh
 # set -o xtrace
 
-docker_image=utiljs-dev:0.41.4
+docker_image=utiljs-dev:0.41.5
 npm_dev_globals='eslint@10.12.0
 jsdoc@4.0.5
 jsdoc-to-markdown@9.1.3
