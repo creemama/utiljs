@@ -12,24 +12,24 @@ describe("Promises", function () {
     }
     it("should resolve a Promise", async function () {
       expect(
-        await promises.applyCallback(null, notify, ["Promise me", "Hypnotoad"])
+        await promises.applyCallback(null, notify, ["Promise me", "Hypnotoad"]),
       ).to.eql("Promise me, Hypnotoad!");
       expect(
-        await promises.callCallback(null, notify, "Promise me", "Hypnotoad")
+        await promises.callCallback(null, notify, "Promise me", "Hypnotoad"),
       ).to.eql("Promise me, Hypnotoad!");
     });
     it("should error if functionOnObjectWithCallback is not a function", () => {
       expect(() =>
-        promises.applyCallback(null, null, ["Promise me", "Hypnotoad"])
+        promises.applyCallback(null, null, ["Promise me", "Hypnotoad"]),
       ).to.throw(TypeError);
       expect(() =>
-        promises.callCallback(null, null, "Promise me", "Hypnotoad")
+        promises.callCallback(null, null, "Promise me", "Hypnotoad"),
       ).to.throw(TypeError);
       expect(() =>
-        promises.applyCallback(null, "a", ["Promise me", "Hypnotoad"])
+        promises.applyCallback(null, "a", ["Promise me", "Hypnotoad"]),
       ).to.throw(TypeError);
       expect(() =>
-        promises.callCallback(null, "a", "Promise me", "Hypnotoad")
+        promises.callCallback(null, "a", "Promise me", "Hypnotoad"),
       ).to.throw(TypeError);
     });
     it("should error if args is erroneous", () => {
@@ -97,7 +97,7 @@ describe("Promises", function () {
             }
             expect(message).to.eql("Call back, Hypnotoad!");
             c(callbck);
-          }
+          },
         );
       }
       function c(callbck) {
@@ -121,22 +121,22 @@ describe("Promises", function () {
             } catch (err) {
               callbck(err);
             }
-          }
+          },
         );
       }
     });
     it("should error if promiseFunction is not a function", () => {
       expect(() =>
-        promises.applyPromise(null, null, ["Call back", "Hypnotoad"])
+        promises.applyPromise(null, null, ["Call back", "Hypnotoad"]),
       ).to.throw(TypeError);
       expect(() =>
-        promises.callPromise(null, null, "Call back", "Hypnotoad")
+        promises.callPromise(null, null, "Call back", "Hypnotoad"),
       ).to.throw(TypeError);
       expect(() =>
-        promises.applyPromise(null, "a", ["Call back", "Hypnotoad"])
+        promises.applyPromise(null, "a", ["Call back", "Hypnotoad"]),
       ).to.throw(TypeError);
       expect(() =>
-        promises.callPromise(null, "a", "Call back", "Hypnotoad")
+        promises.callPromise(null, "a", "Call back", "Hypnotoad"),
       ).to.throw(TypeError);
     });
     it("should handle erroneous input", (callback) => {
@@ -219,11 +219,11 @@ describe("Promises", function () {
                 callback(
                   new Error(
                     "We expected #callPromise to not call this callback.",
-                    { cause: error }
-                  )
+                    { cause: error },
+                  ),
                 );
-              }
-            )
+              },
+            ),
           ).to.throw(Error);
           callbck();
         } catch (error) {
@@ -298,20 +298,20 @@ describe("Promises", function () {
         cb();
       }
       expect(() => promises.applyCallback(null, functionWithCallback)).to.throw(
-        TypeError
+        TypeError,
       );
       expect(() =>
-        promises.applyCallback(null, functionWithCallback, null)
+        promises.applyCallback(null, functionWithCallback, null),
       ).to.throw(TypeError);
       // The following line sends functionWithCallback the wrong number of arguments.
       expect(() =>
-        promises.applyCallback(null, functionWithCallback, "a")
+        promises.applyCallback(null, functionWithCallback, "a"),
       ).to.throw(TypeError);
       expect(() => promises.applyCallback(null, null, [() => {}])).to.throw(
-        TypeError
+        TypeError,
       );
       expect(() => promises.applyCallback(null, "a", [() => {}])).to.throw(
-        TypeError
+        TypeError,
       );
       expect(() => promises.applyCallback(null, null, [])).to.throw(TypeError);
       expect(() => promises.applyCallback(null, "a", [])).to.throw(TypeError);

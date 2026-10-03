@@ -172,7 +172,7 @@ function runExample7() {
         return;
       }
       console.log(message);
-    }
+    },
   );
 }
 

@@ -22,7 +22,7 @@ class Streams {
   finished() {
     if (!stream().finished)
       throw new Error(
-        "This version of Node.js does not support stream.finished."
+        "This version of Node.js does not support stream.finished.",
       );
     return promises().applyCallback(stream(), stream().finished, arguments);
   }
@@ -111,7 +111,7 @@ class Streams {
   pipeline() {
     if (!stream().pipeline)
       throw new Error(
-        "This version of Node.js does not support stream.pipeline."
+        "This version of Node.js does not support stream.pipeline.",
       );
     return promises().applyCallback(stream(), stream().pipeline, arguments);
   }

@@ -17,7 +17,7 @@ function wrap(thiz) {
     timezone,
     context,
     runOnInit,
-    unrefTimeout
+    unrefTimeout,
   ) {
     return new thiz.cron.CronJob(
       cronTime,
@@ -27,7 +27,7 @@ function wrap(thiz) {
       timezone,
       context,
       runOnInit,
-      unrefTimeout
+      unrefTimeout,
     );
   };
 }

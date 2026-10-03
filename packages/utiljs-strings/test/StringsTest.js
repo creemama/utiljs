@@ -8,18 +8,20 @@ describe("Strings", () => {
     it("should operate normally", () => {
       // From https://www.npmjs.com/package/base64url
       expect(
-        strings.base64UrlEncode("ladies and gentlemen we are floating in space")
+        strings.base64UrlEncode(
+          "ladies and gentlemen we are floating in space",
+        ),
       ).to.equal(
-        "bGFkaWVzIGFuZCBnZW50bGVtZW4gd2UgYXJlIGZsb2F0aW5nIGluIHNwYWNl"
+        "bGFkaWVzIGFuZCBnZW50bGVtZW4gd2UgYXJlIGZsb2F0aW5nIGluIHNwYWNl",
       );
       expect(
-        strings.base64UrlDecode("cmlkZTogZHJlYW1zIGJ1cm4gZG93bg")
+        strings.base64UrlDecode("cmlkZTogZHJlYW1zIGJ1cm4gZG93bg"),
       ).to.equal("ride: dreams burn down");
       expect(
-        strings.base64ToBase64Url("qL8R4QIcQ/ZsRqOAbeRfcZhilN/MksRtDaErMA==")
+        strings.base64ToBase64Url("qL8R4QIcQ/ZsRqOAbeRfcZhilN/MksRtDaErMA=="),
       ).to.equal("qL8R4QIcQ_ZsRqOAbeRfcZhilN_MksRtDaErMA");
       expect(
-        strings.base64UrlToBase64("qL8R4QIcQ_ZsRqOAbeRfcZhilN_MksRtDaErMA")
+        strings.base64UrlToBase64("qL8R4QIcQ_ZsRqOAbeRfcZhilN_MksRtDaErMA"),
       ).to.equal("qL8R4QIcQ/ZsRqOAbeRfcZhilN/MksRtDaErMA==");
       const buf = Buffer.alloc(13);
       buf.writeUInt8(0x73, 0);
@@ -36,7 +38,7 @@ describe("Strings", () => {
       buf.writeUInt8(0x65, 11);
       buf.writeUInt8(0x64, 12);
       expect(
-        strings.base64UrlToBuffer("c3Bpcml0dWFsaXplZA").toString()
+        strings.base64UrlToBuffer("c3Bpcml0dWFsaXplZA").toString(),
       ).to.equal(buf.toString());
     });
   });
@@ -86,7 +88,7 @@ describe("Strings", () => {
       expect(
         strings.isString(() => {
           return "";
-        })
+        }),
       ).to.be.false;
       expect(strings.isString({})).to.be.false;
     });
@@ -135,7 +137,7 @@ describe("Strings", () => {
     it("should operate normally", () => {
       expect(strings.stripTags("frog")).to.equal("frog");
       expect(
-        strings.stripTags('<html><>frog</html><span style=""> </span>')
+        strings.stripTags('<html><>frog</html><span style=""> </span>'),
       ).to.equal("<>frog ");
     });
     it("should throw an error if any argument is null", () => {

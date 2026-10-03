@@ -176,13 +176,13 @@ class Promises {
     if (returnValue) return returnValue;
     if (typeof promiseFunction !== "function")
       throw new TypeError(
-        `We expected promiseFunction to be function, but it was ${promiseFunction}.`
+        `We expected promiseFunction to be function, but it was ${promiseFunction}.`,
       );
     returnValue = function (...args) {
       const callback = arguments[args.length - 1];
       if (typeof callback !== "function")
         throw new TypeError(
-          `We expected callback to be a function, but it was ${callback}.`
+          `We expected callback to be a function, but it was ${callback}.`,
         );
       const argsWithoutCalback = Array.from(args).slice(0, args.length - 1);
       let promise;
@@ -193,7 +193,7 @@ class Promises {
       }
       if (!promise && !promise.then)
         throw new Error(
-          `We expected promiseFunction to return a Promise but instead got ${promise}.`
+          `We expected promiseFunction to return a Promise but instead got ${promise}.`,
         );
       promise.then((result) => callback(null, result)).catch(callback);
       // It is possible for the callback to throw an error.
@@ -303,7 +303,7 @@ class Promises {
     if (returnValue) return returnValue;
     if (typeof functionWithCallback !== "function")
       throw new TypeError(
-        `We expected functionWithCallback to be a function, but it was ${functionWithCallback}.`
+        `We expected functionWithCallback to be a function, but it was ${functionWithCallback}.`,
       );
     returnValue = function (...args) {
       const thiz = this;

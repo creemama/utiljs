@@ -46,7 +46,7 @@ module.exports = class Privates {
       const propertyStr = getPropertyErrorString(property);
       throw new RethrownError(
         e,
-        `privates.call(${thiz}, ${propertyStr}) failed. ${e.message}`
+        `privates.call(${thiz}, ${propertyStr}) failed. ${e.message}`,
       );
     }
   }
@@ -58,7 +58,7 @@ module.exports = class Privates {
       const propertyStr = getPropertyErrorString(property);
       throw new RethrownError(
         e,
-        `privates.get(${thiz}, ${propertyStr}) failed. ${e.message}`
+        `privates.get(${thiz}, ${propertyStr}) failed. ${e.message}`,
       );
     }
   }
@@ -83,7 +83,7 @@ module.exports = class Privates {
     try {
       const lambdaProperties = {};
       Object.entries(properties).forEach(
-        ([property, value]) => (lambdaProperties[property] = () => value)
+        ([property, value]) => (lambdaProperties[property] = () => value),
       );
       return lambdaProperties;
     } catch (e) {
@@ -95,7 +95,7 @@ module.exports = class Privates {
   lazyLoad(thiz, property, lazyLoadFunction) {
     if (typeof lazyLoadFunction !== "function")
       throw new TypeError(
-        `lazyLoadFunction (${lazyLoadFunction}) must be a function.`
+        `lazyLoadFunction (${lazyLoadFunction}) must be a function.`,
       );
     let value;
     let loaded = false;
@@ -113,7 +113,7 @@ module.exports = class Privates {
     lazilyLoadedProperties.forEach((currentProperties) => {
       Object.entries(currentProperties).forEach(
         ([property, lazyLoadFunction]) =>
-          t.lazyLoad(thiz, property, lazyLoadFunction)
+          t.lazyLoad(thiz, property, lazyLoadFunction),
       );
     });
   }
@@ -125,7 +125,7 @@ module.exports = class Privates {
       const propertyStr = getPropertyErrorString(property);
       throw new RethrownError(
         e,
-        `privates.set(${thiz}, ${propertyStr}, ${newValue}) failed. ${e.message}`
+        `privates.set(${thiz}, ${propertyStr}, ${newValue}) failed. ${e.message}`,
       );
     }
   }
@@ -134,10 +134,10 @@ module.exports = class Privates {
     const t = this;
     properties.forEach((currentProperties) => {
       Object.entries(currentProperties).forEach(([property, value]) =>
-        t.set(thiz, property, value)
+        t.set(thiz, property, value),
       );
       getAllMethods(currentProperties).forEach((method) =>
-        t.set(thiz, method, currentProperties[method].bind(currentProperties))
+        t.set(thiz, method, currentProperties[method].bind(currentProperties)),
       );
     });
   }
@@ -180,7 +180,7 @@ function getAllMethods(obj) {
           typeof obj[p] === "function" && // only the methods
           p !== "constructor" && // not the constructor
           (i === 0 || p !== arr[i - 1]) && // not overriding in this prototype
-          props.indexOf(p) === -1 // not overridden in a child
+          props.indexOf(p) === -1, // not overridden in a child
       );
     props = props.concat(l);
   } while (

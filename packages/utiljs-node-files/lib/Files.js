@@ -135,17 +135,17 @@ module.exports = class Files {
     return (async function () {
       if (!objects().isDefined(params))
         throw new TypeError(
-          `We expected params to be defined, but it was ${params}.`
+          `We expected params to be defined, but it was ${params}.`,
         );
       const { dir, ext } = params;
 
       if (!objects().isDefined(dir))
         throw new TypeError(
-          `We expected params.dir to be defined, but it was ${dir}.`
+          `We expected params.dir to be defined, but it was ${dir}.`,
         );
       if (!objects().isDefined(ext))
         throw new TypeError(
-          `We expected params.ext to be defined, but it was ${ext}.`
+          `We expected params.ext to be defined, but it was ${ext}.`,
         );
 
       const files = await thiz.readdir(dir);
@@ -167,18 +167,18 @@ module.exports = class Files {
   filesWithExtensionSync(params) {
     if (!objects().isDefined(params))
       throw new TypeError(
-        `We expected params to be defined, but it was ${params}.`
+        `We expected params to be defined, but it was ${params}.`,
       );
 
     const { dir, ext } = params;
 
     if (!objects().isDefined(dir))
       throw new TypeError(
-        `We expected params.dir to be defined, but it was ${dir}.`
+        `We expected params.dir to be defined, but it was ${dir}.`,
       );
     if (!objects().isDefined(ext))
       throw new TypeError(
-        `We expected params.ext to be defined, but it was ${ext}.`
+        `We expected params.ext to be defined, but it was ${ext}.`,
       );
 
     const files = this.readdirSync(dir);

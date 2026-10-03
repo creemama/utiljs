@@ -19,7 +19,7 @@ module.exports = class MissingError extends TypeError {
             (argumentName ? "`" + argumentName + "`" : "It") +
             " is '" +
             argumentValue +
-            "'."
+            "'.",
     );
     this.name = this.constructor.name;
     this.argumentName = argumentName;

@@ -153,7 +153,7 @@ errors
 //     at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
 
 rejectAPromise().catch((error) =>
-  console.log("\n\nWithout Caller Stack Trace\n" + error.stack)
+  console.log("\n\nWithout Caller Stack Trace\n" + error.stack),
 );
 // Without Caller Stack Trace
 // TypeError: Fail!

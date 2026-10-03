@@ -8,7 +8,7 @@ module.exports = class RethrownError extends Error {
     super(message != null ? message : getErrorProperty(error, "message"));
     if (!error)
       throw new TypeError(
-        `RethrownError's constructor expects a defined error, but it was ${error}.`
+        `RethrownError's constructor expects a defined error, but it was ${error}.`,
       );
     this.name = this.constructor.name;
     this.original = error;

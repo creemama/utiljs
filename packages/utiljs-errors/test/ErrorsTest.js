@@ -83,10 +83,10 @@ describe("new Errors#RethrownError(message, error)", () => {
         throwATypeError();
       } catch (error) {
         expect(new RethrownError(error).stack).to.include(
-          "RethrownError: Invalid Argument\n"
+          "RethrownError: Invalid Argument\n",
         );
         expect(new RethrownError(error, "").stack).to.include(
-          "RethrownError\n"
+          "RethrownError\n",
         );
         throw new RethrownError(error, "Lorem Ipsum");
       }
@@ -114,18 +114,18 @@ describe("new Errors#RethrownError(message, error)", () => {
         throwAString();
       } catch (error) {
         expect(new RethrownError(error).stack).to.include(
-          'RethrownError: "ENTITY_NOT_FOUND"\n'
+          'RethrownError: "ENTITY_NOT_FOUND"\n',
         );
         expect(new RethrownError(error).stack.endsWith('"ENTITY_NOT_FOUND"')).to
           .be.true;
         expect(new RethrownError(error, "").stack).to.include(
-          "RethrownError\n"
+          "RethrownError\n",
         );
         expect(new RethrownError(error, 0).stack).to.include(
-          "RethrownError: 0\n"
+          "RethrownError: 0\n",
         );
         expect(new RethrownError(error, "").stack).to.include(
-          "ENTITY_NOT_FOUND"
+          "ENTITY_NOT_FOUND",
         );
         throw new RethrownError(error, "Lorem Ipsum");
       }
@@ -152,15 +152,15 @@ describe("new Errors#RethrownError(message, error)", () => {
         throwAnArray();
       } catch (error) {
         expect(new RethrownError(error).stack).to.include(
-          'RethrownError: [{"code":"1234"}]\n'
+          'RethrownError: [{"code":"1234"}]\n',
         );
         expect(new RethrownError(error).stack.endsWith('[{"code":"1234"}]')).to
           .be.true;
         expect(new RethrownError(error, "").stack).to.include(
-          "RethrownError\n"
+          "RethrownError\n",
         );
         expect(new RethrownError(error, "").stack).to.include(
-          '[{"code":"1234"}]'
+          '[{"code":"1234"}]',
         );
         throw new RethrownError(error, "Lorem Ipsum");
       }

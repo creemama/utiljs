@@ -23,7 +23,7 @@ function runExample0() {
   errors
     .catch(rejectAPromise())
     .catch((error) =>
-      console.log("\n\nWith Caller Stack Trace\n" + error.stack)
+      console.log("\n\nWith Caller Stack Trace\n" + error.stack),
     );
   // With Caller Stack Trace
   // AsyncError: Fail!
@@ -54,7 +54,7 @@ function runExample0() {
   //     at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
 
   rejectAPromise().catch((error) =>
-    console.log("\n\nWithout Caller Stack Trace\n" + error.stack)
+    console.log("\n\nWithout Caller Stack Trace\n" + error.stack),
   );
   // Without Caller Stack Trace
   // TypeError: Fail!

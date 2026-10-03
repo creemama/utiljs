@@ -47,7 +47,7 @@ describe("Timers#setInterval(callback, delay[, ...args]) and Timers#clearInterva
         }
       },
       25,
-      "foobar"
+      "foobar",
     );
   });
 });
@@ -64,7 +64,7 @@ describe("Timers#setTimeout(callback, delay[, ...args])", () => {
         }
       },
       25,
-      "foobar"
+      "foobar",
     );
   });
 });
@@ -83,8 +83,8 @@ describe("Timers#clearImmediate(immediate)", () => {
       ++numCalls;
       done(
         new Error(
-          "We did not expect execution to notify the immediate callback."
-        )
+          "We did not expect execution to notify the immediate callback.",
+        ),
       );
     });
     require("fs").readFile(__filename, "utf8", (string) => {
@@ -121,12 +121,12 @@ describe("Timers#clearTimeout(timeout)", () => {
         ++numCalls;
         done(
           new Error(
-            "We did not expect execution to notify the timeout callback."
-          )
+            "We did not expect execution to notify the timeout callback.",
+          ),
         );
       },
       10,
-      "foobar"
+      "foobar",
     );
     timers.clearTimeout(timeout);
   });
@@ -222,7 +222,7 @@ describe("Times#throttle(func, limit)", () => {
     expect(await timers.throttle(() => "foo", "foo")()).to.eql("foo");
 
     expect(() => timers.throttle(() => "foo", Symbol("foo"))).to.throw(
-      TypeError
+      TypeError,
     );
   });
 });

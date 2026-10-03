@@ -43,7 +43,7 @@ describe("Urls", () => {
         },
         (error) => {
           expect(error).to.be.an.instanceof(TypeError);
-        }
+        },
       ));
     it("should throw an error if there is no protocol", () =>
       downloadUrlDestination("www.google.com").then(
@@ -52,7 +52,7 @@ describe("Urls", () => {
         },
         (error) => {
           expect(error).to.be.an.instanceof(TypeError);
-        }
+        },
       ));
     it("handles HTTP errors", () =>
       downloadUrlDestination("http://doesnotexist:8080", {
@@ -64,7 +64,7 @@ describe("Urls", () => {
         (error) => {
           if (!error) throw new Error("Unexpected");
           /* expected */
-        }
+        },
       ));
     it("handles HTTPS errors", () =>
       downloadUrlDestination("https://doesnotexist:8443", {
@@ -76,7 +76,7 @@ describe("Urls", () => {
         (error) => {
           if (!error) throw new Error("Unexpected");
           /* expected */
-        }
+        },
       ));
   });
 
@@ -92,7 +92,7 @@ describe("Urls", () => {
         (error) => {
           if (error) return callback();
           callback(new Error("Unexpected success"));
-        }
+        },
       ));
     it("handles HTTPS errors", (callback) =>
       downloadUrlDestinationCallback(
@@ -101,7 +101,7 @@ describe("Urls", () => {
         (error) => {
           if (error) return callback();
           callback(new Error("Unexpected success"));
-        }
+        },
       ));
   });
 
@@ -126,7 +126,7 @@ describe("Urls", () => {
         (error) => {
           if (!error) throw new Error("Unexpected");
           /* expected */
-        }
+        },
       ));
     it("handles HTTPS errors", () =>
       urls.headers("https://doesnotexist:8443", { timeout: 50 }).then(
@@ -136,7 +136,7 @@ describe("Urls", () => {
         (error) => {
           if (!error) throw new Error("Unexpected");
           /* expected */
-        }
+        },
       ));
   });
 
@@ -171,7 +171,7 @@ async function downloadUrlDestination(url, options) {
     "/" +
     files.sanitizeFilename(
       fileNum++ + ".downloadUrlDestination." + url + ".html",
-      { replacement: "_" }
+      { replacement: "_" },
     );
 
   const readFile = (_) => files.readFile(destination, "utf8");
@@ -197,7 +197,7 @@ function downloadUrlDestinationCallback() {
 async function asyncDownloadUrlDestinationCallback(
   url,
   callbackOrOptions,
-  callback
+  callback,
 ) {
   await files.mkdirp(targetDir);
   const cb = arguments[arguments.length - 1];
@@ -206,7 +206,7 @@ async function asyncDownloadUrlDestinationCallback(
     "/" +
     files.sanitizeFilename(
       fileNum++ + ".asyncDownloadUrlDestinationCallback." + url + ".html",
-      { replacement: "_" }
+      { replacement: "_" },
     );
   const options = callbackOrOptions
     ? typeof callbackOrOptions === "function"

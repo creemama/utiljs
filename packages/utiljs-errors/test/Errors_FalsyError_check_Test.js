@@ -11,7 +11,7 @@ describe("FalsyError#check", () => {
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(
-        "Lawyer#argue expected `argument` to be truthy. `argument` is the falsy value NaN."
+        "Lawyer#argue expected `argument` to be truthy. `argument` is the falsy value NaN.",
       );
       expect(e.argumentName).to.equal("argument");
     }
@@ -24,7 +24,7 @@ describe("FalsyError#check", () => {
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(
-        "We expected `argument` to be truthy. `argument` is the falsy value false."
+        "We expected `argument` to be truthy. `argument` is the falsy value false.",
       );
       expect(e.argumentName).to.equal("argument");
     }
@@ -37,7 +37,7 @@ describe("FalsyError#check", () => {
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(
-        "Lawyer#argue expected an argument to be truthy. It is the falsy value undefined."
+        "Lawyer#argue expected an argument to be truthy. It is the falsy value undefined.",
       );
       expect(e.argumentName).to.be.null;
     }
@@ -50,7 +50,7 @@ describe("FalsyError#check", () => {
     } catch (e) {
       expect(e).to.be.an.instanceof(FalsyError);
       expect(e.message).to.equal(
-        "We expected an argument to be truthy. It is the falsy value null."
+        "We expected an argument to be truthy. It is the falsy value null.",
       );
       expect(e.argumentName).to.be.undefined;
     }

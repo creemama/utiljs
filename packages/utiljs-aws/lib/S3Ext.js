@@ -38,7 +38,7 @@ module.exports = class S3Ext {
       return thiz.promises.applyCallback(
         this,
         this.listAllObjectsV2,
-        arguments
+        arguments,
       );
     const { Bucket, ContinuationToken, Objects, Prefix } = params;
     thiz.s3.listObjectsV2(
@@ -68,10 +68,10 @@ module.exports = class S3Ext {
               Objects: newObjects,
               Prefix,
             },
-            callback
+            callback,
           );
         } else callback(null, newObjects);
-      }
+      },
     );
   }
 };

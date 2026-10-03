@@ -37,7 +37,7 @@ async function internalAudit(thiz, packagesDir) {
   const { stdout, stderr } = await thiz.promises.promisify(execute)(
     thiz,
     "npm audit",
-    { cwd: `${packagesDir}/..` }
+    { cwd: `${packagesDir}/..` },
   );
   thiz.console.log(stdout);
   if (stderr) thiz.console.error(stdout);
@@ -58,21 +58,25 @@ async function internalAudit(thiz, packagesDir) {
           thiz.console.log(`Skipping ${packageDir} ...`);
           errorCode = handleError(thiz, error, packageDir);
           return null;
-        })
+        }),
     );
 
   packageDescriptors = (await thiz.promises.all(packageDescriptors)).filter(
-    (packageDesc) => packageDesc != null
+    (packageDesc) => packageDesc != null,
   );
 
   const packages = packageDescriptors.map(
-    (packageDescriptor) => packageDescriptor.packageObj.name
+    (packageDescriptor) => packageDescriptor.packageObj.name,
   );
 
   for (let i = 0; i < packageDescriptors.length; i++) {
     await processPackage(thiz, packageDescriptors[i], packages).catch(
       (error) =>
-        (errorCode = handleError(thiz, error, packageDescriptors[i].packageDir))
+        (errorCode = handleError(
+          thiz,
+          error,
+          packageDescriptors[i].packageDir,
+        )),
     );
   }
 
@@ -82,11 +86,11 @@ async function internalAudit(thiz, packagesDir) {
 async function describePackage(thiz, packageDir) {
   const packageJson = await thiz.files.readFile(
     `${packageDir}/package.json`,
-    "utf8"
+    "utf8",
   );
   const packageLockJson = await thiz.files.readFile(
     `${packageDir}/package-lock.json`,
-    "utf8"
+    "utf8",
   );
   const packageObj = thiz.json.parse(packageJson);
   const packageLockObj = thiz.json.parse(packageLockJson);
@@ -137,12 +141,12 @@ async function processPackage(thiz, packageDescriptor, packages) {
     if (packageFound) {
       await thiz.files.copyFile(
         `${packageDir}/package-lock.json`,
-        `${packageDir}/package-lock.json.bak`
+        `${packageDir}/package-lock.json.bak`,
       );
       await thiz.files.writeFile(
         `${packageDir}/package-lock.json`,
         thiz.json.stringify(packageLockObj, null, "\t"),
-        "utf8"
+        "utf8",
       );
     }
 
@@ -151,7 +155,7 @@ async function processPackage(thiz, packageDescriptor, packages) {
     const { stdout, stderr } = await thiz.promises.promisify(execute)(
       thiz,
       "npm audit",
-      { cwd: packageDir }
+      { cwd: packageDir },
     );
     thiz.console.log(stdout);
     if (stderr) thiz.console.error(stdout);
@@ -160,7 +164,7 @@ async function processPackage(thiz, packageDescriptor, packages) {
     if (packageFound) {
       await thiz.files.copyFile(
         `${packageDir}/package-lock.json.bak`,
-        `${packageDir}/package-lock.json`
+        `${packageDir}/package-lock.json`,
       );
       await thiz.files.rmrf(`${packageDir}/package-lock.json.bak`);
     }

@@ -6,7 +6,7 @@ const privates = new Privates();
 function delegate(thiz, functionName) {
   if (!privates.get(thiz, functionName))
     throw new ReferenceError(
-      "Timers#" + functionName + " is undefined. It is not in this build."
+      "Timers#" + functionName + " is undefined. It is not in this build.",
     );
   const proxy = privates.getCallProxy(thiz);
   return proxy[functionName](proxy);
@@ -97,7 +97,7 @@ module.exports = class Timers {
 
     if (typeof functionToThrottle !== "function")
       throw new TypeError(
-        `functionToThrottle (${functionToThrottle}) must be a function.`
+        `functionToThrottle (${functionToThrottle}) must be a function.`,
       );
 
     let lastRan;

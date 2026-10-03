@@ -317,7 +317,7 @@ promises.callPromise(
   notifyPromise,
   "Call back",
   "Hypnotoad",
-  (error, message) => console.log(message)
+  (error, message) => console.log(message),
 );
 ```
 

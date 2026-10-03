@@ -19,7 +19,7 @@ module.exports = class FalsyError extends TypeError {
             (argumentName ? "`" + argumentName + "`" : "It") +
             " is the falsy value " +
             (argumentValue === "" ? "''" : argumentValue) +
-            "."
+            ".",
     );
     this.name = this.constructor.name;
     this.argumentName = argumentName;

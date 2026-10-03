@@ -63,7 +63,7 @@ class Strings {
     z = z + "";
     if (z.length > 1)
       throw new Error(
-        "The padding character must have a length of 1 but was " + z.length
+        "The padding character must have a length of 1 but was " + z.length,
       );
     n = n + "";
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;

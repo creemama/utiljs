@@ -45,7 +45,7 @@ describe("Files", function () {
         lines = await files.readLastLines(
           new URL("file://" + __filename),
           3,
-          "utf8"
+          "utf8",
         );
         expect(lines).to.eql("    });\n  });\n});\n");
       }
@@ -53,14 +53,14 @@ describe("Files", function () {
       lines = await files.readLastLines(
         Buffer.from(__filename, "utf8"),
         3,
-        "utf8"
+        "utf8",
       );
       expect(lines).to.eql("    });\n  });\n});\n");
 
       lines = await files.readLastLines(
         Buffer.from(__filename, "utf8"),
         3,
-        Buffer.from("utf8", "utf8")
+        Buffer.from("utf8", "utf8"),
       );
       expect(lines).to.eql("    });\n  });\n});\n");
     });
@@ -159,7 +159,7 @@ describe("Files", function () {
           .readLastLines(new URL("http://www.google.com"), 3)
           .then((lines) => assert.fail())
           .catch((error) =>
-            expect(error.message).to.eql("The URL must be of scheme file")
+            expect(error.message).to.eql("The URL must be of scheme file"),
           );
 
       // The method fails if path is a directory.
@@ -168,8 +168,8 @@ describe("Files", function () {
         .then((lines) => assert.fail())
         .catch((error) =>
           expect(error.message).to.eql(
-            "EISDIR: illegal operation on a directory, read"
-          )
+            "EISDIR: illegal operation on a directory, read",
+          ),
         );
 
       // The method fails if path is one of the primitive types other than string.
@@ -198,7 +198,7 @@ describe("Files", function () {
       files.readLastLines(__dirname, 3, (error, lines) => {
         try {
           expect(error.message).to.eql(
-            "EISDIR: illegal operation on a directory, read"
+            "EISDIR: illegal operation on a directory, read",
           );
           callback();
         } catch (e) {
@@ -212,8 +212,8 @@ describe("Files", function () {
         .then((lines) => assert.fail())
         .catch((error) =>
           expect(error.message).to.eql(
-            "Cannot convert a Symbol value to a number"
-          )
+            "Cannot convert a Symbol value to a number",
+          ),
         );
     });
     it("should fail if the encoding is invalid", async function () {
@@ -221,14 +221,14 @@ describe("Files", function () {
         .readLastLines(__filename, 3, false)
         .then((lines) => assert.fail())
         .catch((error) =>
-          expect(error.message).to.eql("Unknown encoding: false")
+          expect(error.message).to.eql("Unknown encoding: false"),
         );
 
       await files
         .readLastLines(__filename, 3, NaN)
         .then((lines) => assert.fail())
         .catch((error) =>
-          expect(error.message).to.eql("Unknown encoding: NaN")
+          expect(error.message).to.eql("Unknown encoding: NaN"),
         );
 
       await files
@@ -245,7 +245,7 @@ describe("Files", function () {
         .readLastLines(__filename, 3, "frog")
         .then((lines) => assert.fail())
         .catch((error) =>
-          expect(error.message).to.eql("Unknown encoding: frog")
+          expect(error.message).to.eql("Unknown encoding: frog"),
         );
 
       await files
@@ -253,8 +253,8 @@ describe("Files", function () {
         .then((lines) => assert.fail())
         .catch((error) =>
           expect(error.message).to.eql(
-            "Cannot convert a Symbol value to a string"
-          )
+            "Cannot convert a Symbol value to a string",
+          ),
         );
     });
   });
@@ -469,7 +469,7 @@ describe("Files", function () {
           } catch (err) {
             done(err);
           }
-        }
+        },
       );
     });
     it("should return [] if dir is empty", (done) => {
@@ -486,7 +486,7 @@ describe("Files", function () {
           } catch (err) {
             done(err);
           }
-        }
+        },
       );
     });
     it("should have a forward slash separating directory and filename in returned filenames if dir does not contain a slash at the end", async function () {
@@ -520,7 +520,7 @@ describe("Files", function () {
             } catch (err) {
               done(err);
             }
-          }
+          },
         );
       });
     });
@@ -586,13 +586,13 @@ describe("Files", function () {
     });
     it("should return [] if dir is empty", function () {
       expect(
-        files.filesWithExtensionSync({ dir: emptyDir, ext: "json" })
+        files.filesWithExtensionSync({ dir: emptyDir, ext: "json" }),
       ).to.have.members([]);
     });
     it("should have a forward slash separating directory and filename in returned filenames if dir does not contain a slash at the end", function () {
       return prepareDirWithJsonFiles().then(() => {
         expect(
-          files.filesWithExtensionSync({ dir: jsonDir, ext: "json" })
+          files.filesWithExtensionSync({ dir: jsonDir, ext: "json" }),
         ).to.have.members([
           jsonDir + "/package.json",
           jsonDir + "/server.json",
@@ -603,7 +603,7 @@ describe("Files", function () {
     it("should not have two forward slashes in returned filenames if dir contains a slash at the end", function () {
       return prepareDirWithJsonFiles().then(() => {
         expect(
-          files.filesWithExtensionSync({ dir: jsonDir, ext: "json" })
+          files.filesWithExtensionSync({ dir: jsonDir, ext: "json" }),
         ).to.have.members([
           jsonDir + "/package.json",
           jsonDir + "/server.json",
@@ -614,14 +614,14 @@ describe("Files", function () {
     it("should return [] if there are files in dir matching ext but ext starts with a period", function () {
       return prepareDirWithJsonFiles().then(() => {
         expect(
-          files.filesWithExtensionSync({ dir: jsonDir, ext: ".json" })
+          files.filesWithExtensionSync({ dir: jsonDir, ext: ".json" }),
         ).to.have.members([]);
       });
     });
     it("should return [] if ext is empty", function () {
       return prepareDirWithJsonFiles().then(() => {
         expect(
-          files.filesWithExtensionSync({ dir: jsonDir, ext: "" })
+          files.filesWithExtensionSync({ dir: jsonDir, ext: "" }),
         ).to.have.members([]);
       });
     });
@@ -654,7 +654,7 @@ describe("Files", function () {
           } catch (err) {
             done(err);
           }
-        }
+        },
       );
     });
     it("should error for UnlikelyToExist.js", async function () {
@@ -808,7 +808,7 @@ describe("Files", function () {
             cb(null);
           },
         ],
-        done
+        done,
       );
     });
   });
@@ -839,7 +839,7 @@ describe("Files", function () {
             cb();
           },
         ],
-        done
+        done,
       );
     });
   });
@@ -902,7 +902,7 @@ describe("Files", function () {
           },
           files.writeFile,
         ],
-        done
+        done,
       );
     });
 
@@ -921,7 +921,7 @@ describe("Files", function () {
           } catch (err) {
             done(err);
           }
-        }
+        },
       );
     });
     it("should successfully read three files when called with option 'utf8'", (done) => {
@@ -936,13 +936,13 @@ describe("Files", function () {
           } catch (err) {
             done(err);
           }
-        }
+        },
       );
     });
     it("should successfully read three files when called with options", async function () {
       const string = await files.readFiles(
         [targetDir + "/c.txt", targetDir + "/a.txt", targetDir + "/c.txt"],
-        { encoding: "utf8", flag: "r" }
+        { encoding: "utf8", flag: "r" },
       );
       expect(string).to.equal("cac");
     });
@@ -958,7 +958,7 @@ describe("Files", function () {
           } catch (err) {
             done(err);
           }
-        }
+        },
       );
     });
     it("should return a Promise if callback is null", async function () {
@@ -1019,7 +1019,7 @@ describe("Files", function () {
           } catch (err) {
             done(err);
           }
-        }
+        },
       );
     });
   });
@@ -1051,7 +1051,7 @@ describe("Files", function () {
           },
           files.mkdirp,
         ],
-        done
+        done,
       );
     });
 
@@ -1090,7 +1090,7 @@ describe("Files", function () {
           },
           files.isFile.bind(files),
         ],
-        done
+        done,
       );
     });
     it("should throw TypeError when filename is null", async function () {

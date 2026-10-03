@@ -65,7 +65,7 @@ describe("Streams", () => {
         },
         (error) => {
           if (!error) throw new Error("Unexpected");
-        }
+        },
       );
       await streams.stringify(null).then(
         () => {
@@ -73,7 +73,7 @@ describe("Streams", () => {
         },
         (error) => {
           if (!error) throw new Error("Unexpected");
-        }
+        },
       );
       await streams.stringify(null, null).then(
         () => {
@@ -81,7 +81,7 @@ describe("Streams", () => {
         },
         (error) => {
           if (!error) throw new Error("Unexpected");
-        }
+        },
       );
     });
     it("should successfully stringify a Readable and notify a callback", (callback) => {

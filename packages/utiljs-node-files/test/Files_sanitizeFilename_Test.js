@@ -18,7 +18,7 @@ describe("Files#sanitizeFilename", () => {
   });
   it("should throw an error if the filename is not a string", () => {
     expect(() =>
-      files.sanitizeFilename(["~/.\u0000ssh/authorized_keys"])
+      files.sanitizeFilename(["~/.\u0000ssh/authorized_keys"]),
     ).to.throw(Error);
   });
 });

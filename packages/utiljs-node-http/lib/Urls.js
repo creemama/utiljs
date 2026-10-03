@@ -61,8 +61,8 @@ class Urls {
     const port = parsedUrl.port
       ? parsedUrl.port
       : parsedUrl.protocol === "https:"
-      ? 443
-      : 80;
+        ? 443
+        : 80;
 
     let options = Object.assign(
       {},
@@ -70,7 +70,7 @@ class Urls {
         ? typeof callbackOrOptions === "function"
           ? {}
           : callbackOrOptions
-        : {}
+        : {},
     );
     options = Object.assign(options, {
       host: parsedUrl.host,
@@ -138,7 +138,7 @@ function getProtocolObject(protocolStr) {
       return http();
     default:
       throw new TypeError(
-        'The protocol must be "https:" or "http:", not "' + protocolStr + '"'
+        'The protocol must be "https:" or "http:", not "' + protocolStr + '"',
       );
   }
 }

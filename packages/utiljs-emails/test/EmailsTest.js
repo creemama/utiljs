@@ -60,7 +60,7 @@ describe("Emails", () => {
           '  "Delivered-To": "c@creemama.com",\n' +
           '  "Date": "Tue, 10 Jul 2018 10:18:52 -0700",\n' +
           '  "To": "Chris Topher <c@creemama.com>"\n' +
-          "}"
+          "}",
       );
     });
     it("should throw a TypeError if nameValueArrayOfHeaders is not an array-like object containing name-value objects", () => {

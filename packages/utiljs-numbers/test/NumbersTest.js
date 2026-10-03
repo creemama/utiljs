@@ -6,7 +6,7 @@ const numbers = require("..");
 describe("Numbers#abs(x)", () => {
   it("should calculate correctly", () => {
     expect(numbers.abs(numbers.NEGATIVE_INFINITY)).to.eql(
-      numbers.POSITIVE_INFINITY
+      numbers.POSITIVE_INFINITY,
     );
   });
 });
