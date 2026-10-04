@@ -30,5 +30,8 @@
   },
   "scripts-comments": [
     "npm run test is the default build script for Travis CI."
+  ],
+  "workspaces": [
+    "packages/*"
   ]
 }

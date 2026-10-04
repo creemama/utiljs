@@ -279,14 +279,6 @@ execute_prettier() {
 
 install() {
 	npm install
-	cd packages
-	for package in */; do
-		(
-			cd "$package"
-			printf '%s\n' "Visting $package"
-			npm install
-		)
-	done
 }
 
 install_dev_globals() {
