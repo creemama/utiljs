@@ -8,6 +8,10 @@
     "work in https://npm.runkit.com."
   ],
   "description": "JavaScript utility methods for objects",
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "keywords": [
     "object",
     "objects",

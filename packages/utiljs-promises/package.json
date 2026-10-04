@@ -8,6 +8,10 @@
     "work in https://npm.runkit.com."
   ],
   "description": "JavaScript utility methods for promises",
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "keywords": [
     "promise",
     "promises",

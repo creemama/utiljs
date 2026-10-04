@@ -16,6 +16,10 @@
   "devDependencies": {
     "async-waterfall": "0.1.5"
   },
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "file",
     "file system",

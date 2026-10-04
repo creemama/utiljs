@@ -390,6 +390,7 @@ publish() {
 	clean
 	build
 	npm login --scope=@util.js
+	# Use `npm pack --dry-run` to do a dry run of what's published.
 	lerna publish --exact # This command bumps the version number.
 }
 

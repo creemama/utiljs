@@ -8,6 +8,10 @@
     "@babel/runtime-corejs3 is required by files in the dist directory to ",
     "work in https://npm.runkit.com."
   ],
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "keywords": [
     "email",
     "emails",

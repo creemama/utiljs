@@ -5,6 +5,10 @@
     "@util.js/errors": "0.41.6"
   },
   "description": "JavaScript utility class for private member variables",
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "keywords": [
     "field",
     "fields",

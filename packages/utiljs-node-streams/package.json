@@ -5,6 +5,10 @@
     "@util.js/strings": "0.41.6"
   },
   "description": "JavaScript utility methods for streams",
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "fromString",
     "stream",

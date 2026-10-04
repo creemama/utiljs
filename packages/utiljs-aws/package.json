@@ -5,6 +5,10 @@
     "@util.js/promises": "0.41.6"
   },
   "description": "JavaScript utility class for the AWS SDK",
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "aws",
     "utilities",

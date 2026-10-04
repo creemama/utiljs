@@ -5,6 +5,10 @@
     "@util.js/promises": "0.41.6"
   },
   "description": "JavaScript utility methods for URLs",
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "uri",
     "uris",

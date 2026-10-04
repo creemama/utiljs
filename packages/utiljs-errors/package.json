@@ -4,6 +4,11 @@
     "@babel/runtime-corejs3": "7.29.7"
   },
   "description": "JavaScript utility methods for errors",
+  "files": [
+    "dist",
+    "index.js",
+    "RethrownError.js"
+  ],
   "keywords": [
     "error",
     "errors",

@@ -9,6 +9,10 @@
     "work in https://npm.runkit.com."
   ],
   "description": "JavaScript utility methods for arrays",
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "keywords": [
     "array",
     "arrays",

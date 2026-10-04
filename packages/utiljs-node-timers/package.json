@@ -5,6 +5,10 @@
     "cron": "4.4.0"
   },
   "description": "An object to hold JavaScript timers: https://nodejs.org/api/timers.html",
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "throttle",
     "timer",

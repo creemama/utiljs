@@ -11,6 +11,11 @@
     "@util.js/promises": "0.41.6"
   },
   "description": "JavaScript utility methods for Lerna",
+  "files": [
+    "cli.js",
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "lerna",
     "utilities",
