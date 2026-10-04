@@ -92,8 +92,22 @@ module.exports = class Files {
     return path().dirname(...arguments);
   }
 
-  exists() {
-    return promises().applyCallback(fs(), fs().exists, arguments);
+  exists(path, callback) {
+    if (callback) {
+      return fs().exists(path, callback);
+    }
+    return new Promise((resolve, reject) => {
+      // From https://nodejs.org/api/fs.html#fsexistspath-callback:
+      // The parameters for this callback are not consistent with other Node.js callbacks.
+      // Normally, the first parameter to a Node.js callback is an err parameter, optionally 
+      // followed by other parameters. The fs.exists() callback has only one boolean 
+      // parameter. 
+      try {
+        fs().exists(path, resolve);
+      } catch (err) {
+        reject(err);
+      }
+    });
   }
 
   existsSync() {
