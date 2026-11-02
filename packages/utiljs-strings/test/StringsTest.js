@@ -55,7 +55,7 @@ describe("Strings", () => {
       const str = "To be, or not to be, that is the question.";
       expect(strings.endsWith(str, "question.", -19)).to.be.false;
     });
-    it("should thow an error when the first or second argument is missing", () => {
+    it("should throw an error when the first or second argument is missing", () => {
       expect(() => {
         strings.endsWith();
       }).to.throw(TypeError);

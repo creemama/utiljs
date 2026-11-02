@@ -59,7 +59,7 @@ class Arrays {
    * See [knuth-shuffle]{@link https://www.npmjs.com/package/knuth-shuffle}.
    *
    * @param {Array} array The array to shuffle
-   * @return {Array} A new Array instance
+   * @return {Array} A new Array instance with shuffled elements
    * @public
    * @instance
    * @function
@@ -69,12 +69,12 @@ class Arrays {
   }
 
   /**
-   * Sorts the elements of an array and (unlike returns a **new array** with the sorted elements. The default sort order is ascending, built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
+   * Sorts the elements of an array and returns a **new array** with the sorted elements. The default sort order is ascending, built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
    *
-   * See [knuth-shuffle]{@link https://www.npmjs.com/package/knuth-shuffle}.
+   * See MDN's documentation about [sort]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort}.
    *
-   * @param {Array} array The array to shuffle
-   * @return {Array} A new Array instance
+   * @param {Array} array The array to sort
+   * @return {Array} A new Array instance with sorted elements
    * @public
    * @instance
    * @function

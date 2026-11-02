@@ -27,7 +27,7 @@ class Promises {
    * });
    * // expected output: Array [3, 42, "foo"]
    *
-   * @param {iterable|...*} iterable An iterable object such as an Array or String; if you give move than one argument to this method, [arguments]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments} becomes the iterable
+   * @param {iterable|...*} iterable An iterable object such as an Array or String; if you give more than one argument to this method, [arguments]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments} becomes the iterable
    * @return {Promise} (A) An already resolved Promise if the iterable passed is empty.
    * (B) An asynchronously resolved Promise if the iterable passed contains no promises.
    * (C) A pending Promise in all other cases; this returned promise is then resolved/rejected asynchronously (as soon as the stack is empty) when all the promises in the given iterable have resolved, or if any of the promises reject; returned values will be in order of the Promises passed, regardless of completion order.
@@ -345,7 +345,7 @@ class Promises {
    * });
    * // expected output: "two"
    *
-   * @param {iterable|...*} iterable An iterable object such as an Array or String; if you give move than one argument to this method, [arguments]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments} becomes the iterable
+   * @param {iterable|...*} iterable An iterable object such as an Array or String; if you give more than one argument to this method, [arguments]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments} becomes the iterable
    * @return {Promise} A pending Promise that resolves or rejects asynchronically (as soon as the stack is empty) as soon as one of the promises in the given iterable resolves or rejects, adopting that first promise's value as its value
    * @public
    * @instance
