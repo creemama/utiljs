@@ -26,9 +26,9 @@ prettier@3.9.9
 npm_global=npm@12.2.0
 npm_globals='@babel/cli@7.29.7
 @babel/core@7.29.7
+c8@12.0.0
 lerna@10.0.1
 mocha@12.0.3
-nyc@18.0.0
 '
 
 audit() {
@@ -221,7 +221,7 @@ execute_jsdoc2md() {
 execute_mocha() {
 	if [ -n "${2:-}" ] && [ -d "packages/$2" ]; then
 		cd "packages/$2"
-		nyc \
+		c8 \
 			--reporter html \
 			--reporter text \
 			--report-dir target/coverage \
@@ -235,7 +235,7 @@ execute_mocha() {
 			cd "$package"
 			if [ -d "test" ]; then
 				printf '%s\n' "Visting $package"
-				nyc \
+				c8 \
 					--reporter html \
 					--reporter text \
 					--report-dir target/coverage \
@@ -265,7 +265,7 @@ execute_prettier() {
 
 	find "$path" -type f |
 		grep -E "^(\./\.babelrc|$prefix.*\.(css|js|json|jsx|md|scss))$" |
-		grep -E -v "^.*/(.nyc_output|dist|node_modules|target)/.*$" |
+		grep -E -v "^.*/(dist|node_modules|target)/.*$" |
 		grep -E -v "^.*/package-lock\.json$" |
 		grep -E -v "^\./lerna\.json$" \
 			>target/prettier.txt
@@ -316,7 +316,7 @@ install-dev-globals - Install Node.js globals not needed by CI.
 install-globals - Install Node.js globals needed by CI.
 jsdoc - Run jsdoc in all packages.
 jsdoc2md - Run jsdoc2md in all packages.
-mocha - Run mocha/nyc in all packages.
+mocha - Run mocha/c8 in all packages.
 prettier - Run prettier in all packages.
 publish - Bump the version number and publish all packages to npm.
 shell-format - Format shell scripts and run shellcheck.
@@ -371,7 +371,7 @@ update-dockerfile - Update the shellutil-dev image used in docker/Dockerfile.'
 	elif [ "$1" = "$(arg 18 $commands)" ]; then
 		shellutil/format.sh shell-format
 	elif [ "$1" = "$(arg 19 $commands)" ]; then
-		run_test
+		run_test "$@"
 	elif [ "$1" = "$(arg 20 $commands)" ]; then
 		update
 	elif [ "$1" = "$(arg 21 $commands)" ]; then
@@ -404,7 +404,7 @@ run_docker_update_dockerfile() {
 }
 
 run_test() {
-	execute_mocha
+	execute_mocha "$@"
 }
 
 update() {
