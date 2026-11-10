@@ -17,17 +17,17 @@ fi
 # set -o xtrace
 
 docker_image=utiljs-dev:0.42.0
-npm_dev_globals='eslint@10.12.0
+npm_dev_globals='eslint@10.14.0
 jsdoc@4.0.5
 jsdoc-to-markdown@9.1.3
-npm-check-updates@23.1.0
-prettier@3.9.9
+npm-check-updates@23.1.1
+prettier@3.9.10
 '
-npm_global=npm@12.2.0
+npm_global=npm@12.2.2
 npm_globals='@babel/cli@7.29.7
 @babel/core@7.29.7
 c8@12.0.0
-lerna@10.0.1
+lerna@10.1.1
 mocha@12.0.3
 '
 
