@@ -1,4 +1,3 @@
-"use strict";
+import Urls from "./lib/Urls.js";
 
-const Urls = require("./lib/Urls");
-module.exports = new Urls();
+export default Urls;

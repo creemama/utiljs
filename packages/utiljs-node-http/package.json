@@ -31,5 +31,6 @@
     "type": "git",
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-node-http"
   },
+  "type": "module",
   "version": "0.41.8"
 }
