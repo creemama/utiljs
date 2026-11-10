@@ -1,8 +1,8 @@
 {
   "author": "Chris Topher <c@creemama.com>",
   "dependencies": {
-    "@util.js/node-files": "0.41.8",
-    "@util.js/promises": "0.41.8"
+    "@util.js/node-files": "0.42.0",
+    "@util.js/promises": "0.42.0"
   },
   "description": "JavaScript utility methods for URLs",
   "files": [
@@ -32,5 +32,5 @@
     "url": "https://github.com/creemama/utiljs/tree/master/packages/utiljs-node-http"
   },
   "type": "module",
-  "version": "0.41.8"
+  "version": "0.42.0"
 }
