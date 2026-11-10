@@ -5,6 +5,9 @@
     "@util.js/promises": "0.42.0"
   },
   "description": "JavaScript utility methods for URLs",
+  "exports": {
+    ".": "./index.js"
+  },
   "files": [
     "index.js",
     "lib"
@@ -19,6 +22,7 @@
     "utiljs"
   ],
   "license": "MIT",
+  "main": "./index.js",
   "name": "@util.js/node-http",
   "publishConfig": {
     "access": "public"
